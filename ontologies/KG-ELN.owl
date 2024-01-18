@@ -1695,48 +1695,48 @@ process depending on the context in which it occurs. For example, the observed e
   <has_unit_string rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1/s</has_unit_string>
 </SBO:SBO_0000025>
 
-<onto:DataProcessingModule rdf:about="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd">
+<onto:DataProcessingModule rdf:about="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DWSIM_Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:label>
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Process flow diagram of laboratory experiments of Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:comment>
 </onto:DataProcessingModule>
 
-<MaterialStream rdf:about="#indv_Reactant_1">
+<MaterialStream rdf:about="#indv_PFD_909f23fd_c29a_4891_b2f3_88b49e0b4a6b">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Mixer"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_048b042f_c141_45a4_8693_063b3fa63804"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_Laccase"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_ABTS_red"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_Water"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_1</rdfs:label>
 </MaterialStream>
 
-<MaterialStream rdf:about="#indv_Reactant_2">
+<MaterialStream rdf:about="#indv_PFD_cba7de02_76a4_42e1_86fb_2745a74277dd">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Mixer"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_048b042f_c141_45a4_8693_063b3fa63804"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_2_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_2</rdfs:label>
 </MaterialStream>
 
-<Mixer rdf:about="#indv_Mixer">
+<Mixer rdf:about="#indv_PFD_048b042f_c141_45a4_8693_063b3fa63804">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Mixture"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_a8004106_9c7b_49bd_a104_33cc63c2c03f"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixer</rdfs:label>
 </Mixer>
 
-<MaterialStream rdf:about="#indv_Mixture">
+<MaterialStream rdf:about="#indv_PFD_a8004106_9c7b_49bd_a104_33cc63c2c03f">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Reactor"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_89c049ef_f569_4a81_b5e6_76f46b3d7e20"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture</rdfs:label>
 </MaterialStream>
 
-<RCT_PFR rdf:about="#indv_Reactor">
+<RCT_PFR rdf:about="#indv_PFD_89c049ef_f569_4a81_b5e6_76f46b3d7e20">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Product_1"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_11736112_c411_4e18_9de8_21e70bfb8b91"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactor</rdfs:label>
   <hasPressureValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">101325</hasPressureValue>
   <hasPressureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pa</hasPressureUnit>
@@ -1753,16 +1753,16 @@ process depending on the context in which it occurs. For example, the observed e
   <hasTypeOf_OperationMode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</hasTypeOf_OperationMode>
 </RCT_PFR>
 
-<MaterialStream rdf:about="#indv_Product_1">
+<MaterialStream rdf:about="#indv_PFD_11736112_c411_4e18_9de8_21e70bfb8b91">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1</rdfs:label>
 </MaterialStream>
 
-<EnergyStream rdf:about="#indv_Heat">
+<EnergyStream rdf:about="#indv_PFD_2736a99a_0bcf_4f7e_8138_6571f8636b40">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <obo:BFO_0000050 rdf:resource="#DWSIM_824cea2f_f072_48c5_9648_47e77f9da8bd"/>
-  <obo:RO_0002234 rdf:resource="#indv_Reactor"/>
+  <obo:BFO_0000050 rdf:resource="#DWSIM_8bb2d6f1_4bc1_4826_93b4_960c133d1d91"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_89c049ef_f569_4a81_b5e6_76f46b3d7e20"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Heat</rdfs:label>
 </EnergyStream>
 

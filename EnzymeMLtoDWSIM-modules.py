@@ -580,14 +580,17 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     exec(code)
         
     
+    uuid_dict = {}
     ##
     # Add process modules as classes based on their dict-entry "DWSIM-object type" and add respective individual
     for proc_mod in list(PFD_dict.keys()):
         onto_class_name = PFD_dict[proc_mod]["DWSIM-object type"].strip()
         
+        uuid_dict[proc_mod] = "PFD_" + str(uuid.uuid4()).replace("-","_")
+        
         # onto_class = eln_dict["PFD"][proc_mod]["DWSIM-object type"]
         # indv = proc_mod
-
+        
         # introduce DWSIM-object type as new class, if not already contained in ontology
         if onto.search_one(label = onto_class_name):
             codestring = """with onto:
@@ -596,7 +599,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                                 
                                 PFD_indv = onto.search_one(iri= "*{}")
                                 proc_indv.BFO_0000050.append(PFD_indv)
-             """.format(onto_class_name,proc_mod,proc_mod,PFD_uuid) 
+             """.format(onto_class_name,uuid_dict[proc_mod],proc_mod,PFD_uuid) 
         else:
             codestring = """with onto:
                                     class {}(onto.search_one(iri = '*PhysChemProcessingModule')):
@@ -608,7 +611,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                                     
                                     PFD_indv = onto.search_one(iri= "*{}")
                                     proc_indv.BFO_0000050.append(PFD_indv)
-             """.format(onto_class_name,onto_class_name,onto_class_name,proc_mod,proc_mod,PFD_uuid) 
+             """.format(onto_class_name,onto_class_name,onto_class_name,uuid_dict[proc_mod],proc_mod,PFD_uuid) 
         
         #print(codestring) 
         code = compile(codestring, "<string>","exec")
@@ -621,11 +624,11 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     for proc_mod in list(PFD_dict.keys()):
         # check, if there are any process modules connected to the current selected one
         if type(PFD_dict[proc_mod]["connection"]) == str and str(PFD_dict[proc_mod]["connection"]).strip():
-            proc_indv_name = "indv_" + proc_mod.strip()
-            connected_indv_name = "indv_" + PFD_dict[proc_mod]["connection"].strip()
+            proc_indv_name = uuid_dict[proc_mod]
+            connected_indv_name = uuid_dict[PFD_dict[proc_mod]["connection"].strip()]
             codestring = """with onto:
-                proc_indv = onto.search_one(label = "{}")
-                con_proc_indv = onto.search_one(label = "{}")
+                proc_indv = onto.search_one(iri = "*{}")
+                con_proc_indv = onto.search_one(iri = "*{}")
                 
                 proc_indv.RO_0002234.append(con_proc_indv)
 
@@ -658,7 +661,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                     
                     # Add individual for each proc+substance and connect it to individuals                    
                     codestring = """with onto:
-                        proc_indv = onto.search_one(label = "indv_{}") 
+                        proc_indv = onto.search_one(iri = "*{}") 
                         subst_indv = onto.search_one(label = "Sub_{}_{}") 
                         
                         proc_subst_indv = onto.search_one(label = proc_indv.is_a[0].label)('{}')
@@ -668,7 +671,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                         proc_subst_indv.RO_0002473.append(subst_indv)                           
                         proc_subst_indv.BFO_0000050.append(proc_indv)
                         
-                        """.format(proc_mod,prop_key,enz_id,combined_ind_name,combined_ind_name)
+                        """.format(uuid_dict[proc_mod],prop_key,enz_id,combined_ind_name,combined_ind_name)
                     
                     # add data properties for newly created individual
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
@@ -683,9 +686,9 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                     onto = datProp_from_str(prop_key,onto)
                     val = PFD_dict[proc_mod][prop_key]
                     codestring = """with onto:
-                        proc_indv = onto.search_one(label = "indv_{}") 
+                        proc_indv = onto.search_one(iri = "*{}") 
                         proc_indv.{}.append('{}')
-                        """.format(proc_mod, prop_key, val)
+                        """.format(uuid_dict[proc_mod], prop_key, val)
                 
                 code = compile(codestring, "<string>", "exec")
                 exec(code)
