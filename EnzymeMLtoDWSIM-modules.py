@@ -12,6 +12,8 @@ Created on Mon Sep 25 13:58:00 2023
 ####################################################
 
 from owlready2 import *
+import uuid
+
 import pyenzyme as pe
 import json
 #from pyenzyme import EnzymeMLDocument, EnzymeReaction, Complex, Reactant, Protein, Creator
@@ -532,7 +534,7 @@ def kin_ind_from_dict(eln_dict, onto):
                 
     return onto
 
-def process_to_KG_from_dict(eln_dict, onto):
+def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     # includes all elements of process flow diagram asserted in additional ELN
     # into the ontology as subclass of ontochem:PhysChemProcessingModule 
     # subclass determined by "DWSIM-object type" entry in additional ELN.
@@ -563,6 +565,21 @@ def process_to_KG_from_dict(eln_dict, onto):
     PFD_dict = eln_dict["PFD"]
     subst_list = list(eln_dict["substances"].keys())
     omit_list = ["DWSIM-object type", "DWSIM-object argument", "connection", "EntersAtObject", "isDWSIMObject"]
+    
+    PFR_name = enzmldoc.name
+    PFR_iri = uuid.uuid4()
+    
+    codestring = """with onto:
+        class DWSIM_{}(onto.search_one(iri = '*DataProcessingModule')):
+            label = 'DWSIM_{}'
+            comment = 'Process flow diagram of laboratory experiments of {}'
+    """.format(PFR_iri,PFR_name,PFR_name)
+    
+    print(codestring)
+    code = compile(codestring, "<string>", "exec")
+    exec(code)
+        
+    
     ##
     # Add process modules as classes based on their dict-entry "DWSIM-object type" and add respective individual
     for proc_mod in list(PFD_dict.keys()):
@@ -576,7 +593,10 @@ def process_to_KG_from_dict(eln_dict, onto):
             codestring = """with onto:
                                 proc_indv = onto.search_one(label = "{}")('indv_{}')
                                 proc_indv.label = 'indv_{}'
-             """.format(onto_class_name,proc_mod,proc_mod) 
+                                
+                                PFR_indv = onto.search_one(label= "DWSIM_{}")
+                                proc_indv.BFO:0000050.append(PFR_indv)
+             """.format(onto_class_name,proc_mod,proc_mod,PFR_name) 
         else:
             codestring = """with onto:
                                     class {}(onto.search_one(iri = '*PhysChemProcessingModule')):
@@ -585,7 +605,10 @@ def process_to_KG_from_dict(eln_dict, onto):
                                         pass                    
                                     proc_indv = {}('indv_{}')
                                     proc_indv.label = 'indv_{}'
-             """.format(onto_class_name,onto_class_name,onto_class_name,proc_mod,proc_mod) 
+                                    
+                                    PFR_indv = onto.search_one(label= "{}")
+                                    proc_indv.BFO:0000050.append(PFR_indv)
+             """.format(onto_class_name,onto_class_name,onto_class_name,proc_mod,proc_mod,PFR_name) 
         
         #print(codestring) 
         code = compile(codestring, "<string>","exec")
@@ -603,7 +626,9 @@ def process_to_KG_from_dict(eln_dict, onto):
             codestring = """with onto:
                 proc_indv = onto.search_one(label = "{}")
                 con_proc_indv = onto.search_one(label = "{}")
+                
                 proc_indv.RO_0002234.append(con_proc_indv)
+
             """.format(proc_indv_name, connected_indv_name)
             
             #print(codestring)
@@ -693,7 +718,7 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = kin_ind_from_dict(supp_eln_dict,onto)
     
     ## include Process Flow Diagram in ontology    
-    onto = process_to_KG_from_dict(supp_eln_dict,onto)
+    onto = process_to_KG_from_dict(enzmldoc, supp_eln_dict,onto)
     
     # Ontologie zwischenspeichern
     onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")

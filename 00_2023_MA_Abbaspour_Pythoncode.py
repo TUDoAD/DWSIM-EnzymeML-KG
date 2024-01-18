@@ -614,7 +614,7 @@ InletWater.hasVolumetricFlowUnit.append(sheet0.iloc[11,1]) # m3/s
 InletOxygen.hasVolumetricFlow.append(sheet0.iloc[10,4])
 InletOxygen.hasVolumetricFlowUnit.append(sheet0.iloc[11,4]) # m3/s 
   
-#ALEX Rev 
+
   
 with onto:
     
@@ -659,6 +659,8 @@ with onto:
         class hasCreator(EnzymeML_Documentation >> str): pass
         class hasCreatorMail(Agent >> str): pass
         class hasDateOfCreation(EnzymeML_Documentation >> str): pass
+
+#ALEX Rev 
 
 ABTSOxidationbyLaccase = Project('ABTS_OxidationByLaccase')
 Chair_of_EquipmentDesign = Institution('TU_Dortmund_LaboratoryOfEquipmentDesign')
