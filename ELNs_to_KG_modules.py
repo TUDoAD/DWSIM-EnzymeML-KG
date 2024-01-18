@@ -329,8 +329,7 @@ def datProp_from_dict(dataProp_dict, onto):
         
     # only selecting some of the parameters of the EnzymeML substance description
     #relation_set.update(set(enzymeML_subst_parameters))
-        
-    # Definieren jeder Relation in der Ontologie via codestring und exec:
+    
     for rel in relation_set:
         if rel in enzymeML_subst_parameters:
             onto = datProp_from_str("has_" + rel,onto)
@@ -364,14 +363,21 @@ def subst_set_relations(enzmldoc, subst_dict, onto):
         for entry in subst_dict[class_name]: 
             data_prop_type = type(subst_dict[class_name][entry])
             
-            # Assert value directly, if entry is int or float
-            # give the entry as string else
-            if (data_prop_type == int) or (data_prop_type == float):
-                codestring = "{}.{}.append({})".format(str(onto_class),str(entry), subst_dict[class_name][entry])
-            else:
-                codestring = "{}.{}.append('{}')".format(str(onto_class),str(entry), str(subst_dict[class_name][entry]))                
-            
-            # Code, der im codestring enthalten ist compilieren
+            if entry == "has_role":
+                # assert with has role relationship
+                codestring = """with onto:
+                    role_indv = onto.search_one(label='{}')('{}')
+                    {}.RO_0000087.append(role_indv)
+                    """.format(subst_dict[class_name][entry],subst_dict[class_name][entry], str(onto_class))
+            else:    
+                # Assert value directly, if entry is int or float
+                # give the entry as string else
+                if (data_prop_type == int) or (data_prop_type == float):
+                    codestring = "{}.{}.append({})".format(str(onto_class),str(entry), subst_dict[class_name][entry])
+                else:
+                    codestring = "{}.{}.append('{}')".format(str(onto_class),str(entry), str(subst_dict[class_name][entry]))                
+                
+
             code = compile(codestring, "<string>","exec")
 
             exec(code)       
@@ -760,14 +766,15 @@ def run():
 #eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
 #eln_dict = new_ELN_to_dict(eln_str)
 
-def test():
-    enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
+def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
+    enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzymeML_ELN_path)
     enzdict = enzmldoc.dict()
-    eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-    eln_dict = new_ELN_to_dict(eln_str)
+    eln_dict = new_ELN_to_dict(process_ELN_path)
     
     return enzdict, eln_dict
-#enzdict, eln_dict = test()
+#enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
+#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
+#enzdict, eln_dict = eln_to_dict(enz_str,eln_str)
 
 #TODO: Simulationsergebnisse zurück in KG 
 # implement UUIDs

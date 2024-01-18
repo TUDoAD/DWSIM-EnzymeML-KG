@@ -700,7 +700,6 @@ onto.save(file="./ontologies/Finale_Onto_.owl", format="rdfxml")
 #                       END: Ontology-manipulation
 #
 ##################################################################################### 
-#ALEX Rev
 
 # Alle Pakete für die Simulation in DWSIM importieren
 # Das os-Modul Das os-Modul ist das wichtigste Modul zur Interaktion mit dem Betriebssystem
@@ -777,6 +776,7 @@ from DWSIM.Thermodynamics.PropertyPackages.Auxiliary import *
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization import GenerateCompounds
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization.Methods import *
 
+
 Directory.SetCurrentDirectory(dwsimpath)
 
 # Automatisierungsmanager erstellen
@@ -817,6 +817,7 @@ comps = Dictionary[str, float]()
 dorders = Dictionary[str, float]()
 rorders = Dictionary[str, float]()
 
+# Alex
 # Komponenten + Koeffizienten der Simulation hinzufügen
 for comp in compounds:
     comps.Add(comp, stoich_coeffs[comp])
