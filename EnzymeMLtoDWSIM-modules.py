@@ -566,16 +566,16 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     subst_list = list(eln_dict["substances"].keys())
     omit_list = ["DWSIM-object type", "DWSIM-object argument", "connection", "EntersAtObject", "isDWSIMObject"]
     
-    PFR_name = enzmldoc.name
-    PFR_iri = uuid.uuid4()
+    PFD_name = enzmldoc.name
+    PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
     
     codestring = """with onto:
-        class DWSIM_{}(onto.search_one(iri = '*DataProcessingModule')):
-            label = 'DWSIM_{}'
-            comment = 'Process flow diagram of laboratory experiments of {}'
-    """.format(PFR_iri,PFR_name,PFR_name)
+        PFD_indv = onto.search_one(iri = '*DataProcessingModule')("{}")
+        PFD_indv.label = 'DWSIM_{}'
+        PFD_indv.comment = 'Process flow diagram of laboratory experiments of {}'
+        
+    """.format(PFD_uuid,PFD_name,PFD_name)
     
-    print(codestring)
     code = compile(codestring, "<string>", "exec")
     exec(code)
         
@@ -594,9 +594,9 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                                 proc_indv = onto.search_one(label = "{}")('indv_{}')
                                 proc_indv.label = 'indv_{}'
                                 
-                                PFR_indv = onto.search_one(label= "DWSIM_{}")
-                                proc_indv.BFO:0000050.append(PFR_indv)
-             """.format(onto_class_name,proc_mod,proc_mod,PFR_name) 
+                                PFD_indv = onto.search_one(iri= "*{}")
+                                proc_indv.BFO_0000050.append(PFD_indv)
+             """.format(onto_class_name,proc_mod,proc_mod,PFD_uuid) 
         else:
             codestring = """with onto:
                                     class {}(onto.search_one(iri = '*PhysChemProcessingModule')):
@@ -606,9 +606,9 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
                                     proc_indv = {}('indv_{}')
                                     proc_indv.label = 'indv_{}'
                                     
-                                    PFR_indv = onto.search_one(label= "{}")
-                                    proc_indv.BFO:0000050.append(PFR_indv)
-             """.format(onto_class_name,onto_class_name,onto_class_name,proc_mod,proc_mod,PFR_name) 
+                                    PFD_indv = onto.search_one(iri= "*{}")
+                                    proc_indv.BFO_0000050.append(PFD_indv)
+             """.format(onto_class_name,onto_class_name,onto_class_name,proc_mod,proc_mod,PFD_uuid) 
         
         #print(codestring) 
         code = compile(codestring, "<string>","exec")
@@ -765,6 +765,6 @@ def test():
 #enzdict, eln_dict = test()
 
 #TODO: Simulationsergebnisse zurück in KG 
-
+# implement UUIDs
     
     
