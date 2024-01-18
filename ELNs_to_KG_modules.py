@@ -483,9 +483,6 @@ def kin_ind_from_dict(eln_dict, onto):
         exec(code)
         
         
-        
-        
-        
         if kin_type == "Henri-Michaelis-Menten rate law":
             ## adding Km indv if it is contained
             if "Km" in kin_dict[kin]:
@@ -540,7 +537,6 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     # subclass determined by "DWSIM-object type" entry in additional ELN.
     # ontochem is the ontology based on the nfdi4cat-extension of metadata4ing
     # connection of components via "has_input" and "has_output" object properties
-    #TODO: see below
     """
     1. Adds process modules as classes based on their dict-entry 
 	   "DWSIM-object type" as subclass of http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingModule
@@ -569,13 +565,19 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     PFD_name = enzmldoc.name
     PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
     
+    creator_str = ""
+    for key in enzmldoc.creator_dict:
+        creator_str = creator_str + str(enzmldoc.creator_dict[key].dict()).strip("{").strip("}").replace("'","") + "\n"        
+    
     codestring = """with onto:
         PFD_indv = onto.search_one(iri = '*DataProcessingModule')("{}")
         PFD_indv.label = 'DWSIM_{}'
         PFD_indv.comment = 'Process flow diagram of laboratory experiments of {}'
-        
-    """.format(PFD_uuid,PFD_name,PFD_name)
+        PFD_indv.comment =""".format(PFD_uuid,PFD_name,PFD_name)
     
+    codestring = codestring + '""" Creator(s): \n' + creator_str + '"""'
+    
+    #print(codestring)
     code = compile(codestring, "<string>", "exec")
     exec(code)
         
@@ -748,7 +750,7 @@ def run():
    onto = base_ontology_extension("BaseOntology")
    
    new_eln_dict = new_ELN_to_dict("./ELNs/New-ELN_Kinetik_1.xlsx")
-   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "ELN")
+   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "DWSIM_Lab")
    
   # with open('dict_dump.json', 'w') as file:
   #      json.dump(eln_dict, file)

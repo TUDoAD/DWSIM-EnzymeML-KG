@@ -660,7 +660,7 @@ with onto:
         class hasCreatorMail(Agent >> str): pass
         class hasDateOfCreation(EnzymeML_Documentation >> str): pass
 
-#ALEX Rev 
+
 
 ABTSOxidationbyLaccase = Project('ABTS_OxidationByLaccase')
 Chair_of_EquipmentDesign = Institution('TU_Dortmund_LaboratoryOfEquipmentDesign')
@@ -671,7 +671,7 @@ EnzymeML_Document1.hasTitle.append(enzmldoc.name)
 EnzymeML_Document1.hasCreator.append(Creator_Names)
 EnzymeML_Document1.hasCreatorMail.append(Creator_Mail)
 EnzymeML_Document1.hasDateOfCreation.append(enzmldoc.created)
-
+ 
 with onto:
         class Stabilizer(onto.search_one(iri = '*SBO_0000594')): pass
         class hasStabilizerConcentration(onto.search_one(iri = '*SBO_0000594') >> float): pass
@@ -700,7 +700,7 @@ onto.save(file="./ontologies/Finale_Onto_.owl", format="rdfxml")
 #                       END: Ontology-manipulation
 #
 ##################################################################################### 
-
+#ALEX Rev
 
 # Alle Pakete für die Simulation in DWSIM importieren
 # Das os-Modul Das os-Modul ist das wichtigste Modul zur Interaktion mit dem Betriebssystem
