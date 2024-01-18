@@ -157,8 +157,19 @@ def run():
 #TODO: subprocess?
 
 
+#TODO: reconstruct PFD from ontology
+#TODO: set up pipeline for information retrieval from Knowledge gaph
+pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
+pfd_list = pfd_ind.BFO_0000051
 
+for module in pfd_list:
+    if module.is_a[0].label.first() == "MaterialStream":
+        materialstream = module.BFO_0000051
+        for comp in materialstream:
+            mat = comp.RO_0002473.first()
+            subst = mat.is_a
+            role = mat.RO_0000087.first().name
+            print(mat, role)
 
-
-
+##
 
