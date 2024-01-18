@@ -727,8 +727,8 @@ def run():
    
    #return test_dict
 
-eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-eln_dict = new_ELN_to_dict(eln_str)
+#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
+#eln_dict = new_ELN_to_dict(eln_str)
 
 def test():
     enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
