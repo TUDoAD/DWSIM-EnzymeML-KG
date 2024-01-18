@@ -301,7 +301,7 @@ set_relations(test_dict, onto)
 # Ontologie zwischenspeichern
 onto.save(file="./ontologies/Zwischenstand_Onto_.owl", format="rdfxml")
 
-#ALEX Rev
+
 
 # Erstellen von leeren Listen, um Reaktionsteilnehmer in Abhängigkeit ihrer Funktion zu sichern
 catalysts = []
@@ -556,7 +556,7 @@ with onto:
         class hasVolumetricFlow(onto.search_one(iri = '*ChemicalMaterialStaged') >> float): pass
         class hasVolumetricFlowUnit(onto.search_one(iri = '*ChemicalMaterialStaged') >> str): pass
     
-    
+ 
 SCR = Reactortype('StraightTubeReactor')
 HTR = Reactortype('HelicalTubeReactor')
 Reactor = Reactortype(sheet3.iloc[11,1])
@@ -613,7 +613,9 @@ InletWater.hasVolumetricFlowUnit.append(sheet0.iloc[11,1]) # m3/s
 
 InletOxygen.hasVolumetricFlow.append(sheet0.iloc[10,4])
 InletOxygen.hasVolumetricFlowUnit.append(sheet0.iloc[11,4]) # m3/s 
-
+  
+#ALEX Rev 
+  
 with onto:
     
     # Klassen zu Beschreibung einer Projektorganisiation

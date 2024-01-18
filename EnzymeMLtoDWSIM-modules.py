@@ -173,11 +173,10 @@ def base_ontology_extension(name_base_ontology):
     onto_world = owlready2.World()
    # sbo_onto = onto_world.get_ontology("https://raw.githubusercontent.com/EBI-BioModels/SBO/master/SBO_OWL.owl").load()
     onto = onto_world.get_ontology("./ontologies/"+name_base_ontology+".owl").load()
+    onto.name = "onto"
+    
    # onto.imported_ontologies.append(sbo_onto)
     
-    
-    # Ohne diese Definition wird die Ontologie für set_relations(test_dict, onto) nicht gefunden
-    #BaseOnto = onto
 
     #SBO has some classes that contain XMLs describing mathematical formulas
     # loading the ontology with owlready2 results in the XML-classes of the formulas
@@ -313,7 +312,7 @@ def datProp_from_str(data_prop_name, onto):
 def datProp_from_dict(dataProp_dict, onto):
     # Benötigte Relationen bestimmen via set() -> auch bei Mehrfachnennung
     # ist jede Relation aus Dictionary nur max. 1x enthalten in relation_list
-    #BaseOnto = onto
+    
     relation_set = set()
     #iterate through dataProp_dict keys (all substances in additional eln) and 
     # add all keys as dataProperty
@@ -339,7 +338,6 @@ def datProp_from_dict(dataProp_dict, onto):
     return onto
     
 def subst_set_relations(enzmldoc, subst_dict, onto):
-    BaseOnto = onto
     
     # Important for adding protein parameters to ontology that are only contained 
     # in the EnzymeML Excel Sheet
@@ -349,7 +347,7 @@ def subst_set_relations(enzmldoc, subst_dict, onto):
     for class_name in list(subst_dict.keys()):
         #iterate through each key of the substance dictionary (each substance)
         # and extend the respective individual with the data properties            
-        onto_class = BaseOnto.search_one(iri='*ind_'+class_name)  
+        onto_class = onto.search_one(iri='*ind_'+class_name)  
         
         if "hasEnzymeML_ID" in subst_dict[class_name].keys():
             if subst_dict[class_name]["hasEnzymeML_ID"] in prot_dict.keys():
@@ -376,7 +374,7 @@ def subst_set_relations(enzmldoc, subst_dict, onto):
 
             exec(code)       
         
-    return BaseOnto
+    return onto
 
 def kin_ind_from_dict(eln_dict, onto):
     
@@ -671,6 +669,11 @@ def process_to_KG_from_dict(eln_dict, onto):
             
     return onto
 
+
+def process_simulation():
+    
+    return 
+
 def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
 
     ##
@@ -678,29 +681,28 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     
     ## include substances in ontology
     # insert substances from dictionary in ontology
-    BaseOnto = subst_classes_from_dict(enzmldoc, supp_eln_dict["substances"], onto)
+    onto = subst_classes_from_dict(enzmldoc, supp_eln_dict["substances"], onto)
     
     # insert data properties to substance individuals from dictionary
-    BaseOnto = datProp_from_dict(supp_eln_dict["substances"], BaseOnto)
+    onto = datProp_from_dict(supp_eln_dict["substances"], onto)
 
     # insert data properties to substance individuals from dictionary
-    BaseOnto = subst_set_relations(enzmldoc, supp_eln_dict["substances"], BaseOnto)
+    onto = subst_set_relations(enzmldoc, supp_eln_dict["substances"], onto)
     
     ## include kinetics in ontology        
-    BaseOnto = kin_ind_from_dict(supp_eln_dict,BaseOnto)
+    onto = kin_ind_from_dict(supp_eln_dict,onto)
     
     ## include Process Flow Diagram in ontology    
-    BaseOnto = process_to_KG_from_dict(supp_eln_dict,BaseOnto)
+    onto = process_to_KG_from_dict(supp_eln_dict,onto)
     
     # Ontologie zwischenspeichern
-    BaseOnto.save(file="./ontologies/Substances_and_"+ onto_str +".owl", format="rdfxml")
-
+    onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
     
 
     #####
     # Ontology-Extension der Base Ontology #
     #####
-    return BaseOnto, supp_eln_dict
+    return onto, supp_eln_dict
 
 ##
 #
@@ -715,13 +717,13 @@ def run():
    
    enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
    
-   onto = base_ontology_extension("BaseOnto")
+   onto = base_ontology_extension("BaseOntology")
    
    new_eln_dict = new_ELN_to_dict("./ELNs/New-ELN_Kinetik_1.xlsx")
-   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "BaseOnto2")
+   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "ELN")
    
-   with open('dict_dump.json', 'w') as file:
-        json.dump(eln_dict, file)
+  # with open('dict_dump.json', 'w') as file:
+  #      json.dump(eln_dict, file)
    
    #return test_dict
 
