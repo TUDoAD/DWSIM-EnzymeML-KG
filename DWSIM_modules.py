@@ -86,7 +86,7 @@ def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
 ##
 
 ##
-def flowsheet_ini(enz_dict, pfd_dict, onto): 
+def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri): 
     working_dir = os.getcwd()
     Directory.SetCurrentDirectory(dwsimpath)
     # Automatisierungsmanager erstellen
@@ -94,23 +94,33 @@ def flowsheet_ini(enz_dict, pfd_dict, onto):
     interf = Automation3()
     sim = interf.CreateFlowsheet()
 
-    pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
+    ## 
+    pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_list = pfd_ind.BFO_0000051
-
+    
+    comp_list = [] # lists the components contained in the pfd
     for module in pfd_list:
         if module.is_a[0].label.first() == "MaterialStream":
             materialstream = module.BFO_0000051
             for comp in materialstream:
                 mat = comp.RO_0002473.first()
-                subst = mat.is_a
+                subst = mat.is_a.first()
                 role = mat.RO_0000087.first().name
-                print(mat,subst,role)
-
-
-    # Komponenten für die Simulation laden
+                comp_list.append({"subst_indv":mat, "subst_class": subst, "subst_role":role})
+                #print(mat,subst, role) # substance individual, substance class, role [product, reactant]
+        try:
+            if module.RO_0000087.first().name == "product":# has role
+                subst = module.is_a.first()
+                role = module.RO_0000087.first()
+                comp_list.append({"subst_indv":module, "subst_class": subst, "subst_role":role})#print(module,module.is_a,module.RO_0000087.first().name) # substance individual, substance class, role [product, reactant]
+        except:
+            pass
     
-    #compounds = 
-
+    # Komponenten für die Simulation laden
+    #Alex
+    comp_class_list = [comp["subst_class"].label for comp in comp_list]
+    compounds = [comp.label for comp in comp_class_list]
+    
     for comp in compounds:
         sim.AddCompound(comp)
              
@@ -162,9 +172,14 @@ def ini():
 
 ##
 enz_dict, pfd_dict, onto = ini()
+pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
+pfd_iri = pfd_ind.iri
+
 ##
 def run():
-    sim = flowsheet_ini(enz_dict,pfd_dict,onto)
+    
+    pfd_ind.iri
+    sim = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
     
 
 ##
@@ -172,6 +187,8 @@ def run():
 #TODO: subprocess?
 #TODO: reconstruct PFD from ontology
 #TODO: set up pipeline for information retrieval from Knowledge gaph
+
+
 pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
 pfd_list = pfd_ind.BFO_0000051
 
@@ -185,7 +202,7 @@ for module in pfd_list:
             print(mat,subst, role)
     try:
         if module.RO_0000087.first().name == "product":# has role
-            print(module,module.RO_0000087.first().name)
+            print(module,module.is_a,module.RO_0000087.first().name)
     except:
         pass
 
