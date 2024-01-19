@@ -109,7 +109,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto):
 
     # Komponenten für die Simulation laden
     
-    compounds = 
+    #compounds = 
 
     for comp in compounds:
         sim.AddCompound(comp)
@@ -183,6 +183,11 @@ for module in pfd_list:
             subst = mat.is_a
             role = mat.RO_0000087.first().name
             print(mat,subst, role)
+    try:
+        if module.RO_0000087.first().name == "product":# has role
+            print(module,module.RO_0000087.first().name)
+    except:
+        pass
 
 ##
 
