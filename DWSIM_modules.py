@@ -118,7 +118,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     
     # Komponenten für die Simulation laden
     #Alex
-    comp_class_list = [comp["subst_class"].label for comp in comp_list]
+    comp_class_list = [comp["subst_class"] for comp in comp_list]
     compounds = [comp.label for comp in comp_class_list]
     
     for comp in compounds:
