@@ -86,7 +86,7 @@ def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
 ##
 
 ##
-def flowsheet_ini(): 
+def flowsheet_ini(enz_dict, pfd_dict, onto): 
     working_dir = os.getcwd()
     Directory.SetCurrentDirectory(dwsimpath)
     # Automatisierungsmanager erstellen
@@ -94,8 +94,22 @@ def flowsheet_ini():
     interf = Automation3()
     sim = interf.CreateFlowsheet()
 
+    pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
+    pfd_list = pfd_ind.BFO_0000051
+
+    for module in pfd_list:
+        if module.is_a[0].label.first() == "MaterialStream":
+            materialstream = module.BFO_0000051
+            for comp in materialstream:
+                mat = comp.RO_0002473.first()
+                subst = mat.is_a
+                role = mat.RO_0000087.first().name
+                print(mat,subst,role)
+
+
     # Komponenten für die Simulation laden
-    compounds = [catalysts[0], main_substrates[0], main_products[0], reactants[0], reactants[1]]
+    
+    compounds = 
 
     for comp in compounds:
         sim.AddCompound(comp)
@@ -150,13 +164,12 @@ def ini():
 enz_dict, pfd_dict, onto = ini()
 ##
 def run():
-    sim = flowsheet_ini()
+    sim = flowsheet_ini(enz_dict,pfd_dict,onto)
+    
 
 ##
 
 #TODO: subprocess?
-
-
 #TODO: reconstruct PFD from ontology
 #TODO: set up pipeline for information retrieval from Knowledge gaph
 pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
@@ -169,7 +182,7 @@ for module in pfd_list:
             mat = comp.RO_0002473.first()
             subst = mat.is_a
             role = mat.RO_0000087.first().name
-            print(mat, role)
+            print(mat,subst, role)
 
 ##
 

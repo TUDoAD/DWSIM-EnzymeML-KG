@@ -338,12 +338,13 @@ def datProp_from_dict(dataProp_dict, onto):
         
     return onto
     
-def subst_set_relations(enzmldoc, subst_dict, onto):
+def subst_set_relations(enzmldoc, subst_dict, onto,PFD_uuid):
     
     # Important for adding protein parameters to ontology that are only contained 
     # in the EnzymeML Excel Sheet
     enzymeML_subst_parameters = ["organism","sequence","ecnumber"]
     prot_dict = enzmldoc.protein_dict
+    #PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
     
     for class_name in list(subst_dict.keys()):
         #iterate through each key of the substance dictionary (each substance)
@@ -368,7 +369,10 @@ def subst_set_relations(enzmldoc, subst_dict, onto):
                 codestring = """with onto:
                     role_indv = onto.search_one(label='{}')('{}')
                     {}.RO_0000087.append(role_indv)
-                    """.format(subst_dict[class_name][entry],subst_dict[class_name][entry], str(onto_class))
+
+                    pfd_indv = onto.search_one(iri ="*{}")
+                    {}.BFO_0000050.append(pfd_indv)
+                    """.format(subst_dict[class_name][entry],subst_dict[class_name][entry], str(onto_class), PFD_uuid, str(onto_class))
             else:    
                 # Assert value directly, if entry is int or float
                 # give the entry as string else
@@ -377,7 +381,7 @@ def subst_set_relations(enzmldoc, subst_dict, onto):
                 else:
                     codestring = "{}.{}.append('{}')".format(str(onto_class),str(entry), str(subst_dict[class_name][entry]))                
                 
-
+            #print(codestring)
             code = compile(codestring, "<string>","exec")
 
             exec(code)       
@@ -419,7 +423,6 @@ def kin_ind_from_dict(eln_dict, onto):
                     print("baseCompound {} in kinetic of {} not found in elndict. EnzymeML_ID missing or comma in baseCompound-Name?".format(i,kin))
                     pass
         
-        #TODO: Product ? 
         #print(substrate_indv_label)
         
         #include kinetic type as individual for further relations
@@ -537,7 +540,7 @@ def kin_ind_from_dict(eln_dict, onto):
                 
     return onto
 
-def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
+def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
     # includes all elements of process flow diagram asserted in additional ELN
     # into the ontology as subclass of ontochem:PhysChemProcessingModule 
     # subclass determined by "DWSIM-object type" entry in additional ELN.
@@ -567,25 +570,6 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto):
     PFD_dict = eln_dict["PFD"]
     subst_list = list(eln_dict["substances"].keys())
     omit_list = ["DWSIM-object type", "DWSIM-object argument", "connection", "EntersAtObject", "isDWSIMObject"]
-    
-    PFD_name = enzmldoc.name
-    PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
-    
-    creator_str = ""
-    for key in enzmldoc.creator_dict:
-        creator_str = creator_str + str(enzmldoc.creator_dict[key].dict()).strip("{").strip("}").replace("'","") + "\n"        
-    
-    codestring = """with onto:
-        PFD_indv = onto.search_one(iri = '*DataProcessingModule')("{}")
-        PFD_indv.label = 'DWSIM_{}'
-        PFD_indv.comment = 'Process flow diagram of laboratory experiments of {}'
-        PFD_indv.comment =""".format(PFD_uuid,PFD_name,PFD_name)
-    
-    codestring = codestring + '""" Creator(s): \n' + creator_str + '"""'
-    
-    #print(codestring)
-    code = compile(codestring, "<string>", "exec")
-    exec(code)
         
     
     uuid_dict = {}
@@ -719,17 +703,36 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     # insert substances from dictionary in ontology
     onto = subst_classes_from_dict(enzmldoc, supp_eln_dict["substances"], onto)
     
+    PFD_name = enzmldoc.name
+    PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
+    
+    creator_str = ""
+    for key in enzmldoc.creator_dict:
+        creator_str = creator_str + str(enzmldoc.creator_dict[key].dict()).strip("{").strip("}").replace("'","") + "\n"        
+    
+    codestring = """with onto:
+        PFD_indv = onto.search_one(iri = '*DataProcessingModule')("{}")
+        PFD_indv.label = 'DWSIM_{}'
+        PFD_indv.comment = 'Process flow diagram of laboratory experiments of {}'
+        PFD_indv.comment =""".format(PFD_uuid,PFD_name,PFD_name)
+    
+    codestring = codestring + '""" Creator(s): \n' + creator_str + '"""'
+    
+    #print(codestring)
+    code = compile(codestring, "<string>", "exec")
+    exec(code)
+    
     # insert data properties to substance individuals from dictionary
     onto = datProp_from_dict(supp_eln_dict["substances"], onto)
 
     # insert data properties to substance individuals from dictionary
-    onto = subst_set_relations(enzmldoc, supp_eln_dict["substances"], onto)
+    onto = subst_set_relations(enzmldoc, supp_eln_dict["substances"], onto, PFD_uuid)
     
     ## include kinetics in ontology        
     onto = kin_ind_from_dict(supp_eln_dict,onto)
     
     ## include Process Flow Diagram in ontology    
-    onto = process_to_KG_from_dict(enzmldoc, supp_eln_dict,onto)
+    onto = process_to_KG_from_dict(enzmldoc, supp_eln_dict,onto, PFD_uuid)
     
     # Ontologie zwischenspeichern
     onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
