@@ -823,7 +823,8 @@ for comp in compounds:
     comps.Add(comp, stoich_coeffs[comp])
     dorders.Add(comp, direct_order_coeffs[comp])
     rorders.Add(comp, reverse_order_coeffs[comp])   
-
+#####
+#################
 # Arrhenius Kinetik für den Testdurchlauf
 # Ideale Kinetik  
 # Hiermit werden aber auch Molar Franctions und Einheit festgelegt für das eigene Skript 

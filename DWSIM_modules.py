@@ -98,7 +98,8 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_list = pfd_ind.BFO_0000051
     
-    comp_list = [] # lists the components contained in the pfd
+    comp_list = [] # lists the components contained in the PFD
+    # "subst_indv": ontology_individual, "subst_class": ontology_class, "subst_role": role of the individual in the PFD (reactant, product, catalyst,...)
     for module in pfd_list:
         if module.is_a[0].label.first() == "MaterialStream":
             materialstream = module.BFO_0000051
@@ -116,40 +117,41 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         except:
             pass
     
-    # Komponenten für die Simulation laden
-    #Alex
-    comp_class_list = [comp["subst_class"] for comp in comp_list]
-    compounds = [comp.label for comp in comp_class_list]
-    
-    for comp in compounds:
-        sim.AddCompound(comp)
-             
-    # Zugriff auf die Koeffizienten
-    # Komponentenliste kann beliebig lang sein
+    #loading components into DWSIM-simulation and filling dictionaries regarding
+    # stoichiometric coefficients and reaction order coeffs.
     stoich_coeffs = {}  
     direct_order_coeffs = {}  
     reverse_order_coeffs = {}   
-
-    for comp in compounds:
-        stoich_coeffs[comp] = onto.search_one(label=comp).hasStoichiometriCoefficient.first()
-        direct_order_coeffs[comp] = onto.search_one(label=comp).hasDirect_OrderCoefficient.first()
-        reverse_order_coeffs[comp] = onto.search_one(label=comp).hasReverse_OrderCoefficient.first()
-
-    # Dictionary, um Komponentennamen und Koeff zu sichern
-    # Mit der zweiten Zeile können die jeweiligen Koeff geupdatet werden
-    comps = {}
-    comps.update(stoich_coeffs)
-
-    dorders = {}
-    dorders.update(direct_order_coeffs)
-
-    rorders = {}
-    rorders.update(reverse_order_coeffs)
-
-    # Dictionary festlegen   
+    
+    
     comps = Dictionary[str, float]()
     dorders = Dictionary[str, float]()
     rorders = Dictionary[str, float]()
+    
+    
+    for comp in comp_list:
+        # add label of class (= substance name) to the DWSIM-Simulation
+        # comp
+        subst_class_name = comp["subst_class"].label.first()
+        stoich_coeff = comp["subst_indv"].hasStoichiometricCoefficient.first()
+        dorder_coeff = comp["subst_indv"].hasDirect_OrderCoefficient.first()
+        rorder_coeff = comp["subst_indv"].hasReverse_OrderCoefficient.first()
+        
+        sim.AddCompound(subst_class_name)
+        
+        comps.Add(subst_class_name, stoich_coeff)
+        dorders.Add(subst_class_name, dorder_coeff)
+        rorders.Add(subst_class_name, rorder_coeff) 
+    
+    ## Test kinetic reaction
+    # Alex:
+    # 
+    for reaction in enz_dict["reaction_dict"]:
+        kr1 = sim.CreateKineticReaction(reaction["name"], "", 
+                comps, dorders, rorders, main_substrates[0], "Mixture", "Molar Fraction", 
+                "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")    
+        
+    
     
     Directory.SetCurrentDirectory(working_dir)
     return sim

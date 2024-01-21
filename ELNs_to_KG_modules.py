@@ -169,7 +169,8 @@ def new_ELN_to_dict(eln_path):
 # Ontology-Extension der Base Ontology #
 #####
 def base_ontology_extension(name_base_ontology):
-    #TODO: Maybe deprecate this function and include these classes into the initial base-ontology manually
+    #TODO: Deprecate this function and include the two classes 
+    # into the initial base-ontology manually
     # Only supports owl-ontologies
     # load base ontology
     onto_world = owlready2.World()
