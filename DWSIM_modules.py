@@ -119,10 +119,6 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     
     #loading components into DWSIM-simulation and filling dictionaries regarding
     # stoichiometric coefficients and reaction order coeffs.
-    stoich_coeffs = {}  
-    direct_order_coeffs = {}  
-    reverse_order_coeffs = {}   
-    
     
     comps = Dictionary[str, float]()
     dorders = Dictionary[str, float]()
@@ -146,26 +142,36 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         rorders.Add(subst_class_name, rorder_coeff) 
         
         if comp["subst_role"] == "catalyst":
-            kin_indv = comp["subst_indv"].RO_0000053 #has characteristic -> kinetics
+            #has characteristic -> kinetics
+            kin_indv = comp["subst_indv"].RO_0000053 
             substrate_indv = []
             for indv in kin_indv: # might be more than one substrate
-                substrate_indv.append(indv.RO_0002233) # has input -> input = substrate of reactionm
+                # has input -> input = substrate of reaction    
+                substrate_indv.append(indv.RO_0002233)
     
     ## Test kinetic reaction
     #TODO: Decide later whether to deprecate this section?
-    # Alex:
-    # main_substrates[0] = ABTS_red 
-    # Defined via Substance if subst_indv --has characteristic (RO_0000053)-> kinetics
-    for reaction in enz_dict["reaction_dict"]:
-        kr1 = sim.CreateKineticReaction(reaction["name"], "", 
-                comps, dorders, rorders, main_substrates[0], "Mixture", "Molar Fraction", 
-                "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")    
-        
+    substrate_list = []
+    for sub_ind in substrate_indv:
+        # get label(s) of class of substrate individual(s)
+        substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
     
+    for reaction in enz_dict["reaction_dict"]:
+        kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")
+    ##    
+    sim.AddReaction(kr1)
+    sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
     
     Directory.SetCurrentDirectory(working_dir)
-    return sim
+    return sim, interf
 ##
+
+def save_simulation(sim,interface, filename):
+    fileNameToSave = Path.Combine(os.getcwd(),filename)
+    interface.SaveFlowsheet(sim, fileNameToSave, True)
+
+##
+
 
 def simulate_in_subprocess():
     command = ['python', 'run()']
@@ -191,8 +197,9 @@ pfd_iri = pfd_ind.iri
 def run():
     
     pfd_ind.iri
-    sim = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
-    
+    sim, interface = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
+    filename = "ABTS_ox.dwxmz"
+    save_simulation(sim,interface,filename)
 
 ##
 
