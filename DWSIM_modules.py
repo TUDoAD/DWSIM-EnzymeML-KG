@@ -197,26 +197,46 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
 
     stream_info = []
     y_axis = 0
-    x_axis = 0    
+    x_axis = 100    
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
         if not stream_indv.RO_0002353: # starting stream
             next_modules = stream_indv.RO_0002234 # has output
             for module in next_modules:                
-                stream_type = module.is_a[0].label.first()
-                stream_name = module.label.first()
+                module_type = module.is_a[0].label.first()
+                module_name = module.label.first()
                 module_names = [i["name"] for i in stream_info]
-                if stream_name not in module_names:
-                    codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                # check, if module was already added to the simulation
+                # only when true, go further downstream and add the has output streams
+                if module_name not in module_names:
+                    codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(module_type,x_axis, y_axis,module_name)
                     code = compile(codestr, "<string>","exec")
                     exec(code)
                     x_axis += 100
-                    y_axis += 20
                     
+                    # take a look on next stream, going out from last module
+                    next_streams = module.RO_0002234
+                    for stream in next_streams:
+                        stream_type = stream.is_a[0].label.first()
+                        stream_name = stream.label.first()
+                        stream_names = [i["name"] for i in stream_info]
+                        if stream_name not in stream_names: 
+                            codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                            code = compile(codestr, "<string>","exec")
+                            exec(code)
+                            x_axis += 100
+        
+    #add all flowsheet objects to the flowsheet based on stream_info list 
     for s in stream_info:
          stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
          streams.append({s['name'],stream}) 
+    
+    #ALex
+    #iterate through pfd_list and start by input streams with check above
+    # within the loop, connect the objects with sim.ConnectObjects(obj_1.GraphicObject,obj_2.GraphicObject, -1,-1)
+    # the objects should be called via streams["obj_name"] and executed via codestring -> compile -> execute
          
+    
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf
 ##
