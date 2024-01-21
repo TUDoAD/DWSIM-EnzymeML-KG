@@ -97,12 +97,23 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     ## 
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_list = pfd_ind.BFO_0000051 # has part
-    
+        
     comp_list = [] # lists the components contained in the PFD
+    process_streams = [] # lists the stream info for the flowsheet 
+            
     # "subst_indv": ontology_individual, "subst_class": ontology_class, "subst_role": role of the individual in the PFD (reactant, product, catalyst,...)
     for module in pfd_list:
-        if module.is_a[0].label.first() == "MaterialStream":
-            materialstream = module.BFO_0000051
+        if module.is_a[0].label.first() == "EnergyStream":
+            # add energy streams to stream_names for later input in stream creation
+            process_streams.append(module)
+        
+        elif module.is_a[0].label.first() == "MaterialStream":
+            materialstream = module.BFO_0000051 # has part
+            
+            # add material streams to stream_names for later input in stream creation
+            process_streams.append(module)
+            
+            
             for comp in materialstream:
                 mat = comp.RO_0002473.first() # composed primarily of
                 subst = mat.is_a.first() 
@@ -157,11 +168,27 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
     
     for reaction in enz_dict["reaction_dict"]:
-        kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")
-    ##    
-    sim.AddReaction(kr1)
-    sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
+        kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
+        sim.AddReaction(kr1)
+        sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
     
+    # Add streams to DWSIM:
+    stream_info = []
+    y_axis = 0
+    for stream in process_streams:
+        # MaterialStream or EnergyStream 
+        stream_type = stream.is_a[0].label.first()
+        stream_name = stream.label.first()
+        codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
+        code = compile(codestr, "<string>","exec")
+        exec(code)
+        y_axis += 50
+        
+    streams =[]
+    for s in stream_info:
+        stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+        streams.append({s['name'],stream})
+        
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf
 ##
