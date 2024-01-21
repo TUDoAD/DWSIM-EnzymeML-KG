@@ -817,7 +817,6 @@ comps = Dictionary[str, float]()
 dorders = Dictionary[str, float]()
 rorders = Dictionary[str, float]()
 
-# Alex
 # Komponenten + Koeffizienten der Simulation hinzufügen
 for comp in compounds:
     comps.Add(comp, stoich_coeffs[comp])
@@ -832,7 +831,8 @@ for reaction in enzmldoc.reaction_dict.values():
     kr1 = sim.CreateKineticReaction(reaction.name, "", 
             comps, dorders, rorders, main_substrates[0], "Mixture", "Molar Fraction", 
             "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")    
-    
+ 
+# Alex   
 # Ströme definiere => Ströme werden als Kanten betrachtet
 # Zwei Inletströme mit Reaktant 1 und Reaktant 2
 # Aus dem Mixer kommt ein Mix-Strom der in den Reaktor führt

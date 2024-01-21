@@ -781,6 +781,7 @@ def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
 #enzdict, eln_dict = eln_to_dict(enz_str,eln_str)
 
 #TODO: Simulationsergebnisse zurück in KG 
-# implement UUIDs
+#TODO: implement UUIDs for substances and also for reaction/kinetic individuals
+#TODO: Link to simulation-files and to ELN files via comment/IRI!
     
     

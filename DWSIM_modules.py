@@ -96,7 +96,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
 
     ## 
     pfd_ind = onto.search_one(iri = pfd_iri)
-    pfd_list = pfd_ind.BFO_0000051
+    pfd_list = pfd_ind.BFO_0000051 # has part
     
     comp_list = [] # lists the components contained in the PFD
     # "subst_indv": ontology_individual, "subst_class": ontology_class, "subst_role": role of the individual in the PFD (reactant, product, catalyst,...)
@@ -104,15 +104,15 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         if module.is_a[0].label.first() == "MaterialStream":
             materialstream = module.BFO_0000051
             for comp in materialstream:
-                mat = comp.RO_0002473.first()
-                subst = mat.is_a.first()
-                role = mat.RO_0000087.first().name
+                mat = comp.RO_0002473.first() # composed primarily of
+                subst = mat.is_a.first() 
+                role = mat.RO_0000087.first().name # has role
                 comp_list.append({"subst_indv":mat, "subst_class": subst, "subst_role":role})
                 #print(mat,subst, role) # substance individual, substance class, role [product, reactant]
         try:
             if module.RO_0000087.first().name == "product":# has role
                 subst = module.is_a.first()
-                role = module.RO_0000087.first()
+                role = module.RO_0000087.first() # has role
                 comp_list.append({"subst_indv":module, "subst_class": subst, "subst_role":role})#print(module,module.is_a,module.RO_0000087.first().name) # substance individual, substance class, role [product, reactant]
         except:
             pass
@@ -137,15 +137,22 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         dorder_coeff = comp["subst_indv"].hasDirect_OrderCoefficient.first()
         rorder_coeff = comp["subst_indv"].hasReverse_OrderCoefficient.first()
         
+        # add compount to dwsim simulation class
         sim.AddCompound(subst_class_name)
         
+        # add coefficents to dictionaries to prepare for creation of reaction
         comps.Add(subst_class_name, stoich_coeff)
         dorders.Add(subst_class_name, dorder_coeff)
         rorders.Add(subst_class_name, rorder_coeff) 
-    
+        
+        if comp["subst_role"] == "catalyst":
+            kin_equation = comp["subst_indv"].RO_0000052 #has characteristic -> kinetics
+        
     ## Test kinetic reaction
+    #TODO: Decide later whether to deprecate this section?
     # Alex:
-    # 
+    # main_substrates[0] = ABTS_ox 
+    # Defined via Substance if subst_indv --has characteristic (RO_0000053)-> kinetics
     for reaction in enz_dict["reaction_dict"]:
         kr1 = sim.CreateKineticReaction(reaction["name"], "", 
                 comps, dorders, rorders, main_substrates[0], "Mixture", "Molar Fraction", 
