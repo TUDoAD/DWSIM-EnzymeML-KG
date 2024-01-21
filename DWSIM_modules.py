@@ -172,23 +172,51 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         sim.AddReaction(kr1)
         sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
     
-    # Add streams to DWSIM:
+    ## Add streams to DWSIM:
+    
+    # Add starting streams of flow sheet
     stream_info = []
     y_axis = 0
-    for stream in process_streams:
-        # MaterialStream or EnergyStream 
-        stream_type = stream.is_a[0].label.first()
-        stream_name = stream.label.first()
-        codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
-        code = compile(codestr, "<string>","exec")
-        exec(code)
-        y_axis += 50
-        
+    for stream_indv in process_streams:
+        # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
+        if not stream_indv.RO_0002353:
+            #print(stream_indv.label)
+            stream_type = stream_indv.is_a[0].label.first()
+            stream_name = stream_indv.label.first()
+            codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
+            code = compile(codestr, "<string>","exec")
+            exec(code)
+            y_axis += 50
+   
+    #for later reference, streams lists the dwsim-object-representation of the streams 
     streams =[]
+    #Add the streams to the simulation Flowsheet
     for s in stream_info:
-        stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-        streams.append({s['name'],stream})
-        
+         stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+         streams.append({s['name'],stream})
+
+    stream_info = []
+    y_axis = 0
+    x_axis = 0    
+    for stream_indv in process_streams:
+        # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
+        if not stream_indv.RO_0002353: # starting stream
+            next_modules = stream_indv.RO_0002234 # has output
+            for module in next_modules:                
+                stream_type = module.is_a[0].label.first()
+                stream_name = module.label.first()
+                module_names = [i["name"] for i in stream_info]
+                if stream_name not in module_names:
+                    codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                    code = compile(codestr, "<string>","exec")
+                    exec(code)
+                    x_axis += 100
+                    y_axis += 20
+                    
+    for s in stream_info:
+         stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+         streams.append({s['name'],stream}) 
+         
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf
 ##
