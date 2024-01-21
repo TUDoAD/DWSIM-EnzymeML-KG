@@ -235,7 +235,17 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     #iterate through pfd_list and start by input streams with check above
     # within the loop, connect the objects with sim.ConnectObjects(obj_1.GraphicObject,obj_2.GraphicObject, -1,-1)
     # the objects should be called via streams["obj_name"] and executed via codestring -> compile -> execute
-         
+    for pfd_obj in process_streams:
+        if not pfd_obj.RO_0002353: #starting Process streams
+            obj_name = pfd_obj.label.first()    
+            obj_1 = streams[obj_name]
+            
+            output_objects = pfd_obj.RO_0002234 # has_output
+            for out_obj in output_objects:
+                obj_2_name = out_obj.label.first
+                obj_2 = streams[obj_2_name]    
+                codestr = """sim.ConnectObjects({}.GraphicObject,{}.GraphicObject, -1,-1)""".format(obj_1, obj_2)
+                
     
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf
