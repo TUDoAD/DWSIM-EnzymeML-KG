@@ -146,12 +146,15 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         rorders.Add(subst_class_name, rorder_coeff) 
         
         if comp["subst_role"] == "catalyst":
-            kin_equation = comp["subst_indv"].RO_0000052 #has characteristic -> kinetics
-        
+            kin_indv = comp["subst_indv"].RO_0000053 #has characteristic -> kinetics
+            substrate_indv = []
+            for indv in kin_indv: # might be more than one substrate
+                substrate_indv.append(indv.RO_0002233) # has input -> input = substrate of reactionm
+    
     ## Test kinetic reaction
     #TODO: Decide later whether to deprecate this section?
     # Alex:
-    # main_substrates[0] = ABTS_ox 
+    # main_substrates[0] = ABTS_red 
     # Defined via Substance if subst_indv --has characteristic (RO_0000053)-> kinetics
     for reaction in enz_dict["reaction_dict"]:
         kr1 = sim.CreateKineticReaction(reaction["name"], "", 
