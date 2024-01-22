@@ -189,11 +189,11 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             y_axis += 50
    
     #for later reference, streams lists the dwsim-object-representation of the streams 
-    streams =[]
+    streams ={}
     #Add the streams to the simulation Flowsheet
     for s in stream_info:
          stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-         streams.append({s['name'],stream})
+         streams[s['name']] = stream
 
     stream_info = []
     y_axis = 0
@@ -229,26 +229,29 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     #add all flowsheet objects to the flowsheet based on stream_info list 
     for s in stream_info:
          stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-         streams.append({s['name'],stream}) 
+         streams[s['name']] = stream 
     
     #ALex
     #iterate through pfd_list and start by input streams with check above
     # within the loop, connect the objects with sim.ConnectObjects(obj_1.GraphicObject,obj_2.GraphicObject, -1,-1)
     # the objects should be called via streams["obj_name"] and executed via codestring -> compile -> execute
+    #if False:
     for pfd_obj in process_streams:
         if not pfd_obj.RO_0002353: #starting Process streams
-            obj_name = pfd_obj.label.first()    
-            obj_1 = streams[obj_name]
+            obj_name = pfd_obj.label.first()  
+            obj_1 = streams[obj_name].GraphicObject
             
             output_objects = pfd_obj.RO_0002234 # has_output
             for out_obj in output_objects:
-                obj_2_name = out_obj.label.first
-                obj_2 = streams[obj_2_name]    
+                obj_2_name = out_obj.label.first()
+                obj_2 = streams[obj_2_name].GraphicObject    
                 codestr = """sim.ConnectObjects({}.GraphicObject,{}.GraphicObject, -1,-1)""".format(obj_1, obj_2)
-                
+                code = compile(codestr, "<string>","exec")
+                exec(code)
+
     
     Directory.SetCurrentDirectory(working_dir)
-    return sim, interf
+    return sim, interf, streams
 ##
 
 def save_simulation(sim,interface, filename):
@@ -282,10 +285,11 @@ pfd_iri = pfd_ind.iri
 def run():
     
     pfd_ind.iri
-    sim, interface = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
+    sim, interface, streams = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
     filename = "ABTS_ox.dwxmz"
     save_simulation(sim,interface,filename)
-
+    
+    return streams
 ##
 
 #TODO: subprocess?
