@@ -200,32 +200,32 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     x_axis = 100    
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
-        if not stream_indv.RO_0002353: # output of -> starting streams
-            next_modules = stream_indv.RO_0002234 # has output
-            for module in next_modules:                
-                module_type = module.is_a[0].label.first()
-                module_name = module.label.first()
-                module_names = [i["name"] for i in stream_info]
-                # check, if module was already added to the simulation
-                # only when true, go further downstream and add the has output streams
-                if module_name not in module_names:
-                    codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(module_type,x_axis, y_axis,module_name)
-                    code = compile(codestr, "<string>","exec")
-                    exec(code)
-                    x_axis += 100
-                    
-                    # take a look on next stream, going out from last module
-                    next_streams = module.RO_0002234
-                    for stream in next_streams:
-                        stream_type = stream.is_a[0].label.first()
-                        stream_name = stream.label.first()
-                        stream_names = [i["name"] for i in stream_info]
-                        if stream_name not in stream_names: 
-                            codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
-                            code = compile(codestr, "<string>","exec")
-                            exec(code)
-                            x_axis += 100
-        
+        #if not stream_indv.RO_0002353: # output of -> starting streams
+        next_modules = stream_indv.RO_0002234 # has output
+        for module in next_modules:                
+            module_type = module.is_a[0].label.first()
+            module_name = module.label.first()
+            module_names = [i["name"] for i in stream_info]
+            # check, if module was already added to the simulation
+            # only when true, go further downstream and add the has output streams
+            if module_name not in module_names:
+                codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(module_type,x_axis, y_axis,module_name)
+                code = compile(codestr, "<string>","exec")
+                exec(code)
+                x_axis += 100
+                
+                # take a look on next stream, going out from last module
+                next_streams = module.RO_0002234
+                for stream in next_streams:
+                    stream_type = stream.is_a[0].label.first()
+                    stream_name = stream.label.first()
+                    stream_names = [i["name"] for i in stream_info]
+                    if stream_name not in stream_names: 
+                        codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                        code = compile(codestr, "<string>","exec")
+                        exec(code)
+                        x_axis += 100
+    
     #add all flowsheet objects to the flowsheet based on stream_info list 
     for s in stream_info:
          stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
