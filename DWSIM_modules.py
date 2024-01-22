@@ -215,7 +215,7 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                 except:
                     print(stream_name + ": No volumetric flow defined")
                 
-    
+                
                 ## set temperature
                 if subst_indv.first().hasTemperature:
                     if subst_indv.first().hasTemperatureUnit.first() in ["C","c","°c", "°C","Celsius","celsius"]:
@@ -290,6 +290,22 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
             obj_2_name = inp_obj.label.first()
             obj_2 = streams[obj_2_name].GetAsObject().GraphicObject
             sim.ConnectObjects(obj_2,obj_1, -1,-1)
+            
+    
+    ## Add special information to modules
+    for module in pfd_list:
+        # Add information to reactors
+        if module.is_a[0].label.first() in ["RCT_PFR","RCT_Conversion","RCT_Equilibrium","RCT_Gibbs","RCT_CSTR"]:
+            # WARNING: Reactors other than "RCT_PFR" might not work properly yet!    
+            dwsim_obj = streams[module.label.first()].GetAsObject()
+            dwsim_obj.ReactorOperationMode = Reactors.OperationMode(int(module.hasTypeOf_OperationMode.first()))
+            if module.is_a[0].label.first() == "RCT_PFR":
+                dwsim_obj.ReactorSizingType = Reactors.Reactor_PFR.SizingType.Length
+           
+            dwsim_obj.Volume= float(module.hasVolumeValue.first())
+            dwsim_obj.Length= float(module.hasLengthValue.first())
+            dwsim_obj.UseUserDefinedPressureDrop = True
+            dwsim_obj.UserDefinedPressureDrop = float(module.hasDeltaP.first())
 
 
     Directory.SetCurrentDirectory(working_dir)
