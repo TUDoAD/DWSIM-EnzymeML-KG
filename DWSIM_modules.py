@@ -200,7 +200,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     x_axis = 100    
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
-        if not stream_indv.RO_0002353: # starting stream
+        if not stream_indv.RO_0002353: # output of -> starting streams
             next_modules = stream_indv.RO_0002234 # has output
             for module in next_modules:                
                 module_type = module.is_a[0].label.first()
@@ -229,25 +229,31 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     #add all flowsheet objects to the flowsheet based on stream_info list 
     for s in stream_info:
          stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+         #codestr = "{} = stream".format[s['name']]
+         
          streams[s['name']] = stream 
     
     #ALex
-    #iterate through pfd_list and start by input streams with check above
-    # within the loop, connect the objects with sim.ConnectObjects(obj_1.GraphicObject,obj_2.GraphicObject, -1,-1)
-    # the objects should be called via streams["obj_name"] and executed via codestring -> compile -> execute
-    #if False:
+    #iterate through pfd_list and start by input streams with check - RO_002353
     for pfd_obj in process_streams:
-        if not pfd_obj.RO_0002353: #starting Process streams
-            obj_name = pfd_obj.label.first()  
-            obj_1 = streams[obj_name].GraphicObject
-            
-            output_objects = pfd_obj.RO_0002234 # has_output
-            for out_obj in output_objects:
-                obj_2_name = out_obj.label.first()
-                obj_2 = streams[obj_2_name].GraphicObject    
-                codestr = """sim.ConnectObjects({}.GraphicObject,{}.GraphicObject, -1,-1)""".format(obj_1, obj_2)
-                code = compile(codestr, "<string>","exec")
-                exec(code)
+#        if not pfd_obj.RO_0002353: #starting Process streams
+        obj_name = pfd_obj.label.first()  
+        obj_1 = streams[obj_name].GetAsObject().GraphicObject
+        
+        output_objects = pfd_obj.RO_0002234 # has_output -> connected objects
+        input_objects = pfd_obj.RO_0002353 # output of
+        
+        for out_obj in output_objects:
+            obj_2_name = out_obj.label.first()
+            obj_2 = streams[obj_2_name].GetAsObject().GraphicObject
+            sim.ConnectObjects(obj_1,obj_2, -1,-1)
+        
+        for inp_obj in input_objects:
+            obj_2_name = inp_obj.label.first()
+            obj_2 = streams[obj_2_name].GetAsObject().GraphicObject
+            sim.ConnectObjects(obj_2,obj_1, -1,-1)
+                
+                
 
     
     Directory.SetCurrentDirectory(working_dir)
