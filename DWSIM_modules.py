@@ -114,7 +114,6 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             # add material streams to stream_names for later input in stream creation
             process_streams.append(module)
             
-            
             for comp in materialstream:
                 mat = comp.RO_0002473.first() # composed primarily of
                 subst = mat.is_a.first() 
@@ -177,6 +176,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     
     # Add starting streams of flow sheet
     stream_info = []
+    streams = {}
     y_axis = 0
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
@@ -184,17 +184,29 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             #print(stream_indv.label)
             stream_type = stream_indv.is_a[0].label.first()
             stream_name = stream_indv.label.first()
-            codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
+            codestr = """stream = sim.AddObject(ObjectType.{}, 0,{},'{}')
+streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
+            #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
             code = compile(codestr, "<string>","exec")
             exec(code)
             y_axis += 50
+            if stream_indv.is_a[0].label.first() == "MaterialStream":
+                subst_indv = stream_indv.BFO_0000051 # has part
+                #ALex
+                if subst_indv.first().hasTemperature:
+                    if subst_indv.first().hasTemperatureUnit.first() in ["C","c","°c", "°C","Celsius","celsius"]:
+                        temp = float(subst_indv.first().hasTemperature.first()) + 273.15
+                    else:
+                        temp = float(subst_indv.first().hasTemperature.first())
+                    streams[stream_name].GetAsObject().SetTemperature(temp)
+                    
    
     #for later reference, streams lists the dwsim-object-representation of the streams 
-    streams ={}
+    #streams ={}
     #Add the streams to the simulation Flowsheet
-    for s in stream_info:
-         stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-         streams[s['name']] = stream
+    #for s in stream_info:
+    #     stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+    #     streams[s['name']] = stream
 
     stream_info = []
     y_axis = 0
@@ -210,9 +222,14 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             # check, if module was already added to the simulation
             # only when true, go further downstream and add the has output streams
             if module_name not in module_names:
-                codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(module_type,x_axis, y_axis,module_name)
+                codestr = """stream = sim.AddObject(ObjectType.{}, {},{},'{}')
+streams['{}'] = stream""".format(module_type,x_axis, y_axis,module_name,module_name)
+                #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
                 code = compile(codestr, "<string>","exec")
                 exec(code)
+#                codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(module_type,x_axis, y_axis,module_name)
+#                code = compile(codestr, "<string>","exec")
+                #exec(code)
                 x_axis += 100
                 
                 # take a look on next stream, going out from last module
@@ -222,17 +239,19 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                     stream_name = stream.label.first()
                     stream_names = [i["name"] for i in stream_info]
                     if stream_name not in stream_names: 
-                        codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                        codestr = """stream = sim.AddObject(ObjectType.{}, {},{},'{}')
+streams['{}'] = stream""".format(stream_type,x_axis, y_axis,stream_name,stream_name)
+                        #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
                         code = compile(codestr, "<string>","exec")
                         exec(code)
                         x_axis += 100
     
     #add all flowsheet objects to the flowsheet based on stream_info list 
-    for s in stream_info:
-         stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-         #codestr = "{} = stream".format[s['name']]
-         
-         streams[s['name']] = stream 
+    #for s in stream_info:
+    #     stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
+    #     #codestr = "{} = stream".format[s['name']]
+    #     
+    #     streams[s['name']] = stream 
     
     #iterate through pfd_list connect the objects, direction of connection comes
     # with RO_0002234 (has output) and RO_0002353 (output of)
@@ -252,10 +271,8 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             obj_2_name = inp_obj.label.first()
             obj_2 = streams[obj_2_name].GetAsObject().GraphicObject
             sim.ConnectObjects(obj_2,obj_1, -1,-1)
-                
-    
-    
-    
+
+
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf, streams
 ##
@@ -295,7 +312,7 @@ def run():
     filename = "ABTS_ox.dwxmz"
     save_simulation(sim,interface,filename)
     
-    return streams
+    return sim, streams
 ##
 
 #TODO: subprocess?
