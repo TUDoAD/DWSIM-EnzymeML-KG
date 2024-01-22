@@ -129,9 +129,11 @@ def new_ELN_to_dict(eln_path):
     eln_sheet = pd.read_excel(ELN_xlsx,"PFD")
     pfd_eln_data = {}
     for index, row in eln_sheet.iterrows():
-        pfd_eln_data[row["object"].strip()] = {'DWSIM-object type':row["DWSIM-object type"].strip(),
+        pfd_eln_data[row["Object-name"].strip()] = {'DWSIM-object type':row["DWSIM-object type"].strip(),
                                        'DWSIM-object argument':int(row["DWSIM-object argument"]) if pd.notna(row["DWSIM-object argument"]) else None, 
                                        'connection':row["output connected to"].strip() if pd.notna(row["output connected to"]) else None,
+                                       'overallVolumetricFlow':row["overallVolumetricFlow"] if pd.notna(row["overallVolumetricFlow"]) else None,
+                                       'hasVolumetricFlowUnit':row["hasVolumetricFlowUnit"].strip() if pd.notna(row["hasVolumetricFlowUnit"]) else None,
                                        }
     
     # Sheet Material Streams

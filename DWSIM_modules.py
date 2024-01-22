@@ -176,7 +176,9 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     
     # Add starting streams of flow sheet
     stream_info = []
+    #for later reference, streams lists the dwsim-object-representation of the streams 
     streams = {}
+    # Start at y = 0, x=0
     y_axis = 0
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
@@ -191,26 +193,44 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
             exec(code)
             y_axis += 50
             if stream_indv.is_a[0].label.first() == "MaterialStream":
+                
                 subst_indv = stream_indv.BFO_0000051 # has part
-                #ALex
+                
+                ## set molar flows of compounds
+                for sub_stream in subst_indv:
+                    substance = sub_stream.RO_0002473.first().is_a.first().label.first() #composed primarily of
+                    if sub_stream.hasCompoundMolarFlowUnit.first().replace(" ","") in ["mol/s","mols^-1"]:
+                        mol_flow = float(sub_stream.hasCompoundMolarFlow.first())
+                    else:
+                        print("compound molar flow unit not recognized: {} in stream {}".format(substance,sub_stream.label.first()))
+                        mol_flow = 0
+                    
+                    #print("stream_name: {}, substance:{}, mol_flow:{}".format(stream_name, substance, mol_flow))
+                    streams[stream_name].GetAsObject().SetOverallCompoundMolarFlow(substance,mol_flow)
+                
+                # set overall volume flow
+                try: 
+                    if stream_indv.hasVolumetricFlowUnit.first().replace(" ","") in ["m3/s","m^3s^-1", "m^3/s", "m3s-1"]:
+                        streams[stream_name].GetAsObject().SetVolumetricFlow(float(stream_indv.overallVolumetricFlow.first()))
+                except:
+                    print(stream_name + ": No volumetric flow defined")
+                
+    
+                ## set temperature
                 if subst_indv.first().hasTemperature:
                     if subst_indv.first().hasTemperatureUnit.first() in ["C","c","°c", "°C","Celsius","celsius"]:
                         temp = float(subst_indv.first().hasTemperature.first()) + 273.15
                     else:
                         temp = float(subst_indv.first().hasTemperature.first())
                     streams[stream_name].GetAsObject().SetTemperature(temp)
-                    
-   
-    #for later reference, streams lists the dwsim-object-representation of the streams 
-    #streams ={}
-    #Add the streams to the simulation Flowsheet
-    #for s in stream_info:
-    #     stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-    #     streams[s['name']] = stream
+                
+                
 
+    #Add the streams and other objects (mixer, reactor, ...) to the simulation Flowsheet
     stream_info = []
     y_axis = 0
-    x_axis = 100    
+    x_axis = 100   
+    codestr = ""
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
         #if not stream_indv.RO_0002353: # output of -> starting streams
@@ -218,12 +238,15 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
         for module in next_modules:                
             module_type = module.is_a[0].label.first()
             module_name = module.label.first()
-            module_names = [i["name"] for i in stream_info]
+            module_names = list(streams.keys())
             # check, if module was already added to the simulation
             # only when true, go further downstream and add the has output streams
             if module_name not in module_names:
-                codestr = """stream = sim.AddObject(ObjectType.{}, {},{},'{}')
-streams['{}'] = stream""".format(module_type,x_axis, y_axis,module_name,module_name)
+                codestr = """stream = sim.AddObject(ObjectType.{},{},{},'{}')\n""".format(module_type,x_axis, y_axis,module_name)
+                codestr += """streams['{}'] = stream""".format(module_name)
+                #stream = eval("sim.AddObject(ObjectType.{},{},{},'{}')".format(module_type,x_axis, y_axis,module_name))
+                #eval("streams['{}'] =stream".format(module_name))
+                #stream = None
                 #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': 0, 'y': {}, 'name': '{}'}})""".format(stream_type,y_axis,stream_name)
                 code = compile(codestr, "<string>","exec")
                 exec(code)
@@ -239,19 +262,15 @@ streams['{}'] = stream""".format(module_type,x_axis, y_axis,module_name,module_n
                     stream_name = stream.label.first()
                     stream_names = [i["name"] for i in stream_info]
                     if stream_name not in stream_names: 
-                        codestr = """stream = sim.AddObject(ObjectType.{}, {},{},'{}')
-streams['{}'] = stream""".format(stream_type,x_axis, y_axis,stream_name,stream_name)
-                        #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+                        codestr = """stream = sim.AddObject(ObjectType.{},{},{},'{}')\n""".format(stream_type,x_axis,y_axis,stream_name)
+                        codestr += """streams['{}'] = stream\n""".format(stream_name)
                         code = compile(codestr, "<string>","exec")
                         exec(code)
+                        #eval("streams['{}'] = sim.AddObject(ObjectType.{},{},{},'{}')".format(stream_name,stream_type,x_axis,y_axis,stream_name))
+                        #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
+
                         x_axis += 100
-    
-    #add all flowsheet objects to the flowsheet based on stream_info list 
-    #for s in stream_info:
-    #     stream = sim.AddObject(s['type'], s['x'], s['y'], s['name'])
-    #     #codestr = "{} = stream".format[s['name']]
-    #     
-    #     streams[s['name']] = stream 
+
     
     #iterate through pfd_list connect the objects, direction of connection comes
     # with RO_0002234 (has output) and RO_0002353 (output of)
@@ -307,7 +326,7 @@ pfd_iri = pfd_ind.iri
 ##
 def run():
     
-    pfd_ind.iri
+    pfd_iri = pfd_ind.iri
     sim, interface, streams = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
     filename = "ABTS_ox.dwxmz"
     save_simulation(sim,interface,filename)
@@ -319,7 +338,7 @@ def run():
 #TODO: reconstruct PFD from ontology
 #TODO: set up pipeline for information retrieval from Knowledge gaph
 
-
+"""
 pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
 pfd_list = pfd_ind.BFO_0000051
 
@@ -338,4 +357,4 @@ for module in pfd_list:
         pass
 
 ##
-
+"""
