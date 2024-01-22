@@ -311,7 +311,24 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf, streams
 ##
+# Ein Skript definieren, um den Script Manager in DWSIM zu verwenden
+# Über den Script Manager eigene Kinetik importieren
+# https://sourceforge.net/p/dwsim/discussion/scripting/thread/c530736cdb/?limit=25#1667
+def createScript(sim,obj_name):
+    #GUID = str(uuid.uuid1())
+    GUID = obj_name
+    sim.Scripts.Add(GUID, FlowsheetSolver.Script())
+    #By not declaring the ID the tabs of each script is not loaded
+    #sim.Scripts.TryGetValue(GUID)[1].ID = GUID
+    sim.Scripts.TryGetValue(GUID)[1].Linked = True
+    sim.Scripts.TryGetValue(GUID)[1].LinkedEventType = Interfaces.Enums.Scripts.EventType.ObjectCalculationStarted
+    sim.Scripts.TryGetValue(GUID)[1].LinkedObjectName = obj_name
+    sim.Scripts.TryGetValue(GUID)[1].LinkedObjectType = Interfaces.Enums.Scripts.ObjectType.FlowsheetObject
+    sim.Scripts.TryGetValue(GUID)[1].PythonInterpreter = Interfaces.Enums.Scripts.Interpreter.IronPython
+    sim.Scripts.TryGetValue(GUID)[1].Title = obj_name
+    sim.Scripts.TryGetValue(GUID)[1].ScriptText = str()
 
+##
 def save_simulation(sim,interface, filename):
     fileNameToSave = Path.Combine(os.getcwd(),filename)
     interface.SaveFlowsheet(sim, fileNameToSave, True)
