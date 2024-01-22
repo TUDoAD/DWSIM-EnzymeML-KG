@@ -669,20 +669,29 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                     # add data properties for newly created individual
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
                         val = PFD_dict[proc_mod][prop_key][key]
-                        dataPropstring = """
-                        
-                        proc_subst_indv.{}.append('{}')""".format(key,val)    
+                        if (val == int) or (val == float):
+                            dataPropstring = """\nproc_subst_indv.{}.append(float({}))""".format(key,val)  
+                        else:
+                            dataPropstring = """\nproc_subst_indv.{}.append('{}')""".format(key,val)  
+  
                         codestring = codestring + dataPropstring
                     #print(codestring)
                 else:
                     # No Substance name -> Direct dataProperty assertion
                     onto = datProp_from_str(prop_key,onto)
                     val = PFD_dict[proc_mod][prop_key]
-                    codestring = """with onto:
-                        proc_indv = onto.search_one(iri = "*{}") 
-                        proc_indv.{}.append('{}')
-                        """.format(uuid_dict[proc_mod], prop_key, val)
-                
+                    if (val == int) or (val == float):
+                        codestring = """with onto:
+                            proc_indv = onto.search_one(iri = "*{}") 
+                            proc_indv.{}.append(float({}))
+                            """.format(uuid_dict[proc_mod], prop_key, val)
+
+                    else:
+                        codestring = """with onto:
+                            proc_indv = onto.search_one(iri = "*{}") 
+                            proc_indv.{}.append('{}')
+                            """.format(uuid_dict[proc_mod], prop_key, val)
+                    
                 code = compile(codestring, "<string>", "exec")
                 exec(code)
     ##        
