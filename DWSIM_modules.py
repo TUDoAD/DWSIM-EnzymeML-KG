@@ -93,6 +93,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     # Create automatin manager
     interf = Automation3()
     sim = interf.CreateFlowsheet()
+    sim.CreateAndAddPropertyPackage("Raoult's Law")
 
     ## 
     pfd_ind = onto.search_one(iri = pfd_iri)
@@ -233,15 +234,14 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
          
          streams[s['name']] = stream 
     
-    #ALex
-    #iterate through pfd_list and start by input streams with check - RO_002353
+    #iterate through pfd_list connect the objects, direction of connection comes
+    # with RO_0002234 (has output) and RO_0002353 (output of)
     for pfd_obj in process_streams:
-#        if not pfd_obj.RO_0002353: #starting Process streams
         obj_name = pfd_obj.label.first()  
         obj_1 = streams[obj_name].GetAsObject().GraphicObject
         
-        output_objects = pfd_obj.RO_0002234 # has_output -> connected objects
-        input_objects = pfd_obj.RO_0002353 # output of
+        output_objects = pfd_obj.RO_0002234 # has_output -> obj_1 connected to obj_2
+        input_objects = pfd_obj.RO_0002353 # output of -> obj_2 connected to obj_1
         
         for out_obj in output_objects:
             obj_2_name = out_obj.label.first()
@@ -253,8 +253,8 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             obj_2 = streams[obj_2_name].GetAsObject().GraphicObject
             sim.ConnectObjects(obj_2,obj_1, -1,-1)
                 
-                
-
+    
+    
     
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf, streams
