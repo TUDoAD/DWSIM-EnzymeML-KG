@@ -1,6 +1,5 @@
-When you encounter 
-RuntimeError: Failed to initialize Python.Runtime.dll
-make sure to turn off UMR 
+When you encounter "RuntimeError: Failed to initialize Python.Runtime.dll"
+make sure to turn off UMR in spyder!
 see here:
 https://github.com/spyder-ide/spyder/issues/21269#issuecomment-1684439990
 

@@ -743,18 +743,17 @@ def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
             if entry == "educts":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002233 = subst_dict[enz_id] # has input
+                    rct_indv.RO_0002233.append(subst_dict[enz_id]) # has input
                 
             elif entry == "products":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002234 = subst_dict[enz_id] # has output
+                    rct_indv.RO_0002234.append(subst_dict[enz_id]) # has output
             
             elif entry == "modifiers":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002573 = subst_dict[enz_id] # has modifier          
-            
+                    rct_indv.RO_0002573.append(subst_dict[enz_id]) # has modifier          
             
             else:
                 ## add to individual via dataProperty
