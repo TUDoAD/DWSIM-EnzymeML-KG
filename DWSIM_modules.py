@@ -159,18 +159,32 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             for indv in kin_indv: # might be more than one substrate
                 # has input -> input = substrate of reaction    
                 substrate_indv.append(indv.RO_0002233)
+            
+    ##
+    # Add reaction
+    #TODO: implement as function
+    if kin_indv:
+        substrate_list = []
+        for sub_ind in substrate_indv:
+            # get label(s) of class of substrate individual(s)
+            substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
+        
+        #TODO: split for arrhenius kinetic (default) and custom reaction kinetics
+        
+        for reaction in enz_dict["reaction_dict"]:
+            kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
+            sim.AddReaction(kr1)
+            sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
+        
+        script_name = 'descriptor'
+        createScript(script_name)
+        custom_reac = sim.GetReaction()
+        
+        
+        
+        
+    ##
     
-    ## Test kinetic reaction
-    #TODO: Decide later whether to deprecate this section?
-    substrate_list = []
-    for sub_ind in substrate_indv:
-        # get label(s) of class of substrate individual(s)
-        substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
-    
-    for reaction in enz_dict["reaction_dict"]:
-        kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
-        sim.AddReaction(kr1)
-        sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
     
     ## Add streams to DWSIM:
     
