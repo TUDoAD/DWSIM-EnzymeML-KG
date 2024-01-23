@@ -730,11 +730,11 @@ def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
         reaction_class = reac_obj.ontology.value.replace(":","_")
         RCT_uuid = "RCT_" + str(uuid.uuid4()).replace("-","_")
         try:
-            with onto:
-                #add individual of reaction class to ontology
-                rct_indv = onto.search_one(iri ="*"+reaction_class)(RCT_uuid)
-                rct_indv.label = reac_obj.name + "_" + reac_ID
-                #Add all other properties of the enzmldoc, but the entries that contain an "ontology" entry   
+            #with onto:
+            #add individual of reaction class to ontology
+            rct_indv = onto.search_one(iri ="*"+reaction_class)(RCT_uuid)
+            rct_indv.label = reac_obj.name + "_" + reac_ID
+            #Add all other properties of the enzmldoc, but the entries that contain an "ontology" entry   
         except:
             print(reaction_class+" - class not found in ontology while implementing reaction" + reac_ID +" in ontology!")
             
@@ -758,9 +758,17 @@ def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
             
             else:
                 ## add to individual via dataProperty
-                codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
-                code = compile(codestr,"<string>","exec")
-                exec(code)
+                if entry not in ["name"]:
+                    onto = datProp_from_str(entry, onto)
+                    if type(reac_obj.dict()[entry]) in [float, int]:
+                        codestr = """rct_indv.{}.append({})""".format(entry,reac_obj.dict()[entry])
+                    else:
+                        codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
+                    
+                    print(codestr)
+                    
+                    code = compile(codestr,"<string>","exec")
+                    exec(code)
             # else:
                 ## add to individual via dataProperty
             
