@@ -376,6 +376,12 @@ def subst_set_relations(enzmldoc, subst_dict, onto,PFD_uuid):
                     pfd_indv = onto.search_one(iri ="*{}")
                     {}.BFO_0000050.append(pfd_indv)
                     """.format(subst_dict[class_name][entry],subst_dict[class_name][entry], str(onto_class), PFD_uuid, str(onto_class))
+            
+            elif entry == "kineticDescription":
+                # add reaction(s)
+                for reac_ID in entry.replace(" ","").split(","):
+                    onto = reaction_to_KG(enzmldoc , reac_ID, onto , PFD_uuid)
+            
             else:    
                 # Assert value directly, if entry is int or float
                 # give the entry as string else
@@ -572,7 +578,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
     
     PFD_dict = eln_dict["PFD"]
     subst_list = list(eln_dict["substances"].keys())
-    omit_list = ["DWSIM-object type", "DWSIM-object argument", "connection", "EntersAtObject", "isDWSIMObject"]
+    omit_list = ["DWSIM-object type", "DWSIM-object argument", "connection", "EntersAtObject", "isDWSIMObject", "hasEnzymeML_ID"]
         
     
     uuid_dict = {}
@@ -701,10 +707,68 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
             
     return onto
 
-
-def process_simulation():
+###
+def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
+    #TODO: Add reaction as indv. of ontology class from enzymeML sheet
+    # add properties of reaction to individual
+    # add educts, products, ... subdicts -> based on assigned ontology class
+    #onto -> add enzmldoc.reaction_dict[reac_ID]["ontology"]
+    # 
+    #Get individual of current sheet
+    pfd_indv = onto.search_one(iri = "*"+PFD_uuid)
     
-    return 
+    #get all substances of sheet, that have an EnzymeML-ID
+    #subst_dict = {EnzymeML-ID: onto.individual, ...}
+    subst_dict = {} 
+    for indv in pfd_indv.BFO_0000051:
+        if indv.hasEnzymeML_ID: 
+            subst_dict[indv.hasEnzymeML_ID.first()] = indv 
+    #
+    
+    for reac_ID in list(enzmldoc.reaction_dict.keys()):
+        reac_obj = enzmldoc.getAny(reac_ID)
+        reaction_class = reac_obj.ontology.value.replace(":","_")
+        RCT_uuid = "RCT_" + str(uuid.uuid4()).replace("-","_")
+        try:
+            with onto:
+                #add individual of reaction class to ontology
+                rct_indv = onto.search_one(iri ="*"+reaction_class)(RCT_uuid)
+                rct_indv.label = reac_obj.name + "_" + reac_ID
+                #Add all other properties of the enzmldoc, but the entries that contain an "ontology" entry   
+        except:
+            print(reaction_class+" - class not found in ontology while implementing reaction" + reac_ID +" in ontology!")
+            
+        ## ALEX
+        for entry in reac_obj.dict():
+            if entry == "educts":
+                for i in reac_obj.dict()[entry]:
+                    enz_id = i["species_id"]
+                    rct_indv.RO_0002233 = subst_dict[enz_id] # has input
+                
+            elif entry == "products":
+                for i in reac_obj.dict()[entry]:
+                    enz_id = i["species_id"]
+                    rct_indv.RO_0002234 = subst_dict[enz_id] # has output
+            
+            elif entry == "modifiers":
+                for i in reac_obj.dict()[entry]:
+                    enz_id = i["species_id"]
+                    rct_indv.RO_0002573 = subst_dict[enz_id] # has modifier          
+            
+            
+            else:
+                ## add to individual via dataProperty
+                codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
+                code = compile(codestr,"<string>","exec")
+                exec(code)
+            # else:
+                ## add to individual via dataProperty
+            
+        
+    return onto
+
+
+##
 
 def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
 
@@ -746,7 +810,10 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     ## include Process Flow Diagram in ontology    
     onto = process_to_KG_from_dict(enzmldoc, supp_eln_dict,onto, PFD_uuid)
     
-    # Ontologie zwischenspeichern
+    ## include reactions in ontology
+    onto = reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid)
+    
+    # save ontology
     onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
     
 
@@ -791,6 +858,7 @@ def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
 #eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
 #enzdict, eln_dict = eln_to_dict(enz_str,eln_str)
 
+#TODO: characteristic_of -> Von Enzyme auf Reaktion! (RO_0000052)
 #TODO: Simulationsergebnisse zurück in KG 
 #TODO: implement UUIDs for substances and also for reaction/kinetic individuals
 #TODO: Link to simulation-files and to ELN files via comment/IRI!
