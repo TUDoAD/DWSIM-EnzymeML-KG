@@ -405,7 +405,7 @@ def kin_ind_from_dict(eln_dict, onto):
     kin_dict = eln_dict["kinetics"]
     for kin in list(kin_dict.keys()):
         # kin = label of indv
-        
+        kin_indv_uuid = "Kin_" + str(uuid.uuid4()).replace("-","_")
         ## adding rateLaw individual
         kin_type = kin_dict[kin]["rateLaw"] # ontology class
         
@@ -448,7 +448,7 @@ def kin_ind_from_dict(eln_dict, onto):
                             enzyme_indv = onto.search_one(label = "{}")
                             kin_indv.RO_0000052 = enzyme_indv
                             
-                """.format(kin_type, kin, kin, Enz_indv_label)
+                """.format(kin_type, kin_indv_uuid, kin, Enz_indv_label)
             
             # adding substrates
             for substrate in substrate_indv_label:
@@ -467,7 +467,7 @@ def kin_ind_from_dict(eln_dict, onto):
                             
                             enzyme_indv = onto.search_one(label = "{}")
                             kin_indv.RO_0000052 = enzyme_indv
-                """.format(kin_type, kin, kin, Enz_indv_label)
+                """.format(kin_type, kin_indv_uuid, kin, Enz_indv_label)
             
             # adding substrates
             for substrate in substrate_indv_label:
@@ -489,7 +489,7 @@ def kin_ind_from_dict(eln_dict, onto):
                         
                         enzyme_indv = onto.search_one(label = "{}")
                         kin_indv.RO_0000052 = enzyme_indv
-                """.format(kin_type,kin_type,kin_type,kin,kin, Enz_indv_label)
+                """.format(kin_type,kin_type,kin_type,kin_indv_uuid,kin, Enz_indv_label)
             
             # adding substrates
             for substrate in substrate_indv_label:
@@ -506,8 +506,9 @@ def kin_ind_from_dict(eln_dict, onto):
         ## add kinetic equation
         
         onto = datProp_from_str("has_equation", onto)
+        kin_indv = onto.search_one(iri = "*"+kin_indv_uuid)
         kin_indv.has_equation.append(str(kin_dict[kin]["has_equation"]))
-
+        ##
         
         if kin_type == "Henri-Michaelis-Menten rate law":
             ## adding Km indv if it is contained
