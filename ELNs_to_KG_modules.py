@@ -377,11 +377,6 @@ def subst_set_relations(enzmldoc, subst_dict, onto,PFD_uuid):
                     {}.BFO_0000050.append(pfd_indv)
                     """.format(subst_dict[class_name][entry],subst_dict[class_name][entry], str(onto_class), PFD_uuid, str(onto_class))
             
-            elif entry == "kineticDescription":
-                # add reaction(s)
-                for reac_ID in entry.replace(" ","").split(","):
-                    onto = reaction_to_KG(enzmldoc , reac_ID, onto , PFD_uuid)
-            
             else:    
                 # Assert value directly, if entry is int or float
                 # give the entry as string else
@@ -389,7 +384,15 @@ def subst_set_relations(enzmldoc, subst_dict, onto,PFD_uuid):
                     codestring = "{}.{}.append({})".format(str(onto_class),str(entry), subst_dict[class_name][entry])
                 else:
                     codestring = "{}.{}.append('{}')".format(str(onto_class),str(entry), str(subst_dict[class_name][entry]))                
-                
+            
+            """
+            elif entry == "kineticDescription":
+                # add reaction(s)
+                for reac_ID in entry.replace(" ","").split(","):
+                    onto = reactions_to_KG(enzmldoc , reac_ID, onto , PFD_uuid)
+            """
+            
+            
             #print(codestring)
             code = compile(codestring, "<string>","exec")
 
@@ -708,7 +711,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
     return onto
 
 ###
-def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
+def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
     #TODO: Add reaction as indv. of ontology class from enzymeML sheet
     # add properties of reaction to individual
     # add educts, products, ... subdicts -> based on assigned ontology class
@@ -724,6 +727,7 @@ def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
         if indv.hasEnzymeML_ID: 
             subst_dict[indv.hasEnzymeML_ID.first()] = indv 
     #
+    print("\n keys of subst_dict: \n {}".format(list(subst_dict.keys())))
     
     for reac_ID in list(enzmldoc.reaction_dict.keys()):
         reac_obj = enzmldoc.getAny(reac_ID)
@@ -743,31 +747,35 @@ def reaction_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
             if entry == "educts":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002233.append(subst_dict[enz_id]) # has input
+                    if enz_id in subst_dict.keys():
+                        rct_indv.RO_0002233.append(subst_dict[enz_id]) # has input
                 
             elif entry == "products":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002234.append(subst_dict[enz_id]) # has output
+                    if enz_id in subst_dict.keys():
+                        rct_indv.RO_0002234.append(subst_dict[enz_id]) # has output
             
             elif entry == "modifiers":
                 for i in reac_obj.dict()[entry]:
                     enz_id = i["species_id"]
-                    rct_indv.RO_0002573.append(subst_dict[enz_id]) # has modifier          
+                    if enz_id in subst_dict.keys():
+                        rct_indv.RO_0002573.append(subst_dict[enz_id]) # has modifier          
             
             else:
                 ## add to individual via dataProperty
                 if entry not in ["name"]:
                     onto = datProp_from_str(entry, onto)
-                    if type(reac_obj.dict()[entry]) in [float, int]:
-                        codestr = """rct_indv.{}.append({})""".format(entry,reac_obj.dict()[entry])
-                    else:
-                        codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
+                    if reac_obj.dict()[entry]:
+                        if type(reac_obj.dict()[entry]) in [float, int]:
+                            codestr = """rct_indv.{}.append({})""".format(entry,reac_obj.dict()[entry])
+                        else:
+                            codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
+                        
+                        print(codestr)
                     
-                    print(codestr)
-                    
-                    code = compile(codestr,"<string>","exec")
-                    exec(code)
+                        code = compile(codestr,"<string>","exec")
+                        exec(code)
             # else:
                 ## add to individual via dataProperty
             
@@ -787,7 +795,7 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = subst_classes_from_dict(enzmldoc, supp_eln_dict["substances"], onto)
     
     PFD_name = enzmldoc.name
-    PFD_uuid = "DWSIM_" + str(uuid.uuid4()).replace("-","_")
+    PFD_uuid = "Experiment_" + str(uuid.uuid4()).replace("-","_")
     
     creator_str = ""
     for key in enzmldoc.creator_dict:
@@ -795,8 +803,8 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     
     codestring = """with onto:
         PFD_indv = onto.search_one(iri = '*DataProcessingModule')("{}")
-        PFD_indv.label = 'DWSIM_{}'
-        PFD_indv.comment = 'Process flow diagram of laboratory experiments of {}'
+        PFD_indv.label = 'Experiment_{}'
+        PFD_indv.comment = 'Laboratory experiments and corresponding process flow diagram of {}'
         PFD_indv.comment =""".format(PFD_uuid,PFD_name,PFD_name)
     
     codestring = codestring + '""" Creator(s): \n' + creator_str + '"""'
@@ -821,7 +829,7 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid)
     
     # save ontology
-    onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
+    onto.save(file="./ontologies/KG-"+ onto_str+"_final.owl", format="rdfxml")
     
 
     #####
@@ -845,7 +853,7 @@ def run():
    onto = base_ontology_extension("BaseOntology")
    
    new_eln_dict = new_ELN_to_dict("./ELNs/New-ELN_Kinetik_1.xlsx")
-   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "DWSIM_Lab")
+   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "DWSIM_EnzML_ELN")
    
   # with open('dict_dump.json', 'w') as file:
   #      json.dump(eln_dict, file)
