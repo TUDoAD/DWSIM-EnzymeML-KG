@@ -162,7 +162,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             
     ##
     # Add reaction
-    #TODO: implement as function
+    #TODO: implement as function ?
     if kin_indv:
         substrate_list = []
         for sub_ind in substrate_indv:
@@ -176,11 +176,17 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             sim.AddReaction(kr1)
             sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
         
-        script_name = 'descriptor'
-        createScript(script_name)
-        custom_reac = sim.GetReaction()
+            # add py-script for own kinetics Equation:
+            script_name = enz_dict["reaction_dict"][reaction]["name"]
+            sim = createScript(sim,script_name)
+            #custom_reac = sim.GetReaction(kr1.ID)
+            custom_reac_script = sim.Scripts[script_name]
+            custom_reac_script.ScriptText = str("import math\n reactor = Flowsheet.GetFlowsheetSimulationObject()")
+            
+            kr1.ReactionKinetics = ReactionKinetics(1)
+            kr1.ScriptTitle = script_name
         
-        
+    errors = interf.CalculateFlowsheet4(sim)
         
         
     ##
@@ -341,6 +347,8 @@ def createScript(sim,obj_name):
     sim.Scripts.TryGetValue(GUID)[1].PythonInterpreter = Interfaces.Enums.Scripts.Interpreter.IronPython
     sim.Scripts.TryGetValue(GUID)[1].Title = obj_name
     sim.Scripts.TryGetValue(GUID)[1].ScriptText = str()
+    
+    return sim
 
 ##
 def save_simulation(sim,interface, filename):
@@ -360,14 +368,14 @@ def simulate_in_subprocess():
 def ini():
     enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
     eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-    onto_str ="./ontologies/KG-DWSIM_Lab.owl"
+    onto_str ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
     
     enz_dict, pfd_dict, onto = data_ini(enz_str, eln_str, onto_str)
     return enz_dict, pfd_dict, onto
 
 ##
 enz_dict, pfd_dict, onto = ini()
-pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
+pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
 pfd_iri = pfd_ind.iri
 
 ##
@@ -378,7 +386,7 @@ def run():
     filename = "ABTS_ox.dwxmz"
     save_simulation(sim,interface,filename)
     
-    return sim, streams
+    #return sim, streams
 ##
 
 #TODO: subprocess?

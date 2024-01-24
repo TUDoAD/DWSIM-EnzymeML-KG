@@ -504,7 +504,6 @@ def kin_ind_from_dict(eln_dict, onto):
         exec(code)
         
         ## add kinetic equation
-        
         onto = datProp_from_str("has_equation", onto)
         kin_indv = onto.search_one(iri = "*"+kin_indv_uuid)
         kin_indv.has_equation.append(str(kin_dict[kin]["has_equation"]))
