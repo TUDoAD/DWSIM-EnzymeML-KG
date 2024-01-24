@@ -503,6 +503,11 @@ def kin_ind_from_dict(eln_dict, onto):
         code = compile(codestring, "<string>","exec")
         exec(code)
         
+        ## add kinetic equation
+        
+        onto = datProp_from_str("has_equation", onto)
+        kin_indv.has_equation.append(str(kin_dict[kin]["has_equation"]))
+
         
         if kin_type == "Henri-Michaelis-Menten rate law":
             ## adding Km indv if it is contained
