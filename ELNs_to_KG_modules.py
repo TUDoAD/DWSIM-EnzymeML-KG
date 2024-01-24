@@ -727,7 +727,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
         if indv.hasEnzymeML_ID: 
             subst_dict[indv.hasEnzymeML_ID.first()] = indv 
     #
-    print("\n keys of subst_dict: \n {}".format(list(subst_dict.keys())))
+    #print("\n keys of subst_dict: \n {}".format(list(subst_dict.keys())))
     
     for reac_ID in list(enzmldoc.reaction_dict.keys()):
         reac_obj = enzmldoc.getAny(reac_ID)
@@ -771,9 +771,8 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
                             codestr = """rct_indv.{}.append({})""".format(entry,reac_obj.dict()[entry])
                         else:
                             codestr = """rct_indv.{}.append('{}')""".format(entry,reac_obj.dict()[entry])
-                        
-                        print(codestr)
-                    
+                
+                        #print(codestr)
                         code = compile(codestr,"<string>","exec")
                         exec(code)
             # else:
@@ -829,7 +828,7 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid)
     
     # save ontology
-    onto.save(file="./ontologies/KG-"+ onto_str+"_final.owl", format="rdfxml")
+    onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
     
 
     #####
