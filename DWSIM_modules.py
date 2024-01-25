@@ -170,6 +170,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     
     if kin_indv:
         substrate_list = []
+        i = 0
         for sub_ind in substrate_indv:
             # get label(s) of class of substrate individual(s)
             substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
@@ -179,26 +180,35 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         #-> iteriere durch kin_indv -- <has role in modeling> --> reactions        
         for kin_ind in kin_indv:
             react_list = kin_ind.RO_0003301
-        
+            
             for reaction in react_list: #enz_dict["reaction_dict"]:
                 kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
                 sim.AddReaction(kr1)
                 sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
             
                 # add py-script for own kinetics Equation:
-                script_name = reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
-                sim = createScript(sim,script_name)
+                script_name =kr1.ID# reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
+                
+                #sim = createScript(sim,script_name)
+                
+                sim.Scripts.Add(script_name, FlowsheetSolver.Script())
+                
                 #custom_reac = sim.GetReaction(kr1.ID)
                 custom_reac_script = sim.Scripts[script_name]
+                custom_reac_script.Title = script_name
+                custom_reac_script.ID = str(i)
                 custom_reac_script.ScriptText = str("import math\n reactor = Flowsheet.GetFlowsheetSimulationObject()")
                 
-                kr1.ReactionKinetics = ReactionKinetics(1)
-                kr1.ScriptTitle = script_name
+                new_reaction = sim.GetReaction(script_name)  
+                new_reaction.ReactionKinetics = ReactionKinetics(1)
+                new_reaction.ScriptTitle = script_name
                 
-                kr1 = None
+                i +=1
+                #kr1 = None
                 print(script_name, reaction)
                 
-    errors = interf.CalculateFlowsheet4(sim)
+                
+    errors = interf.CalculateFlowsheet2(sim)
         
         
     ##
@@ -349,16 +359,16 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
 def createScript(sim,obj_name):
     #GUID = str(uuid.uuid1())
     GUID = obj_name
-    sim.Scripts.Add(GUID, FlowsheetSolver.Script())
+    sim.Scripts.Add(obj_name, FlowsheetSolver.Script())
     #By not declaring the ID the tabs of each script is not loaded
     #sim.Scripts.TryGetValue(GUID)[1].ID = GUID
-    sim.Scripts.TryGetValue(GUID)[1].Linked = True
-    sim.Scripts.TryGetValue(GUID)[1].LinkedEventType = Interfaces.Enums.Scripts.EventType.ObjectCalculationStarted
-    sim.Scripts.TryGetValue(GUID)[1].LinkedObjectName = obj_name
-    sim.Scripts.TryGetValue(GUID)[1].LinkedObjectType = Interfaces.Enums.Scripts.ObjectType.FlowsheetObject
-    sim.Scripts.TryGetValue(GUID)[1].PythonInterpreter = Interfaces.Enums.Scripts.Interpreter.IronPython
-    sim.Scripts.TryGetValue(GUID)[1].Title = obj_name
-    sim.Scripts.TryGetValue(GUID)[1].ScriptText = str()
+    sim.Scripts.TryGetValue(obj_name)[1].Linked = True
+    sim.Scripts.TryGetValue(obj_name)[1].LinkedEventType = Interfaces.Enums.Scripts.EventType.ObjectCalculationStarted
+    sim.Scripts.TryGetValue(obj_name)[1].LinkedObjectName = obj_name
+    sim.Scripts.TryGetValue(obj_name)[1].LinkedObjectType = Interfaces.Enums.Scripts.ObjectType.FlowsheetObject
+    sim.Scripts.TryGetValue(obj_name)[1].PythonInterpreter = Interfaces.Enums.Scripts.Interpreter.IronPython
+    sim.Scripts.TryGetValue(obj_name)[1].Title = obj_name
+    sim.Scripts.TryGetValue(obj_name)[1].ScriptText = str()
     
     return sim
 
