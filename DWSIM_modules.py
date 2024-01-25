@@ -200,17 +200,28 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 
                 catalysts = kin_ind.RO_0000052 # characteristic of
                 code_str = ""
-                for cat in catalysts:
-                    code_str += cat.hasEnzymeML_ID.first() + " = " + "Amounts[" + cat.is_a.label.first() + "]\n"
                 
+                if type(catalysts) == owlready2.prop.IndividualValueList: 
+                    for cat in catalysts:
+                        code_str += cat.hasEnzymeML_ID.first() + " = " + "Amounts['" + cat.is_a.first().label.first() + "']\n"
+                else:
+                    code_str += catalysts.hasEnzymeML_ID.first() + " = " + "Amounts['" + catalysts.is_a.first().label.first() + "']\n"
+                    
+                    
                 reactants = kin_ind.RO_0002233  # has input
-                for react in reactants:
-                    code_str += react.hasEnzymeML_ID.first() + " = " + "Amounts[" + react.is_a.label.first() + "]\n"
-                
+                if type(reactants) == owlready2.prop.IndividualValueList:
+                    for react in reactants:
+                        code_str += react.hasEnzymeML_ID.first() + " = " + "Amounts['" + react.is_a.first().label.first() + "']\n"
+                else:
+                    code_str += reactants.hasEnzymeML_ID.first() + " = " + "Amounts['" + reactants.is_a.first().label.first() + "']\n"
+       
                 variables = kin_ind.hasVariable
-                for var in variables:
-                    code_str += var.label + " = " + str(var.hasValue.first()) + "\n"
-                
+                if type(variables) == owlready2.prop.IndividualValueList:
+                    for var in variables:
+                        code_str += str(var.label.first()) + " = " + str(var.hasValue.first()) + "\n"
+                else:
+                    code_str += variables.label + " = " + str(variables.hasValue.first()) + "\n"
+                    
                 kin_equation = kin_ind.has_equation.first()
                 code_str += "r =" + kin_equation
                 
