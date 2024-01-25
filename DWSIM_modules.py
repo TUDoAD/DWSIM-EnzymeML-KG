@@ -178,10 +178,10 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             react_list = kin_ind.RO_0003301
             
             for reaction in react_list: #enz_dict["reaction_dict"]:
-                kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
+                kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "mol/m3", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
                 sim.AddReaction(kr1)
                 sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
-            
+                
                 # add py-script for own kinetics Equation:
                 script_name =kr1.ID# reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
                 
@@ -195,16 +195,26 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 custom_reac_script.ID = str(i)
                 
                 #TODO: get from ontology
-                reactor_name = "PFR-RCT"
+                reactor_name = "indv_Reactor"
                 reac_inlet_name = "Mixture"
                 
+                catalysts = kin_ind.RO_0000052 # characteristic of
+                code_str = ""
+                for cat in catalysts:
+                    code_str += cat.hasEnzymeML_ID.first() + " = " + "Amounts[" + cat.is_a.label.first() + "]\n"
                 
-                custom_reac_script.ScriptText = str("""import math
-reactor = Flowsheet.GetFlowsheetSimulationObject("{}")
-T = reactor.OutletTemperature
-Flowsheet = reactor.FlowSheet
-inl_obj = Flowsheet.GetFlowsheetSimulationObject("{}")
-""".format(reactor_name,reac_inlet_name))
+                reactants = kin_ind.RO_0002233  # has input
+                for react in reactants:
+                    code_str += react.hasEnzymeML_ID.first() + " = " + "Amounts[" + react.is_a.label.first() + "]\n"
+                
+                variables = kin_ind.hasVariable
+                for var in variables:
+                    code_str += var.label + " = " + str(var.hasValue.first()) + "\n"
+                
+                kin_equation = kin_ind.has_equation.first()
+                code_str += "r =" + kin_equation
+                
+                custom_reac_script.ScriptText = code_str 
                 
                 new_reaction = sim.GetReaction(script_name)  
                 new_reaction.ReactionKinetics = ReactionKinetics(1)
@@ -359,25 +369,8 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
 
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf, streams
-##
-# Ein Skript definieren, um den Script Manager in DWSIM zu verwenden
-# Über den Script Manager eigene Kinetik importieren
-# https://sourceforge.net/p/dwsim/discussion/scripting/thread/c530736cdb/?limit=25#1667
-def createScript(sim,obj_name):
-    #GUID = str(uuid.uuid1())
-    GUID = obj_name
-    sim.Scripts.Add(obj_name, FlowsheetSolver.Script())
-    #By not declaring the ID the tabs of each script is not loaded
-    #sim.Scripts.TryGetValue(GUID)[1].ID = GUID
-    sim.Scripts.TryGetValue(obj_name)[1].Linked = True
-    sim.Scripts.TryGetValue(obj_name)[1].LinkedEventType = Interfaces.Enums.Scripts.EventType.ObjectCalculationStarted
-    sim.Scripts.TryGetValue(obj_name)[1].LinkedObjectName = obj_name
-    sim.Scripts.TryGetValue(obj_name)[1].LinkedObjectType = Interfaces.Enums.Scripts.ObjectType.FlowsheetObject
-    sim.Scripts.TryGetValue(obj_name)[1].PythonInterpreter = Interfaces.Enums.Scripts.Interpreter.IronPython
-    sim.Scripts.TryGetValue(obj_name)[1].Title = obj_name
-    sim.Scripts.TryGetValue(obj_name)[1].ScriptText = str()
-    
-    return sim
+
+
 
 ##
 def save_simulation(sim,interface, filename):

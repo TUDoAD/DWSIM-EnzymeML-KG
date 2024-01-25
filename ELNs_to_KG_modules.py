@@ -524,6 +524,7 @@ def kin_ind_from_dict(eln_dict, onto):
                 
                 codestring = """with onto:
                                 Km_indv = onto.search_one(iri = "*SBO_0000027")('{}')
+                                Km_indv.label = "Km"
                                 Km_indv.{}.append('{}')
                                 Km_indv.has_unit_string.append('{}')
                                 
@@ -546,6 +547,7 @@ def kin_ind_from_dict(eln_dict, onto):
                 
                 codestring = """with onto:
                                 kcat_indv = onto.search_one(iri = "*SBO_0000025")('{}')
+                                kcat_indv.label = "kcat"
                                 kcat_indv.{}.append('{}')
                                 kcat_indv.has_unit_string.append('{}')
                                 
