@@ -176,7 +176,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         #-> iteriere durch kin_indv -- <has role in modeling> --> reactions        
         for kin_ind in kin_indv:
             react_list = kin_ind.RO_0003301
-            
+            print(react_list)
             for reaction in react_list: #enz_dict["reaction_dict"]:
                 kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "mol/m3", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
                 sim.AddReaction(kr1)

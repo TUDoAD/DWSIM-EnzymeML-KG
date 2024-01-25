@@ -772,7 +772,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
                         kin_indv = subst_dict[enz_id].RO_0000053.first() # has characteristic
                         #rct_indv --has model -> kin_indv
                         rct_indv.RO_0002615.append(kin_indv) # has model
-            
+                        
             else:
                 ## add to individual via dataProperty
                 if entry not in ["name","ontology"]:
