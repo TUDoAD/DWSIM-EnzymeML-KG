@@ -199,13 +199,12 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 reac_inlet_name = "Mixture"
                 
                 
-                custom_reac_script.ScriptText = str("""import math\n
-                                                    reactor = Flowsheet.GetFlowsheetSimulationObject("{}")\n
-                                                    T = reactor.OutletTemperature\n
-                                                    Flowsheet = reactor.FlowSheet\n
-                                                    inl_obj = Flowsheet.GetFlowsheetSimulationObject("{}")\n
-                                                    
-                                                    """.format(reactor_name,reac_inlet_name))
+                custom_reac_script.ScriptText = str("""import math
+reactor = Flowsheet.GetFlowsheetSimulationObject("{}")
+T = reactor.OutletTemperature
+Flowsheet = reactor.FlowSheet
+inl_obj = Flowsheet.GetFlowsheetSimulationObject("{}")
+""".format(reactor_name,reac_inlet_name))
                 
                 new_reaction = sim.GetReaction(script_name)  
                 new_reaction.ReactionKinetics = ReactionKinetics(1)
