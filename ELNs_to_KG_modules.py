@@ -528,7 +528,7 @@ def kin_ind_from_dict(eln_dict, onto):
                                 Km_indv.has_unit_string.append('{}')
                                 
                                 kin_indv = onto.search_one(label = kin_indv_label)
-                                Km_indv.RO_0002615.append(kin_indv)
+                                kin_indv.hasVariable.append(Km_indv)
                     """.format(ind_name, hasVal.name, val, unit)
                     
                     
@@ -550,7 +550,7 @@ def kin_ind_from_dict(eln_dict, onto):
                                 kcat_indv.has_unit_string.append('{}')
                                 
                                 kin_indv = onto.search_one(label = kin_indv_label)
-                                kcat_indv.RO_0002615.append(kin_indv)
+                                kin_indv.hasVariable.append(kcat_indv)
                     """.format(ind_name, hasVal.name, val, unit)
                 code = compile(codestring, "<string>","exec")
                 exec(code)           
@@ -743,6 +743,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
             #add individual of reaction class to ontology
             rct_indv = onto.search_one(iri ="*"+reaction_class)(RCT_uuid)
             rct_indv.label = reac_obj.name + "_" + reac_ID
+            rct_indv.BFO_0000050.append(pfd_indv)
             #Add all other properties of the enzmldoc, but the entries that contain an "ontology" entry   
         except:
             print(reaction_class+" - class not found in ontology while implementing reaction" + reac_ID +" in ontology!")
@@ -766,10 +767,13 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
                     enz_id = i["species_id"]
                     if enz_id in subst_dict.keys():
                         rct_indv.RO_0002573.append(subst_dict[enz_id]) # has modifier          
+                        kin_indv = subst_dict[enz_id].RO_0000053.first() # has characteristic
+                        #rct_indv --has model -> kin_indv
+                        rct_indv.RO_0002615.append(kin_indv) # has model
             
             else:
                 ## add to individual via dataProperty
-                if entry not in ["name"]:
+                if entry not in ["name","ontology"]:
                     onto = datProp_from_str(entry, onto)
                     if reac_obj.dict()[entry]:
                         if type(reac_obj.dict()[entry]) in [float, int]:

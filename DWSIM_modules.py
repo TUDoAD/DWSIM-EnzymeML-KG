@@ -163,6 +163,11 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
     ##
     # Add reaction
     #TODO: implement as function ?
+    
+    #######
+    ## ALEX -> Integrate information only from Ontology!
+    #######
+    
     if kin_indv:
         substrate_list = []
         for sub_ind in substrate_indv:
@@ -171,21 +176,28 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
         
         #TODO: split for arrhenius kinetic (default) and custom reaction kinetics
         
-        for reaction in enz_dict["reaction_dict"]:
-            kr1 = sim.CreateKineticReaction(reaction, "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
-            sim.AddReaction(kr1)
-            sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
+        #-> iteriere durch kin_indv -- <has role in modeling> --> reactions        
+        for kin_ind in kin_indv:
+            react_list = kin_ind.RO_0003301
         
-            # add py-script for own kinetics Equation:
-            script_name = enz_dict["reaction_dict"][reaction]["name"]
-            sim = createScript(sim,script_name)
-            #custom_reac = sim.GetReaction(kr1.ID)
-            custom_reac_script = sim.Scripts[script_name]
-            custom_reac_script.ScriptText = str("import math\n reactor = Flowsheet.GetFlowsheetSimulationObject()")
+            for reaction in react_list: #enz_dict["reaction_dict"]:
+                kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
+                sim.AddReaction(kr1)
+                sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
             
-            kr1.ReactionKinetics = ReactionKinetics(1)
-            kr1.ScriptTitle = script_name
-        
+                # add py-script for own kinetics Equation:
+                script_name = reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
+                sim = createScript(sim,script_name)
+                #custom_reac = sim.GetReaction(kr1.ID)
+                custom_reac_script = sim.Scripts[script_name]
+                custom_reac_script.ScriptText = str("import math\n reactor = Flowsheet.GetFlowsheetSimulationObject()")
+                
+                kr1.ReactionKinetics = ReactionKinetics(1)
+                kr1.ScriptTitle = script_name
+                
+                kr1 = None
+                print(script_name, reaction)
+                
     errors = interf.CalculateFlowsheet4(sim)
         
         
