@@ -195,6 +195,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 custom_reac_script.ID = str(i)
                 
                 #TODO: get from ontology
+                ## ALEX -> Names from below
                 reactor_name = "indv_Reactor"
                 reac_inlet_name = "indv_Mixture"
                 
