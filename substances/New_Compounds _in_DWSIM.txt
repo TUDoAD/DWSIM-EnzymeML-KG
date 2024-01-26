@@ -1,1 +1,2 @@
-Import von neuen chemischen Substanzen in DWSIM
+Import new substances in DWSIM by adding the json file into the directory
+C:\Users\User\AppData\Local\DWSIM8\addcomps

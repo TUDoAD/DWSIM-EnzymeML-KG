@@ -196,24 +196,39 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 
                 #TODO: get from ontology
                 reactor_name = "indv_Reactor"
-                reac_inlet_name = "Mixture"
+                reac_inlet_name = "indv_Mixture"
                 
                 catalysts = kin_ind.RO_0000052 # characteristic of
-                code_str = ""
-                
+                code_str = "import math\n"# +"reactor = Flowsheet.GetFlowsheetSimulationObject('{}')\n".format(reactor_name)
+                code_str += """
+obj = Flowsheet.GetFlowsheetSimulationObject('{}')
+
+n = obj.GetPhase('Overall').Properties.molarflow # mol/s
+Q = obj.GetPhase('Overall').Properties.volumetric_flow # m3/s
+
+concentration_flow = n/Q # mol/m3
+
+# Access to compound list
+values = obj.GetOverallComposition()
+compsids = obj.ComponentIds
+comp_dict = {{}}
+
+for i in range(len(compsids)):
+    comp_dict[compsids[i]] = values[i]
+""".format(reac_inlet_name)
                 if type(catalysts) == owlready2.prop.IndividualValueList: 
                     for cat in catalysts:
-                        code_str += cat.hasEnzymeML_ID.first() + " = " + "Amounts['" + cat.is_a.first().label.first() + "']\n"
+                        code_str += cat.hasEnzymeML_ID.first() + " = " + "comp_dict['" + cat.is_a.first().label.first() + "']*concentration_flow\n"
                 else:
-                    code_str += catalysts.hasEnzymeML_ID.first() + " = " + "Amounts['" + catalysts.is_a.first().label.first() + "']\n"
+                    code_str += catalysts.hasEnzymeML_ID.first() + " = " + "comp_dict['" + catalysts.is_a.first().label.first() + "']*concentration_flow\n"
                     
                     
                 reactants = kin_ind.RO_0002233  # has input
                 if type(reactants) == owlready2.prop.IndividualValueList:
                     for react in reactants:
-                        code_str += react.hasEnzymeML_ID.first() + " = " + "Amounts['" + react.is_a.first().label.first() + "']\n"
+                        code_str += react.hasEnzymeML_ID.first() + " = " + "comp_dict['" + react.is_a.first().label.first() + "']*concentration_flow\n"
                 else:
-                    code_str += reactants.hasEnzymeML_ID.first() + " = " + "Amounts['" + reactants.is_a.first().label.first() + "']\n"
+                    code_str += reactants.hasEnzymeML_ID.first() + " = " + "comp_dict['" + reactants.is_a.first().label.first() + "']*concentration_flow\n"
        
                 variables = kin_ind.hasVariable
                 if type(variables) == owlready2.prop.IndividualValueList:
