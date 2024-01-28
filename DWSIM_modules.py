@@ -161,7 +161,7 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 substrate_indv.append(indv.RO_0002233)
             
     ##
-    # Add reaction
+    # Add reaction(s)
     #TODO: implement as function ?
     
     if kin_indv:
@@ -196,7 +196,6 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
                 
                 #TODO: get from ontology
                 ## ALEX -> Names from below
-                reactor_name = "indv_Reactor"
                 reac_inlet_name = "indv_Mixture"
                 
                 catalysts = kin_ind.RO_0000052 # characteristic of
@@ -254,9 +253,6 @@ for i in range(len(compsids)):
                 
     errors = interf.CalculateFlowsheet2(sim)
         
-        
-    ##
-    
     
     ## Add streams to DWSIM:
     

@@ -770,8 +770,11 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
                     if enz_id in subst_dict.keys():
                         rct_indv.RO_0002573.append(subst_dict[enz_id]) # has modifier          
                         kin_indv = subst_dict[enz_id].RO_0000053.first() # has characteristic
-                        #rct_indv --has model -> kin_indv
-                        rct_indv.RO_0002615.append(kin_indv) # has model
+                        
+                        if subst_dict[enz_id].kineticDescription.first() == reac_ID:
+                            #rct_indv --has model -> kin_indv
+                            rct_indv.RO_0002615.append(kin_indv) # has model
+
                         
             else:
                 ## add to individual via dataProperty
