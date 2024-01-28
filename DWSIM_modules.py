@@ -247,12 +247,6 @@ for i in range(len(compsids)):
                 new_reaction.ScriptTitle = script_name
                 
                 i +=1
-                #kr1 = None
-                #print(script_name, reaction)
-                
-                
-    errors = interf.CalculateFlowsheet2(sim)
-        
     
     ## Add streams to DWSIM:
     
@@ -389,6 +383,10 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
             dwsim_obj.UseUserDefinedPressureDrop = True
             dwsim_obj.UserDefinedPressureDrop = float(module.hasDeltaP.first())
 
+    errors = interf.CalculateFlowsheet4(sim)
+    if (len(errors) > 0):
+        for e in errors:
+            print("Error: " + e.ToString())    
 
     Directory.SetCurrentDirectory(working_dir)
     return sim, interf, streams
