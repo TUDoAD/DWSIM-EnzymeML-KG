@@ -406,7 +406,45 @@ for i in range(len(compsids)):
             print("Error: " + e.ToString())    
 
     Directory.SetCurrentDirectory(working_dir)
-    return sim, interf, streams
+    return sim, interf, streams, pfd_list
+
+##
+def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
+    #sim = DWSIM simulation object
+    #onto = Knowledge Graph to be extended
+    #streams = Dictionary of {Stream_name : DWSIM-object,...}
+    #pfd_list = list of all individuals connected to pfd_iri in Knowledge Graph
+    #pfd_iri = IRI of PFD object 
+    
+    pfd_ind = onto.search_one(iri = pfd_iri)
+    pfd_dict = {} 
+    for i in pfd_list:
+        pfd_dict[i.label.first()]=i
+    
+    for stream in streams:
+        dwsim_obj = streams[stream].GetAsObject()
+        onto_obj = pfd_dict[stream]
+        
+        stream_comp_ids = list(dwsim_obj.ComponentIds)
+        stream_composition = list(dwsim_obj.GetOverallComposition())
+    
+    """
+    mol/L = mol/s / (m^3/s)  *composition
+    stream.GetMolarFlow() 
+    stream.GetVolumetricFlow()
+list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
+list(streams["indv_Product_1"].GetAsObject().ComponentIds)
+list(streams["indv_Product_1"].GetAsObject().GetMolarFlow())
+streams["indv_Product_1"].GetAsObject().GetMolarFlow()
+streams["indv_Product_1"].GetAsObject().GetOverallComposition()
+list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
+    """    
+    
+    
+    return onto
+
+##
+
 
 
 
@@ -442,19 +480,25 @@ def ini():
 def run():
     enz_dict, pfd_dict, onto = ini()
     
-    filename = "./DWSIM/ABTS_ox.dwxmz"
+    filename_DWSIM = "./DWSIM/ABTS_ox.dwxmz"
+    filename_KG = "./ontologies/KG-DWSIM_EnzML_ELN_output.owl"
     
     pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
     
     print("Data initialized, ontology loaded...")
     
     pfd_iri = pfd_ind.iri
-    sim, interface, streams = flowsheet_simulation(onto,pfd_iri)
+    sim, interface, streams,pfd_list = flowsheet_simulation(onto,pfd_iri)
     
-    print("Storing DWSIM-file: "+filename)
-    save_simulation(sim,interface,filename)
+    print("Storing DWSIM-file: "+filename_DWSIM)
+    save_simulation(sim,interface,filename_DWSIM)
     
+    print("Integrating new information into Knowledge Graph")
+    onto = extend_knowledgegraph(sim, onto, streams, pfd_list, pfd_iri)
+    print("Storing Knowledge Graph: "+filename_KG)
+    onto.save(file =filename_KG, format ="rdfxml")
     
+    return streams, pfd_list
 ##
 
 #TODO: subprocess?
