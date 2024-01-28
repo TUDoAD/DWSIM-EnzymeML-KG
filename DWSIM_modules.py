@@ -159,94 +159,6 @@ def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri):
             for indv in kin_indv: # might be more than one substrate
                 # has input -> input = substrate of reaction    
                 substrate_indv.append(indv.RO_0002233)
-            
-    ##
-    # Add reaction(s)
-    #TODO: implement as function ?
-    
-    if kin_indv:
-        substrate_list = []
-        i = 0
-        for sub_ind in substrate_indv:
-            # get label(s) of class of substrate individual(s)
-            substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
-        
-        #TODO: split for arrhenius kinetic (default) and custom reaction kinetics
-        
-        #-> iteriere durch kin_indv -- <has role in modeling> --> reactions        
-        for kin_ind in kin_indv:
-            react_list = kin_ind.RO_0003301
-            #print(react_list)
-            for reaction in react_list: #enz_dict["reaction_dict"]:
-                kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "mol/m3", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
-                sim.AddReaction(kr1)
-                sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
-                
-                # add py-script for own kinetics Equation:
-                script_name =kr1.ID# reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
-                
-                #sim = createScript(sim,script_name)
-                
-                sim.Scripts.Add(script_name, FlowsheetSolver.Script())
-                
-                #custom_reac = sim.GetReaction(kr1.ID)
-                custom_reac_script = sim.Scripts[script_name]
-                custom_reac_script.Title = script_name
-                custom_reac_script.ID = str(i)
-                
-                #TODO: get from ontology
-                ## ALEX -> Names from below
-                reac_inlet_name = "indv_Mixture"
-                
-                catalysts = kin_ind.RO_0000052 # characteristic of
-                code_str = "import math\n"# +"reactor = Flowsheet.GetFlowsheetSimulationObject('{}')\n".format(reactor_name)
-                code_str += """
-obj = Flowsheet.GetFlowsheetSimulationObject('{}')
-
-n = obj.GetPhase('Overall').Properties.molarflow # mol/s
-Q = obj.GetPhase('Overall').Properties.volumetric_flow # m3/s
-
-concentration_flow = n/Q # mol/m3
-
-# Access to compound list
-values = obj.GetOverallComposition()
-compsids = obj.ComponentIds
-comp_dict = {{}}
-
-for i in range(len(compsids)):
-    comp_dict[compsids[i]] = values[i]
-""".format(reac_inlet_name)
-                if type(catalysts) == owlready2.prop.IndividualValueList: 
-                    for cat in catalysts:
-                        code_str += cat.hasEnzymeML_ID.first() + " = " + "comp_dict['" + cat.is_a.first().label.first() + "']*concentration_flow\n"
-                else:
-                    code_str += catalysts.hasEnzymeML_ID.first() + " = " + "comp_dict['" + catalysts.is_a.first().label.first() + "']*concentration_flow\n"
-                    
-                    
-                reactants = kin_ind.RO_0002233  # has input
-                if type(reactants) == owlready2.prop.IndividualValueList:
-                    for react in reactants:
-                        code_str += react.hasEnzymeML_ID.first() + " = " + "comp_dict['" + react.is_a.first().label.first() + "']*concentration_flow\n"
-                else:
-                    code_str += reactants.hasEnzymeML_ID.first() + " = " + "comp_dict['" + reactants.is_a.first().label.first() + "']*concentration_flow\n"
-       
-                variables = kin_ind.hasVariable
-                if type(variables) == owlready2.prop.IndividualValueList:
-                    for var in variables:
-                        code_str += str(var.label.first()) + " = " + str(var.hasValue.first()) + "\n"
-                else:
-                    code_str += variables.label + " = " + str(variables.hasValue.first()) + "\n"
-                    
-                kin_equation = kin_ind.has_equation.first()
-                code_str += "r =" + kin_equation
-                
-                custom_reac_script.ScriptText = code_str 
-                
-                new_reaction = sim.GetReaction(script_name)  
-                new_reaction.ReactionKinetics = ReactionKinetics(1)
-                new_reaction.ScriptTitle = script_name
-                
-                i +=1
     
     ## Add streams to DWSIM:
     
@@ -369,19 +281,123 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
             
     
     ## Add special information to modules
+    # 
+    reactor_list = []
     for module in pfd_list:
         # Add information to reactors
         if module.is_a[0].label.first() in ["RCT_PFR","RCT_Conversion","RCT_Equilibrium","RCT_Gibbs","RCT_CSTR"]:
             # WARNING: Reactors other than "RCT_PFR" might not work properly yet!    
             dwsim_obj = streams[module.label.first()].GetAsObject()
+            reactor_list.append(module)
             dwsim_obj.ReactorOperationMode = Reactors.OperationMode(int(module.hasTypeOf_OperationMode.first()))
             if module.is_a[0].label.first() == "RCT_PFR":
                 dwsim_obj.ReactorSizingType = Reactors.Reactor_PFR.SizingType.Length
-           
+                
             dwsim_obj.Volume= float(module.hasVolumeValue.first())
             dwsim_obj.Length= float(module.hasLengthValue.first())
             dwsim_obj.UseUserDefinedPressureDrop = True
             dwsim_obj.UserDefinedPressureDrop = float(module.hasDeltaP.first())
+    
+    ##
+    # Add reaction(s)    
+    if kin_indv:
+        substrate_list = []
+        i = 0
+        for sub_ind in substrate_indv:
+            # get label(s) of class of substrate individual(s)
+            substrate_list.extend([i.is_a.first().label.first() for i in sub_ind])
+        
+        #TODO: split for arrhenius kinetic (default) and custom reaction kinetics
+        #-> iterating kin_indv -- <has role in modeling> --> reactions
+        
+        for kin_ind in kin_indv:
+            react_list = kin_ind.RO_0003301
+            #print(react_list)
+            for reaction in react_list: #enz_dict["reaction_dict"]:
+                kr1 = sim.CreateKineticReaction(reaction.id.first(), "", comps, dorders, rorders, substrate_list[0], "Mixture", "Molar Fraction", "mol/m3", "mol/[m3.s]", 0.5, 0.0, 0.0, 0.0, "", "")  
+                sim.AddReaction(kr1)
+                sim.AddReactionToSet(kr1.ID, "DefaultSet", True, 0)   
+                
+                # add py-script for own kinetics Equation:
+                script_name =kr1.ID# reaction.label.first()#enz_dict["reaction_dict"][reaction.id.first()]["name"]
+                
+                #sim = createScript(sim,script_name)                
+                sim.Scripts.Add(script_name, FlowsheetSolver.Script())
+                
+                #custom_reac = sim.GetReaction(kr1.ID)
+                custom_reac_script = sim.Scripts[script_name]
+                custom_reac_script.Title = script_name
+                custom_reac_script.ID = str(i)
+                
+                reac_inlet_name = ""
+                
+                #first Reactor in reactor_list --output of (RO_0002353)-> Input of Reactor individual
+                # reactor_list.RO_0002353
+                if reactor_list:
+                    for reactor in reactor_list:
+                        for inp_stream in reactor.RO_0002353:
+                            if inp_stream.is_a.first().label.first() == "MaterialStream": 
+                                reac_inlet_name = inp_stream.label.first()
+                                #print("Reactor found. Inlet stream name "+reac_inlet_name)                              
+                
+                if reac_inlet_name == "": 
+                    print("Warning: No Reactor found to apply kinetics to!")
+                
+                #print(reac_inlet_name)
+                    
+                catalysts = kin_ind.RO_0000052 # characteristic of
+                code_str = "import math\n"# +"reactor = Flowsheet.GetFlowsheetSimulationObject('{}')\n".format(reactor_name)
+                code_str += """
+obj = Flowsheet.GetFlowsheetSimulationObject('{}')
+
+n = obj.GetPhase('Overall').Properties.molarflow # mol/s
+Q = obj.GetPhase('Overall').Properties.volumetric_flow # m3/s
+
+concentration_flow = n/Q # mol/m3
+
+# Access to compound list
+values = obj.GetOverallComposition()
+compsids = obj.ComponentIds
+comp_dict = {{}}
+
+for i in range(len(compsids)):
+    comp_dict[compsids[i]] = values[i]
+""".format(reac_inlet_name)
+                if type(catalysts) == owlready2.prop.IndividualValueList: 
+                    for cat in catalysts:
+                        code_str += cat.hasEnzymeML_ID.first() + " = " + "comp_dict['" + cat.is_a.first().label.first() + "']*concentration_flow\n"
+                else:
+                    code_str += catalysts.hasEnzymeML_ID.first() + " = " + "comp_dict['" + catalysts.is_a.first().label.first() + "']*concentration_flow\n"
+                    
+                    
+                reactants = kin_ind.RO_0002233  # has input
+                if type(reactants) == owlready2.prop.IndividualValueList:
+                    for react in reactants:
+                        code_str += react.hasEnzymeML_ID.first() + " = " + "comp_dict['" + react.is_a.first().label.first() + "']*concentration_flow\n"
+                else:
+                    code_str += reactants.hasEnzymeML_ID.first() + " = " + "comp_dict['" + reactants.is_a.first().label.first() + "']*concentration_flow\n"
+       
+                variables = kin_ind.hasVariable
+                if type(variables) == owlready2.prop.IndividualValueList:
+                    for var in variables:
+                        code_str += str(var.label.first()) + " = " + str(var.hasValue.first()) + "\n"
+                else:
+                    code_str += variables.label + " = " + str(variables.hasValue.first()) + "\n"
+                    
+                kin_equation = kin_ind.has_equation.first()
+                code_str += "r =" + kin_equation
+                
+                custom_reac_script.ScriptText = code_str 
+                
+                new_reaction = sim.GetReaction(script_name)  
+                new_reaction.ReactionKinetics = ReactionKinetics(1)
+                new_reaction.ScriptTitle = script_name
+                
+                i +=1
+    ##
+
+
+
 
     errors = interf.CalculateFlowsheet4(sim)
     if (len(errors) > 0):
