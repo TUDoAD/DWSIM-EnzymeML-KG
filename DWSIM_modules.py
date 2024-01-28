@@ -86,7 +86,8 @@ def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
 ##
 
 ##
-def flowsheet_ini(enz_dict, pfd_dict, onto, pfd_iri): 
+def flowsheet_simulation(onto, pfd_iri):
+        #enz_dict, pfd_dict, onto, pfd_iri): 
     working_dir = os.getcwd()
     Directory.SetCurrentDirectory(dwsimpath)
     # Automatisierungsmanager erstellen
@@ -433,42 +434,30 @@ def ini():
     return enz_dict, pfd_dict, onto
 
 ##
-enz_dict, pfd_dict, onto = ini()
-pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
-pfd_iri = pfd_ind.iri
+#enz_dict, pfd_dict, onto = ini()
+#pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
+#pfd_iri = pfd_ind.iri
 
 ##
 def run():
+    enz_dict, pfd_dict, onto = ini()
+    
+    filename = "./DWSIM/ABTS_ox.dwxmz"
+    
+    pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
+    
+    print("Data initialized, ontology loaded...")
     
     pfd_iri = pfd_ind.iri
-    sim, interface, streams = flowsheet_ini(enz_dict,pfd_dict,onto,pfd_iri)
-    filename = "ABTS_ox.dwxmz"
+    sim, interface, streams = flowsheet_simulation(onto,pfd_iri)
+    
+    print("Storing DWSIM-file: "+filename)
     save_simulation(sim,interface,filename)
     
-    #return sim, streams
+    
 ##
 
 #TODO: subprocess?
-#TODO: reconstruct PFD from ontology
-#TODO: set up pipeline for information retrieval from Knowledge gaph
+#TODO: import material streams from simulation into knowledge graph
 
-"""
-pfd_ind = onto.search_one(label = "DWSIM_"+enz_dict["name"])
-pfd_list = pfd_ind.BFO_0000051
 
-for module in pfd_list:
-    if module.is_a[0].label.first() == "MaterialStream":
-        materialstream = module.BFO_0000051
-        for comp in materialstream:
-            mat = comp.RO_0002473.first()
-            subst = mat.is_a
-            role = mat.RO_0000087.first().name
-            print(mat,subst, role)
-    try:
-        if module.RO_0000087.first().name == "product":# has role
-            print(module,module.is_a,module.RO_0000087.first().name)
-    except:
-        pass
-
-##
-"""
