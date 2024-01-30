@@ -1,4 +1,4 @@
-# DWSIM-EnzymeML-KG
+## DWSIM-EnzymeML-KG
 
 This repository contains the code and the MS Excel files (subdirectory [ELNs](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/tree/main/ELNs)) used as data input for the automated generation of process simulations in [DWSIM](https://dwsim.org).
 To obtain the process simulation, the ontology [./ontologies/BaseOntology.owl](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/blob/main/ontologies/BaseOntology.owl) is loaded and extended by the data contained in both Excel-files by the code contained in [ELNs_to_KG_modules.py](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/blob/main/ELNs_to_KG_modules.py).
@@ -13,3 +13,9 @@ The working principle of the code to create the DWSIM-simulation files is depict
 <h1 align="center">
 <img src="./img/FigureB.png" width="50%" />
 </h1>
+
+## Installation
+Needed modules (list may not be complete!):
+`pip install owlready2
+pip install pythonnet
+`
