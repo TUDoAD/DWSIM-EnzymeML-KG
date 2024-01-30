@@ -425,8 +425,21 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
         dwsim_obj = streams[stream].GetAsObject()
         onto_obj = pfd_dict[stream]
         
-        stream_comp_ids = list(dwsim_obj.ComponentIds)
-        stream_composition = list(dwsim_obj.GetOverallComposition())
+        if "MaterialStream" in onto_obj.is_a.first().label:
+            stream_comp_ids = list(dwsim_obj.ComponentIds)
+            stream_composition = list(dwsim_obj.GetOverallComposition())
+            molar_flow = dwsim_obj.GetMolarFlow()
+            volume_flow = dwsim_obj.GetVolumetricFlow()
+            
+            f = molar_flow / volume_flow /1000 # mol/L
+            for phase_no in range(dwsim_obj.GetNumPhases()):
+                print("phase"+ str(phase_no) + " " + str([i*f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
+            
+            for i in range(len(stream_comp_ids)):
+                print(str(stream_comp_ids[i]) + " : " + str(stream_composition[i]))
+    #ALEX:
+    # 
+    
     
     """
     mol/L = mol/s / (m^3/s)  *composition
