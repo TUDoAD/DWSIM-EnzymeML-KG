@@ -6,9 +6,8 @@ This yields a knowledge graph ([./ontologies/KG-DWSIM_EnzML_ELN.owl](https://git
 
 The overall workflow is depicted below, showing the overall data integration. Starting with laboratory data recorded in EnzymeML ELNs on enzyme kinetics and reaction rates investigations of enzymes, data is read in with Python and stored in a structured manner with the help of a tailored ontology as a knowledge graph. 
 Then, the recorded data is used to automatically generate process simulations, resulting in further insights and eased workflow from laboratory to process simulation data. 
+![Depiction of the overall process.](img/FigureA.png?raw=true "Depiction of the overall process.")
 
 
-
-
-![Overall](img/FigureA.png?raw=true "Depiction of the overall process.")
-![]()
+The working principle of the code to create the DWSIM-simulation files is depicted in the figure below. This is executed by the `run()` function contained in [DWSIM_modules.py](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/blob/main/DWSIM_modules.py)
+![General Procedure of the automated data integration and execution of the process simulation in DWSIM](img/FigureB.png?raw=true "General Procedure of the automated data integration and execution of the process simulation in DWSIM")
