@@ -11,5 +11,5 @@ Then, the recorded data is used to automatically generate process simulations, r
 
 The working principle of the code to create the DWSIM-simulation files is depicted in the figure below. This is executed by the `run()` function contained in [DWSIM_modules.py](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/blob/main/DWSIM_modules.py)
 <h1 align="center">
-[<img src="./img/FigureB.png" width="50%" />](https://raw.githubusercontent.com/TUDoAD/DWSIM-EnzymeML-KG/main/img/FigureB.png)
-<\h1>
+<img src="./img/FigureB.png" width="50%" />
+</h1>
