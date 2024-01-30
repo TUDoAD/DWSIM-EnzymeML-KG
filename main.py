@@ -9,4 +9,5 @@ import ELNs_to_KG_modules
 import DWSIM_modules
 
 ELNs_to_KG_modules.run()
+DWSIM_modules.run()
 
