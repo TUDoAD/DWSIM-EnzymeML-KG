@@ -16,6 +16,8 @@ The working principle of the code to create the DWSIM-simulation files is depict
 
 ## Installation
 Needed modules (list may not be complete!):
-`pip install owlready2
+```
+pip install owlready2
 pip install pythonnet
-`
+```
+
