@@ -7,25 +7,26 @@ Created on Thu Jan 12 15:04:30 2024
 
 import os
 import uuid
-
 import clr 
 
 from owlready2 import *
 
-# Importiere Python Module
 import pythoncom
 import System
 pythoncom.CoInitialize()
 
 from System.IO import Directory, Path, File
-from System import String, Environment
-from System.Collections.Generic import Dictionary
+#from System import String, Environment
+#from System.Collections.Generic import Dictionary
 
 import ELNs_to_KG_modules
-# Path to DWSIM-Directory
 
+#from enum import Enum
+# Path to DWSIM-Directory
 dwsimpath = os.getenv('LOCALAPPDATA') + "\\DWSIM8\\"
 
+
+## import DWSIM modules / DLLs
 clr.AddReference(dwsimpath + "DWSIM")
 clr.AddReference(dwsimpath + "CapeOpen.dll")
 clr.AddReference(dwsimpath + "DWSIM.Automation.dll")
@@ -44,13 +45,13 @@ clr.AddReference("System.Core")
 clr.AddReference("System.Windows.Forms")
 clr.AddReference(dwsimpath + "Newtonsoft.Json")
 
+import DWSIM
+from DWSIM.Automation import Automation3
 from DWSIM.Interfaces.Enums.GraphicObjects import ObjectType
 from DWSIM.Thermodynamics import Streams, PropertyPackages
 from DWSIM.UnitOperations import UnitOperations, Reactors
-from DWSIM.Automation import Automation3
-from DWSIM.GlobalSettings import Settings
+#from DWSIM.GlobalSettings import Settings
 
-from enum import Enum
 # Paket, um Kalkulationen durchzuführen 
 from DWSIM import FlowsheetSolver
 # Paket, um ein neues Fließbild zu erstellen und darauf zuzugreifen
@@ -59,7 +60,7 @@ from System import *
 
 from System.Linq import *
 from DWSIM import *
-#from DWSIM import FormPCBulk
+
 from DWSIM.Interfaces import *
 from DWSIM.Interfaces.Enums import*
 
@@ -132,9 +133,9 @@ def flowsheet_simulation(onto, pfd_iri):
     #loading components into DWSIM-simulation and filling dictionaries regarding
     # stoichiometric coefficients and reaction order coeffs.
     
-    comps = Dictionary[str, float]()
-    dorders = Dictionary[str, float]()
-    rorders = Dictionary[str, float]()
+    comps = System.Collections.Generic.Dictionary[str, float]()
+    dorders = System.Collections.Generic.Dictionary[str, float]()
+    rorders = System.Collections.Generic.Dictionary[str, float]()
     
     
     for comp in comp_list:
@@ -158,7 +159,7 @@ def flowsheet_simulation(onto, pfd_iri):
             kin_indv = comp["subst_indv"].RO_0000053 
             substrate_indv = []
             for indv in kin_indv: # might be more than one substrate
-                # has input -> input = substrate of reaction    
+                # has input-> input = substrate of reaction    
                 substrate_indv.append(indv.RO_0002233)
     
     ## Add streams to DWSIM:
@@ -170,8 +171,8 @@ def flowsheet_simulation(onto, pfd_iri):
     # Start at y = 0, x=0
     y_axis = 0
     for stream_indv in process_streams:
-        # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
-        if not stream_indv.RO_0002353:
+        # if the property preceded by () output of (RO_0002353) returns an empty list -> Start of the flowsheet
+        if not stream_indv.BFO_0000062:#RO_0002353:
             #print(stream_indv.label)
             stream_type = stream_indv.is_a[0].label.first()
             stream_name = stream_indv.label.first()
@@ -223,7 +224,7 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
         #if not stream_indv.RO_0002353: # output of -> starting streams
-        next_modules = stream_indv.RO_0002234 # has output
+        next_modules = stream_indv.BFO_0000063 # precedes     #RO_0002234 # has output
         for module in next_modules:                
             module_type = module.is_a[0].label.first()
             module_name = module.label.first()
@@ -245,7 +246,7 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                 x_axis += 100
                 
                 # take a look on next stream, going out from last module
-                next_streams = module.RO_0002234
+                next_streams = module.BFO_0000063
                 for stream in next_streams:
                     stream_type = stream.is_a[0].label.first()
                     stream_name = stream.label.first()
@@ -267,8 +268,8 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
         obj_name = pfd_obj.label.first()  
         obj_1 = streams[obj_name].GetAsObject().GraphicObject
         
-        output_objects = pfd_obj.RO_0002234 # has_output -> obj_1 connected to obj_2
-        input_objects = pfd_obj.RO_0002353 # output of -> obj_2 connected to obj_1
+        output_objects = pfd_obj.BFO_0000063 # precedes -> obj_1 connected to obj_2
+        input_objects = pfd_obj.BFO_0000062 # preceded by -> obj_2 connected to obj_1
         
         for out_obj in output_objects:
             obj_2_name = out_obj.label.first()
@@ -333,10 +334,10 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                 reac_inlet_name = ""
                 
                 #first Reactor in reactor_list --output of (RO_0002353)-> Input of Reactor individual
-                # reactor_list.RO_0002353
+                # reactor_list.RO_0002353 --> BFO_0000062 (preceded by)
                 if reactor_list:
                     for reactor in reactor_list:
-                        for inp_stream in reactor.RO_0002353:
+                        for inp_stream in reactor.BFO_0000062: #.RO_0002353:
                             if inp_stream.is_a.first().label.first() == "MaterialStream": 
                                 reac_inlet_name = inp_stream.label.first()
                                 #print("Reactor found. Inlet stream name "+reac_inlet_name)                              
@@ -371,7 +372,7 @@ for i in range(len(compsids)):
                     code_str += catalysts.hasEnzymeML_ID.first() + " = " + "comp_dict['" + catalysts.is_a.first().label.first() + "']*concentration_flow\n"
                     
                     
-                reactants = kin_ind.RO_0002233  # has input
+                reactants = kin_ind.RO_0002233 #BFO_0000062 #preceded by  #RO_0002233  # has input
                 if type(reactants) == owlready2.prop.IndividualValueList:
                     for react in reactants:
                         code_str += react.hasEnzymeML_ID.first() + " = " + "comp_dict['" + react.is_a.first().label.first() + "']*concentration_flow\n"
@@ -421,6 +422,8 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
     for i in pfd_list:
         pfd_dict[i.label.first()]=i
     
+    
+    
     for stream in streams:
         dwsim_obj = streams[stream].GetAsObject()
         onto_obj = pfd_dict[stream]
@@ -428,17 +431,27 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
         if "MaterialStream" in onto_obj.is_a.first().label:
             stream_comp_ids = list(dwsim_obj.ComponentIds)
             stream_composition = list(dwsim_obj.GetOverallComposition())
-            molar_flow = dwsim_obj.GetMolarFlow()
-            volume_flow = dwsim_obj.GetVolumetricFlow()
-            
-            f = molar_flow / volume_flow /1000 # mol/L
+#            molar_flow = dwsim_obj.GetMolarFlow()
+#            volume_flow = dwsim_obj.GetVolumetricFlow()
+#            f = molar_flow / volume_flow /1000 # mol/L
+
             for phase_no in range(dwsim_obj.GetNumPhases()):
-                print("phase"+ str(phase_no) + " " + str([i*f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
-            
-            for i in range(len(stream_comp_ids)):
-                print(str(stream_comp_ids[i]) + " : " + str(stream_composition[i]))
+                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow()
+                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow()
+                
+                if mol_flow and vol_flow:                
+                    f = mol_flow / vol_flow /1000 # mol/L
+                    print("phase"+str(phase_no)+"_concentration: " + str([i * f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
+                    print("phase"+ str(phase_no) + " " + str([i * f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
+                    #print("mol_flow: "+ str(mol_flow))
+                    
+                for i in range(len(stream_comp_ids)):
+                    print(str(stream_comp_ids[i]) + " : " + str(stream_composition[i]))
+        
+    
+    
     #ALEX:
-    # 
+    # Stoffstrom aus Phase mit rein nehmen!
     
     
     """
@@ -511,7 +524,7 @@ def run():
     print("Storing Knowledge Graph: "+filename_KG)
     onto.save(file =filename_KG, format ="rdfxml")
     
-    return streams, pfd_list
+    #return streams, pfd_list
 ##
 
 #TODO: subprocess?

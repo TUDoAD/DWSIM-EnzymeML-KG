@@ -570,8 +570,8 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
 	   "DWSIM-object type" as subclass of http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingModule
     2. Adds process modules as individual of their respective 
 	   classes based on their dict-key
-    3. Adds relation process_module_indv -- has_output -> process_module_indv 
-	   for each dict-entry "connection" (has output: http://purl.obolibrary.org/obo/RO_0002234)
+    3. Adds relation process_module_indv -- precedes -> process_module_indv 
+	   for each dict-entry "connection" (precedes: http://purl.obolibrary.org/obo/BFO_0000063)
     4. Searches for Substance names in subdicts of process modules
     -> "EntersAtObject" determines individual of the PFD, 
 	    where the substance enters
@@ -631,7 +631,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
     
     ##        
     # Connect the process module individuals based on their dict-entry "connection"
-    # with the relation "has output" RO_0002234
+    # with the relation "precedes" BFO_0000063
     for proc_mod in list(PFD_dict.keys()):
         # check, if there are any process modules connected to the current selected one
         if type(PFD_dict[proc_mod]["connection"]) == str and str(PFD_dict[proc_mod]["connection"]).strip():
@@ -641,7 +641,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                 proc_indv = onto.search_one(iri = "*{}")
                 con_proc_indv = onto.search_one(iri = "*{}")
                 
-                proc_indv.RO_0002234.append(con_proc_indv)
+                proc_indv.BFO_0000063.append(con_proc_indv)
 
             """.format(proc_indv_name, connected_indv_name)
             
