@@ -416,6 +416,9 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
     #pfd_list = list of all individuals connected to pfd_iri in Knowledge Graph
     #pfd_iri = IRI of PFD object 
     
+    for datProp in ["overallMolarFlow","hasMolarFlowUnit"]:
+        onto = ELNs_to_KG_modules.datProp_from_str(datProp,onto)
+        
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_dict = {} 
     
@@ -434,10 +437,11 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
             molar_flow = dwsim_obj.GetMolarFlow()
             volume_flow = dwsim_obj.GetVolumetricFlow()
             
+            ## get phase information
             for phase_no in range(dwsim_obj.GetNumPhases()):
             
-                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow()
-                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow()
+                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow() #mol/s
+                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow() #m3/s
                 
                 #print(onto_obj.label)
                 if mol_flow and vol_flow:                
@@ -452,7 +456,28 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                         
                     
                     phase_dict[str(onto_obj.label.first())] = {str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName): conc_list}
-
+            ##
+            ## add information to ontology
+            onto_obj.overallVolumetricFlow = [volume_flow]
+            onto_obj.hasVolumetricFlowUnit = ["m3/s"]
+            onto_obj.overallMolarFlow = [molar_flow]
+            onto_obj.hasMolarFlowUnit = ["mol/s"]
+            
+            if onto_obj.BFO_0000051: # has part (partial material stream)
+                for submat_stream in onto_obj.BFO_0000051:
+                    material_label = submat_stream.RO_0002473[0].is_a[0].label.first()
+                    #submat_stream.label.first()
+                    conc_dict = phase_dict[onto_obj.label.first()]
+                   # if 
+                    #    phase_dict[submat_stream.label.first()] # the composition dict, gives composition etc 
+                        
+                        
+            else:
+                #create new individuals etc.
+                pass
+        
+            
+        
     print(phase_dict)
     #ALEX:
     # 
