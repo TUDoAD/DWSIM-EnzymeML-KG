@@ -418,6 +418,9 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
     
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_dict = {} 
+    
+    phase_dict = {}
+    
     for i in pfd_list:
         pfd_dict[i.label.first()]=i
     
@@ -431,12 +434,26 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
             molar_flow = dwsim_obj.GetMolarFlow()
             volume_flow = dwsim_obj.GetVolumetricFlow()
             
-            f = molar_flow / volume_flow /1000 # mol/L
             for phase_no in range(dwsim_obj.GetNumPhases()):
-                print("phase"+ str(phase_no) + " " + str([i*f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
             
-            for i in range(len(stream_comp_ids)):
-                print(str(stream_comp_ids[i]) + " : " + str(stream_composition[i]))
+                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow()
+                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow()
+                
+                #print(onto_obj.label)
+                if mol_flow and vol_flow:                
+                    f = mol_flow / vol_flow /1000 # mol/L
+                    #onto_obj.
+                    conc_list = []
+                    
+                    for i in range(len(list(dwsim_obj.GetPhaseComposition(int(phase_no))))):
+                        conc_dict = {}
+                        conc_dict = {stream_comp_ids[i] : f * list(dwsim_obj.GetPhaseComposition(int(phase_no)))[i]}
+                        conc_list.append(conc_dict)
+                        
+                    
+                    phase_dict[str(onto_obj.label.first())] = {str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName): conc_list}
+
+    print(phase_dict)
     #ALEX:
     # 
     
