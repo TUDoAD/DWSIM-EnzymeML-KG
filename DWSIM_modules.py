@@ -416,7 +416,7 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
     #pfd_list = list of all individuals connected to pfd_iri in Knowledge Graph
     #pfd_iri = IRI of PFD object 
     
-    for datProp in ["overallMolarFlow","hasMolarFlowUnit"]:
+    for datProp in ["overallMolarFlow","hasMolarFlowUnit", "hasMolarity"]:
         onto = ELNs_to_KG_modules.datProp_from_str(datProp,onto)
         
     pfd_ind = onto.search_one(iri = pfd_iri)
@@ -463,6 +463,8 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
             onto_obj.overallMolarFlow = [molar_flow]
             onto_obj.hasMolarFlowUnit = ["mol/s"]
             
+            
+            #ALEX:
             if onto_obj.BFO_0000051: # has part (partial material stream)
                 for submat_stream in onto_obj.BFO_0000051:
                     material_label = submat_stream.RO_0002473[0].is_a[0].label.first()
@@ -470,16 +472,32 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     conc_dict = phase_dict[onto_obj.label.first()]
                    # if 
                     #    phase_dict[submat_stream.label.first()] # the composition dict, gives composition etc 
-                        
+
+
+                ##TODO: do this to the substreams of the process stream, then attach 
+                # phase_comp = phase_dict[onto_obj.label.first()][phase] 
+                # phase_comp = list of dicts [{'ABTS_ox': 0.0}, {'Laccase': 1.1500199382988784e-05}, {'ABTS_red': 0.0009616546035775095}, {'Water': 55.01433572428292}, {'Oxygen': 0.0}]
+                # for each entry in phase_comp -> search key in material_labels (above) and assert
+                # submat_stream.hasMolarity = [phase_comp[key]]
+                for phase in phase_dict[onto_obj.label.first()]:
+                    print(phase)
+                    if "Liquid" in phase:
+                        onto_obj.hasAggregateState.append("Liquid")
+                    else:
+                        onto_obj.hasAggregateState.append(phase)# Vapor
                         
             else:
                 #create new individuals etc.
+                for phase in phase_dict[onto_obj.label.first()]:
+                    print(phase)
+                    if "Liquid" in phase:
+                        onto_obj.hasAggregateState.append("Liquid")
+                    else:
+                        onto_obj.hasAggregateState.append(phase) #Vapor
                 pass
         
-            
-        
-    print(phase_dict)
-    #ALEX:
+    #print(phase_dict)
+
     # 
     
     

@@ -582,6 +582,10 @@
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolarFlowUnit</rdfs:label>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#hasPhase">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasPhase</rdfs:label>
+</owl:DatatypeProperty>
+
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/inchi"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/inchikey"/>
@@ -1789,6 +1793,7 @@ given_name: Katrin , family_name: Rosenthal, mail: katrin.rosenthal@tu-dortmund.
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.33333333333333e-08</overallVolumetricFlow>
   <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.004584609073257156</overallMolarFlow>
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</hasPhase>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_b0ee7df5_2c69_4767_8cbb_4eab46ac8337">
@@ -1851,6 +1856,7 @@ given_name: Katrin , family_name: Rosenthal, mail: katrin.rosenthal@tu-dortmund.
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5e-08</overallVolumetricFlow>
   <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.9584243093019674e-06</overallMolarFlow>
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</hasPhase>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Reactant_2_Oxygen">
@@ -1876,6 +1882,8 @@ given_name: Katrin , family_name: Rosenthal, mail: katrin.rosenthal@tu-dortmund.
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
   <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.004586567497566459</overallMolarFlow>
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</hasPhase>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</hasPhase>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_e59c2ef8_d496_453d_aa29_9cd2ad273e97">
@@ -1908,6 +1916,8 @@ given_name: Katrin , family_name: Rosenthal, mail: katrin.rosenthal@tu-dortmund.
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
   <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.004586576916744849</overallMolarFlow>
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</hasPhase>
+  <hasPhase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</hasPhase>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_fb612017_26bd_4784_b174_cee410ba88f9">
