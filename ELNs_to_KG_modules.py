@@ -629,13 +629,15 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                         enz_id = eln_dict["substances"][prop_key]["hasEnzymeML_ID"]
                     except:
                         enz_id = ''
-                        
+                    
+                    combined_ind_uuid = "PFD_" + str(uuid.uuid4()).replace("-","_")
                     combined_ind_name = proc_mod + '_' + prop_key
                     
                     # Add dataProperties of subdictionaries, mostly containing material streams of the substances
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
                         onto = datProp_from_str(key, onto)
                     
+                    #TODO: Alex
                     # Add individual for each proc+substance and connect it to individuals                    
                     codestring = """with onto:
                         proc_indv = onto.search_one(iri = "*{}") 
@@ -648,7 +650,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                         proc_subst_indv.RO_0002473.append(subst_indv)                           
                         proc_subst_indv.BFO_0000050.append(proc_indv)
                         
-                        """.format(uuid_dict[proc_mod],prop_key,enz_id,combined_ind_name,combined_ind_name)
+                        """.format(uuid_dict[proc_mod],prop_key,enz_id,combined_ind_uuid,combined_ind_name)
                     
                     # add data properties for newly created individual
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
