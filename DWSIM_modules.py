@@ -440,8 +440,6 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                 #print(onto_obj.label)
                 if mol_flow and vol_flow:                
                     f = mol_flow / vol_flow /1000 # mol/L
-                    #onto_obj.
-                    conc_list = []
                     conc_dict = {}
                     for i in range(len(list(dwsim_obj.GetPhaseComposition(int(phase_no))))):
                         conc_dict[stream_comp_ids[i]] = f * list(dwsim_obj.GetPhaseComposition(int(phase_no)))[i]
@@ -449,14 +447,16 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     
                     phase_dict[str(onto_obj.label.first())] = {str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName): conc_dict}
             ##
+            
+            
             ## add information to ontology
             onto_obj.overallVolumetricFlow = [str(volume_flow)]
             onto_obj.hasVolumetricFlowUnit = ["m3/s"]
             onto_obj.overallMolarFlow = [str(molar_flow)]
             onto_obj.hasMolarFlowUnit = ["mol/s"]
-            
-            #print(phase_dict)
-            #ALEX:
+            #
+
+            # add Molarities to the sub-material streams
             if onto_obj.BFO_0000051: # has part (partial material stream)
                 for submat_stream in onto_obj.BFO_0000051:
                     material_label = submat_stream.RO_0002473[0].is_a[0].label.first()
@@ -485,7 +485,8 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     key_list = conc_dict[phase].keys()
                     
                     for subst in key_list:
-                        onto, substream = onto_substream_from_name(onto, stream_name, subst)
+                        onto, substream_uri = onto_substream_from_name(onto, stream_name, subst)
+                        substream = onto.search_one(iri = substream_uri)
                         
                         onto_obj.BFO_0000051.append(substream)#hasPart
                         ## search for the correct substance individual in pfd_dict
@@ -495,8 +496,8 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     
                     # add molarities
                     if material_label in key_list:
-                        submat_stream.hasMolarity = [conc_dict[phase][material_label]]
-                        submat_stream.hasMolarityUnit = ["mol/L"]
+                        substream.hasMolarity = [conc_dict[phase][material_label]]
+                        substream.hasMolarityUnit = ["mol/L"]
                 
                     # assert phase
                     if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
@@ -512,8 +513,9 @@ def onto_substream_from_name(onto, stream_name, subst_name):
     uuid_str = "PFD_" + str(uuid.uuid4()).replace("-","_")
     substream = onto.search_one(label = "MaterialStream")(uuid_str)
     substream.label = stream_name + "_" + subst_name
+    substream_iri = substream.iri  
     
-    return onto, substream
+    return onto, substream_iri
 
 
 
