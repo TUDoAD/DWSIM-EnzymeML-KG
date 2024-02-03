@@ -490,29 +490,31 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                 
                 for phase in conc_dict:
                     key_list = conc_dict[phase].keys()
-                    print(phase)
+                    
                     for subst in key_list:
-                        onto, substream_uri = onto_substream_from_name(onto, stream_name, subst)
-                        substream = onto.search_one(iri = substream_uri)
+                        #only extend, if Molarity != 0
+                        if conc_dict[phase][subst] != 0:
+                            onto, substream_uri = onto_substream_from_name(onto, stream_name, subst)
+                            substream = onto.search_one(iri = substream_uri)
+                            
+                            onto_obj.BFO_0000051.append(substream)#hasPart
+                            ## search for the correct substance individual in pfd_dict
+                            for key in pfd_dict:
+                                if pfd_dict[key].is_a.first().label.first() == subst:
+                                    substream.RO_0002473.append(pfd_dict[key]) #consists primarily of
                         
-                        onto_obj.BFO_0000051.append(substream)#hasPart
-                        ## search for the correct substance individual in pfd_dict
-                        for key in pfd_dict:
-                            if pfd_dict[key].is_a.first().label.first() == subst:
-                                substream.RO_0002473.append(pfd_dict[key]) #consists primarily of
-                    
-                        # add molarities
-                        if subst in key_list:
-                            substream.hasMolarity = [str(conc_dict[phase][subst])]
-                            substream.hasMolarityUnit = ["mol/L"]
-                    
-                        # assert phase
-                        if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
-                            substream.hasAggregateState.append("Liquid")
-                        else:
-                            substream.hasAggregateState.append(phase)# Vapor,..
+                            # add molarities
+                            if subst in key_list:
+                                substream.hasMolarity = [str(conc_dict[phase][subst])]
+                                substream.hasMolarityUnit = ["mol/L"]
+                        
+                            # assert phase
+                            if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
+                                substream.hasAggregateState.append("Liquid")
+                            else:
+                                substream.hasAggregateState.append(phase)# Vapor,..
                    
-    return onto,phase_dict
+    return onto
 
 ##
 
@@ -542,9 +544,7 @@ def simulate_in_subprocess():
 
 ##
 def ini():
-    enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
-    eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-    onto_str ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
+
     
     enz_dict, pfd_dict, onto = data_ini(enz_str, eln_str, onto_str)
     return enz_dict, pfd_dict, onto
@@ -553,8 +553,12 @@ def ini():
 
 
 ##
-def run():
-    enz_dict, pfd_dict, onto = ini()
+def run():#filename_DWSIM,filename_KG):
+    enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
+    eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
+    onto_str ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
+    
+    enz_dict, pfd_dict, onto = data_ini(enz_str,eln_str,onto_str)
     
     filename_DWSIM = "./DWSIM/ABTS_ox.dwxmz"
     filename_KG = "./ontologies/KG-DWSIM_EnzML_ELN_output.owl"
@@ -570,11 +574,9 @@ def run():
     save_simulation(sim,interface,filename_DWSIM)
     
     print("Integrating new information into Knowledge Graph")
-    onto,stream_dict = extend_knowledgegraph(sim, onto, streams, pfd_list, pfd_iri)
+    onto = extend_knowledgegraph(sim, onto, streams, pfd_list, pfd_iri)
     print("Storing Knowledge Graph: "+filename_KG)
     onto.save(file =filename_KG, format ="rdfxml")
     
-    return stream_dict
-
 
 
