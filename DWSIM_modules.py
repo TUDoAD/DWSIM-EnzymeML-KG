@@ -553,15 +553,11 @@ def ini():
 
 
 ##
-def run():#filename_DWSIM,filename_KG):
-    enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
-    eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-    onto_str ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
+def run(filename_DWSIM,enzml_XLSX_path,pfd_XLSX_path,KG_path):#filename_DWSIM,filename_KG):
+
+    enz_dict, pfd_dict, onto = data_ini(enzml_XLSX_path,pfd_XLSX_path,KG_path)
     
-    enz_dict, pfd_dict, onto = data_ini(enz_str,eln_str,onto_str)
-    
-    filename_DWSIM = "./DWSIM/ABTS_ox.dwxmz"
-    filename_KG = "./ontologies/KG-DWSIM_EnzML_ELN_output.owl"
+    filename_KG = KG_path.replace(".owl","_output.owl")
     
     pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
     
