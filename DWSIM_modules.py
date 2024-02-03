@@ -538,14 +538,14 @@ def save_simulation(sim,interface, filename):
 
 
 ##
-def run(filename_DWSIM,eln_IRI,path,KG_path):#filename_DWSIM,filename_KG):
+def run(filename_DWSIM,eln_IRI,KG_path):#filename_DWSIM,filename_KG):
 
     onto = owlready2.get_ontology(KG_path).load()
     onto.name = "onto"
     
     filename_KG = KG_path.replace(".owl","_output.owl")
     
-    pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
+    pfd_ind = onto.search_one(iri=eln_IRI)
     
     print("Data initialized, ontology loaded...")
     

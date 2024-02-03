@@ -808,7 +808,7 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, extended_ontology_path
     onto.save(file=extended_ontology_path, format="rdfxml")
     
     
-    return eln_iri
+    return PFD_uuid
 
 
 
