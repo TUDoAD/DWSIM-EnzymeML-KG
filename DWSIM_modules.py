@@ -77,13 +77,6 @@ from DWSIM.Thermodynamics.PropertyPackages.Auxiliary import *
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization import GenerateCompounds
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization.Methods import *
 
-###
-def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
-    onto = owlready2.get_ontology(ontology_path).load()
-    onto.name = "onto"
-    enzdict, eln_dict = ELNs_to_KG_modules.eln_to_dict(enzymeML_ELN_path,process_ELN_path)
-    return enzdict, eln_dict, onto
-##
 
 ##
 def flowsheet_simulation(onto, pfd_iri):
@@ -538,14 +531,14 @@ def save_simulation(sim,interface, filename):
 
 
 ##
-def run(filename_DWSIM,eln_IRI,KG_path):#filename_DWSIM,filename_KG):
+def run(filename_DWSIM,PFD_uuid,KG_path):#filename_DWSIM,filename_KG):
 
     onto = owlready2.get_ontology(KG_path).load()
     onto.name = "onto"
     
     filename_KG = KG_path.replace(".owl","_output.owl")
     
-    pfd_indv = onto.search_one(iri = "*"+PFD_uuid)
+    pfd_ind = onto.search_one(iri = "*"+PFD_uuid)
     
     print("Data initialized, ontology loaded...")
     

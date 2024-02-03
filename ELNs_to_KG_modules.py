@@ -819,9 +819,9 @@ def run(enzml_XLSX_path,pfd_XLSX_path, base_ontology_path, extended_ontology_pat
    
    onto = base_ontology_extension(base_ontology_path)
 
-   eln_IRI = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, extended_ontology_path)
+   PFD_uuid = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, extended_ontology_path)
    
-   return eln_IRI
+   return PFD_uuid
 
 def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
     enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzymeML_ELN_path)

@@ -259,200 +259,200 @@
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isImportedAs</rdfs:label>
 </owl:DatatypeProperty>
 
-<owl:DatatypeProperty rdf:about="#has_sequence">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_sequence</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasIdealGasEnthalpyOfFormation_25Celsius">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasEnthalpyOfFormation_25Celsius</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasRackettCompressibility">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasRackettCompressibility</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hascriticalCompressibility">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hascriticalCompressibility</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasMolecularWeight">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolecularWeight</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasCriticalTemperature">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalTemperature</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasEC_Number">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasEC_Number</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasStoichiometricCoefficient">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasStoichiometricCoefficient</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasCriticalVolume">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalVolume</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasIdealGasEnthalpyOfFormation_25Celsius_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasEnthalpyOfFormation_25Celsius_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasFormula">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasFormula</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasDirect_OrderCoefficient">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasDirect_OrderCoefficient</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasChao_SeaderLiquidMolarVolume">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderLiquidMolarVolume</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#has_pH_Optimum">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_pH_Optimum</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#has_nbps_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_nbps_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasChao_SeaderAcentricFactor">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderAcentricFactor</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasAcentricFactor">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasAcentricFactor</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasDWSIM_ID">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasDWSIM_ID</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#isModified">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isModified</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasChao_SeaderSolubilityParameter">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderSolubilityParameter</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#isCoolPropSupported">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isCoolPropSupported</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#has_function">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_function</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#has_organism">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_organism</rdfs:label>
-</owl:DatatypeProperty>
-
 <owl:DatatypeProperty rdf:about="#isSalt">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isSalt</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasCriticalPressure">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalPressure</rdfs:label>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="#hasSourceOrganism">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasSourceOrganism</rdfs:label>
 </owl:DatatypeProperty>
 
-<owl:DatatypeProperty rdf:about="#inDWSIMdatabase">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">inDWSIMdatabase</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasTemperature_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasTemperature_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasRelativeDensities">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasRelativeDensities</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#isSolid">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isSolid</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasCriticalPressure_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalPressure_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
 <owl:DatatypeProperty rdf:about="#has_role">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_role</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasMolecularWeight_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolecularWeight_Unit</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasEnzymeML_ID">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasEnzymeML_ID</rdfs:label>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="#isBlackOil">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isBlackOil</rdfs:label>
 </owl:DatatypeProperty>
 
-<owl:DatatypeProperty rdf:about="#hasTempOptimum">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasTempOptimum</rdfs:label>
+<owl:DatatypeProperty rdf:about="#hasCriticalPressure">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalPressure</rdfs:label>
 </owl:DatatypeProperty>
 
-<owl:DatatypeProperty rdf:about="#hasCriticalVolume_Unit">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalVolume_Unit</rdfs:label>
+<owl:DatatypeProperty rdf:about="#hasChao_SeaderSolubilityParameter">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderSolubilityParameter</rdfs:label>
 </owl:DatatypeProperty>
 
-<owl:DatatypeProperty rdf:about="#isHydratedSalt">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isHydratedSalt</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasReverse_OrderCoefficient">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasReverse_OrderCoefficient</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#isIon">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isIon</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasSMILES">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasSMILES</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#kineticDescription">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kineticDescription</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#isF_PropsSupported">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isF_PropsSupported</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#hasIdealGasGibbsEnergyOfFormation_25Celsius">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasGibbsEnergyOfFormation_25Celsius</rdfs:label>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="#has_ecnumber">
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_ecnumber</rdfs:label>
+<owl:DatatypeProperty rdf:about="#hasRackettCompressibility">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasRackettCompressibility</rdfs:label>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="#has_nbps">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_nbps</rdfs:label>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#hasEC_Number">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasEC_Number</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasTempOptimum">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasTempOptimum</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasEnzymeML_ID">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasEnzymeML_ID</rdfs:label>
+</owl:DatatypeProperty>
+
 <owl:DatatypeProperty rdf:about="#hasChao_SeaderSolubilityParameter_Unit">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderSolubilityParameter_Unit</rdfs:label>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#hasCriticalVolume_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalVolume_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasStoichiometricCoefficient">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasStoichiometricCoefficient</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCriticalTemperature">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalTemperature</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isSolid">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isSolid</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDirect_OrderCoefficient">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasDirect_OrderCoefficient</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_function">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_function</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCriticalVolume">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalVolume</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasChao_SeaderLiquidMolarVolume">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderLiquidMolarVolume</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isIon">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isIon</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasIdealGasEnthalpyOfFormation_25Celsius_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasEnthalpyOfFormation_25Celsius_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasChao_SeaderAcentricFactor">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasChao_SeaderAcentricFactor</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasSMILES">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasSMILES</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasReverse_OrderCoefficient">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasReverse_OrderCoefficient</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isHydratedSalt">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isHydratedSalt</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasAcentricFactor">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasAcentricFactor</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hascriticalCompressibility">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hascriticalCompressibility</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isCoolPropSupported">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isCoolPropSupported</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_organism">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_organism</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasIdealGasGibbsEnergyOfFormation_25Celsius">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasGibbsEnergyOfFormation_25Celsius</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_nbps_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_nbps_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasTemperature_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasTemperature_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasFormula">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasFormula</rdfs:label>
+</owl:DatatypeProperty>
+
 <owl:DatatypeProperty rdf:about="#hasCAS_Number">
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCAS_Number</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isF_PropsSupported">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isF_PropsSupported</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDWSIM_ID">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasDWSIM_ID</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasRelativeDensities">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasRelativeDensities</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_pH_Optimum">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_pH_Optimum</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_ecnumber">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_ecnumber</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMolecularWeight">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolecularWeight</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_sequence">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_sequence</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#kineticDescription">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kineticDescription</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMolecularWeight_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolecularWeight_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCriticalPressure_Unit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasCriticalPressure_Unit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#inDWSIMdatabase">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">inDWSIMdatabase</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isModified">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isModified</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasIdealGasEnthalpyOfFormation_25Celsius">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasIdealGasEnthalpyOfFormation_25Celsius</rdfs:label>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="#has_equation">
@@ -1488,12 +1488,10 @@ process depending on the context in which it occurs. For example, the observed e
   <core:prefLabel>unit operation heating</core:prefLabel>
 </owl:Class>
 
-<owl:Class rdf:about="#Oxygen">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000247"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Oxygen</rdfs:label>
-  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">oxygen</core:altLabel>
-  <cheb:smiles rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O=O</cheb:smiles>
-  <cheb:inchi rdf:datatype="http://www.w3.org/2001/XMLSchema#string">InChI=1S/O2/c1-2</cheb:inchi>
+<owl:Class rdf:about="#Laccase">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000252"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laccase</rdfs:label>
+  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laccase</core:altLabel>
 </owl:Class>
 
 <owl:Class rdf:about="#ABTS_red">
@@ -1503,17 +1501,19 @@ process depending on the context in which it occurs. For example, the observed e
   <cheb:smiles rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC[N+]1\C(SC2=C1C=CC(=C2)[S]([O-])(=O)=O)=N\N=C4/SC3=C(C=CC(=C3)[S]([O-])(=O)=O)N4CC</cheb:smiles>
 </owl:Class>
 
-<owl:Class rdf:about="#Laccase">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000252"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laccase</rdfs:label>
-  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laccase</core:altLabel>
-</owl:Class>
-
 <owl:Class rdf:about="#ABTS_ox">
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000247"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS_ox</rdfs:label>
   <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS oxidized</core:altLabel>
   <cheb:smiles rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CCN1\C(SC2=C1C=CC(=C2)[S]([O-])(=O)=O)=N\N=C4/SC3=C(C=CC(=C3)[S]([O-])(=O)=O)N4CC</cheb:smiles>
+</owl:Class>
+
+<owl:Class rdf:about="#Oxygen">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000247"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Oxygen</rdfs:label>
+  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">oxygen</core:altLabel>
+  <cheb:smiles rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O=O</cheb:smiles>
+  <cheb:inchi rdf:datatype="http://www.w3.org/2001/XMLSchema#string">InChI=1S/O2/c1-2</cheb:inchi>
 </owl:Class>
 
 <owl:Class rdf:about="#Water">
@@ -1560,86 +1560,10 @@ process depending on the context in which it occurs. For example, the observed e
   <core:prefLabel>chemical material storage</core:prefLabel>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#ind_Oxygen">
-  <rdf:type rdf:resource="#Oxygen"/>
-  <obo:RO_0000087 rdf:resource="#reactant"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_Oxygen_s1</rdfs:label>
-  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">oxygen</core:altLabel>
-  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s1</hasEnzymeML_ID>
-  <hasStoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-1</hasStoichiometricCoefficient>
-  <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasDirect_OrderCoefficient>
-  <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
-  <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True</inDWSIMdatabase>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#reactant">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0">
-  <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Experiment_Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:label>
-  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"> Creator(s): 
-given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.university, id: a0
-</rdfs:comment>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ind_ABTS_red">
-  <rdf:type rdf:resource="#ABTS_red"/>
-  <obo:RO_0000087 rdf:resource="#reactant"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_ABTS_red_s0</rdfs:label>
-  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS reduced</core:altLabel>
-  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s0</hasEnzymeML_ID>
-  <hasStoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-4</hasStoichiometricCoefficient>
-  <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasDirect_OrderCoefficient>
-  <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
-  <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</inDWSIMdatabase>
-  <hasRelativeDensities rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasRelativeDensities>
-  <has_nbps rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">375.15</has_nbps>
-  <has_nbps_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">K</has_nbps_Unit>
-  <hasMolecularWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">514.619</hasMolecularWeight>
-  <hasMolecularWeight_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kg/kmol</hasMolecularWeight_Unit>
-  <hasDWSIM_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-9626</hasDWSIM_ID>
-  <hasCAS_Number rdf:datatype="http://www.w3.org/2001/XMLSchema#string">28752-68-3</hasCAS_Number>
-  <hasSMILES rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC[N+]1\C(SC2=C1C=CC(=C2)[S]([O-])(=O)=O)=N\N=C4/SC3=C(C=CC(=C3)[S]([O-])(=O)=O)N4CC</hasSMILES>
-  <hasFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C18H17N4O6S4</hasFormula>
-  <hasCriticalTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">647.14</hasCriticalTemperature>
-  <hasCriticalPressure rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22064000</hasCriticalPressure>
-  <hasCriticalVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.05595</hasCriticalVolume>
-  <hascriticalCompressibility rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.229</hascriticalCompressibility>
-  <hasAcentricFactor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.344</hasAcentricFactor>
-  <hasIdealGasEnthalpyOfFormation_25Celsius rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasIdealGasEnthalpyOfFormation_25Celsius>
-  <hasIdealGasGibbsEnergyOfFormation_25Celsius rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasIdealGasGibbsEnergyOfFormation_25Celsius>
-  <hasChao_SeaderAcentricFactor rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasChao_SeaderAcentricFactor>
-  <hasChao_SeaderSolubilityParameter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0114199</hasChao_SeaderSolubilityParameter>
-  <hasChao_SeaderLiquidMolarVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasChao_SeaderLiquidMolarVolume>
-  <hasRackettCompressibility rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasRackettCompressibility>
-  <isBlackOil rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isBlackOil>
-  <isCoolPropSupported rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isCoolPropSupported>
-  <isF_PropsSupported rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isF_PropsSupported>
-  <isHydratedSalt rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isHydratedSalt>
-  <isIon rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isIon>
-  <isModified rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isModified>
-  <isSalt rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isSalt>
-  <isSolid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isSolid>
-  <hasSourceOrganism rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasSourceOrganism>
-  <hasEC_Number rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasEC_Number>
-  <has_pH_Optimum rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</has_pH_Optimum>
-  <hasTempOptimum rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasTempOptimum>
-  <hasTemperature_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">K</hasTemperature_Unit>
-  <hasCriticalPressure_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pa</hasCriticalPressure_Unit>
-  <hasCriticalVolume_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/kmol</hasCriticalVolume_Unit>
-  <hasIdealGasEnthalpyOfFormation_25Celsius_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kJ/kg</hasIdealGasEnthalpyOfFormation_25Celsius_Unit>
-  <hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">in kJ/kg</hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit>
-  <hasChao_SeaderSolubilityParameter_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mL/mol</hasChao_SeaderSolubilityParameter_Unit>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#ind_Laccase">
   <rdf:type rdf:resource="#Laccase"/>
   <obo:RO_0000087 rdf:resource="#catalyst"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_Laccase_p2</rdfs:label>
   <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laccase</core:altLabel>
   <has_organism rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Trametes versicolor</has_organism>
@@ -1696,10 +1620,73 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000013"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b">
+  <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Experiment_Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"> Creator(s): 
+given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.university, id: a0
+</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ind_ABTS_red">
+  <rdf:type rdf:resource="#ABTS_red"/>
+  <obo:RO_0000087 rdf:resource="#reactant"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_ABTS_red_s0</rdfs:label>
+  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS reduced</core:altLabel>
+  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s0</hasEnzymeML_ID>
+  <hasStoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-4</hasStoichiometricCoefficient>
+  <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasDirect_OrderCoefficient>
+  <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
+  <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</inDWSIMdatabase>
+  <hasRelativeDensities rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasRelativeDensities>
+  <has_nbps rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">375.15</has_nbps>
+  <has_nbps_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">K</has_nbps_Unit>
+  <hasMolecularWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">514.619</hasMolecularWeight>
+  <hasMolecularWeight_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kg/kmol</hasMolecularWeight_Unit>
+  <hasDWSIM_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-9626</hasDWSIM_ID>
+  <hasCAS_Number rdf:datatype="http://www.w3.org/2001/XMLSchema#string">28752-68-3</hasCAS_Number>
+  <hasSMILES rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC[N+]1\C(SC2=C1C=CC(=C2)[S]([O-])(=O)=O)=N\N=C4/SC3=C(C=CC(=C3)[S]([O-])(=O)=O)N4CC</hasSMILES>
+  <hasFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C18H17N4O6S4</hasFormula>
+  <hasCriticalTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">647.14</hasCriticalTemperature>
+  <hasCriticalPressure rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22064000</hasCriticalPressure>
+  <hasCriticalVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.05595</hasCriticalVolume>
+  <hascriticalCompressibility rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.229</hascriticalCompressibility>
+  <hasAcentricFactor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.344</hasAcentricFactor>
+  <hasIdealGasEnthalpyOfFormation_25Celsius rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasIdealGasEnthalpyOfFormation_25Celsius>
+  <hasIdealGasGibbsEnergyOfFormation_25Celsius rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasIdealGasGibbsEnergyOfFormation_25Celsius>
+  <hasChao_SeaderAcentricFactor rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasChao_SeaderAcentricFactor>
+  <hasChao_SeaderSolubilityParameter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0114199</hasChao_SeaderSolubilityParameter>
+  <hasChao_SeaderLiquidMolarVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasChao_SeaderLiquidMolarVolume>
+  <hasRackettCompressibility rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasRackettCompressibility>
+  <isBlackOil rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isBlackOil>
+  <isCoolPropSupported rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isCoolPropSupported>
+  <isF_PropsSupported rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isF_PropsSupported>
+  <isHydratedSalt rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isHydratedSalt>
+  <isIon rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isIon>
+  <isModified rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isModified>
+  <isSalt rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isSalt>
+  <isSolid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">False</isSolid>
+  <hasSourceOrganism rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasSourceOrganism>
+  <hasEC_Number rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasEC_Number>
+  <has_pH_Optimum rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</has_pH_Optimum>
+  <hasTempOptimum rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasTempOptimum>
+  <hasTemperature_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">K</hasTemperature_Unit>
+  <hasCriticalPressure_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pa</hasCriticalPressure_Unit>
+  <hasCriticalVolume_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/kmol</hasCriticalVolume_Unit>
+  <hasIdealGasEnthalpyOfFormation_25Celsius_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kJ/kg</hasIdealGasEnthalpyOfFormation_25Celsius_Unit>
+  <hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">in kJ/kg</hasIdealGasGibbsEnergyOfFormation_25Celsius_Unit>
+  <hasChao_SeaderSolubilityParameter_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mL/mol</hasChao_SeaderSolubilityParameter_Unit>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#reactant">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ind_ABTS_ox">
   <rdf:type rdf:resource="#ABTS_ox"/>
   <obo:RO_0000087 rdf:resource="#product"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_ABTS_ox_s2</rdfs:label>
   <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS oxidized</core:altLabel>
   <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s2</hasEnzymeML_ID>
@@ -1751,10 +1738,23 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000011"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#ind_Oxygen">
+  <rdf:type rdf:resource="#Oxygen"/>
+  <obo:RO_0000087 rdf:resource="#reactant"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_Oxygen_s1</rdfs:label>
+  <core:altLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">oxygen</core:altLabel>
+  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s1</hasEnzymeML_ID>
+  <hasStoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-1</hasStoichiometricCoefficient>
+  <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasDirect_OrderCoefficient>
+  <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
+  <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True</inDWSIMdatabase>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ind_Water">
   <rdf:type rdf:resource="#Water"/>
   <obo:RO_0000087 rdf:resource="#reactant"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sub_Water_</rdfs:label>
   <hasStoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</hasStoichiometricCoefficient>
   <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasDirect_OrderCoefficient>
@@ -1762,7 +1762,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True</inDWSIMdatabase>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_Kin_15a59a42_0193_4c53_a86b_36cd2cb57a6d">
+<owl:NamedIndividual rdf:about="#indv_Kin_a7d1ae1a_e1ab_4c0f_86d2_66114531d2e9">
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000029"/>
   <obo:RO_0000052 rdf:resource="#ind_Laccase"/>
   <obo:RO_0002233 rdf:resource="#ind_ABTS_red"/>
@@ -1786,10 +1786,10 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <has_unit_string rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1/s</has_unit_string>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_54f09e7e_84a7_4d18_aaab_198363fa2050">
+<owl:NamedIndividual rdf:about="#indv_PFD_6eae2b97_7bf0_4913_baf1_26060a0ea91e">
   <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_67eb5fb5_725f_47a1_b565_2fe5d11fc7b6"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_bc94547c_afcc_4be2_a7b9_3d6864761a4f"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_Laccase"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_ABTS_red"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_1_Water"/>
@@ -1800,10 +1800,10 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_67eb5fb5_725f_47a1_b565_2fe5d11fc7b6">
+<owl:NamedIndividual rdf:about="#indv_PFD_bc94547c_afcc_4be2_a7b9_3d6864761a4f">
   <rdf:type rdf:resource="#Mixer"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_be44c2ba_cddc_4ee5_8b6f_3bb2ffc04313"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_8e678ce9_51c3_4a89_a53b_3ff3c36c937d"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixer</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
@@ -1859,10 +1859,10 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_6efd7fce_9cc8_4554_b966_9525d43ca884">
+<owl:NamedIndividual rdf:about="#indv_PFD_c61093bc_a739_4932_a21b_22366b85fc8d">
   <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_67eb5fb5_725f_47a1_b565_2fe5d11fc7b6"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_bc94547c_afcc_4be2_a7b9_3d6864761a4f"/>
   <obo:BFO_0000051 rdf:resource="#Reactant_2_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_2</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5e-08</overallVolumetricFlow>
@@ -1888,18 +1888,18 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_be44c2ba_cddc_4ee5_8b6f_3bb2ffc04313">
+<owl:NamedIndividual rdf:about="#indv_PFD_8e678ce9_51c3_4a89_a53b_3ff3c36c937d">
   <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_32c65a23_1c20_46a7_b980_3ca38267353d"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_e9b25936_e5f2_4184_87d0_3ab8fd99d722"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_93d463fc_61a6_4601_a038_4b2086b06a37"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_6f89a67f_f4ea_4583_8a90_26072c94536e"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_492a5856_b73a_4ae2_897c_aa1c19ba3794"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_05c392b2_0224_435b_9e65_5d4ee82878ae"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_54b0aa8d_c3dd_4629_b1d3_706c04e5bd4c"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_400018db_f84c_410f_baf6_5caae06aa388"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_999b8d90_4229_44e5_8aa6_df2070c3df5e"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_3cd97058_c296_4e18_affb_80b6da67f7c0"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_6b77f0d5_5073_449c_aa50_39a0a7404620"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_649e3017_c106_4345_b6be_89e5e7385459"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_86672974_901c_4a04_bf66_b4f762436fdc"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_bf31a86c_e6ad_42dc_ab96_dd07aec9cc98"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_7fcaa6b2_7cad_4b1c_ad69_ec2a832ef1b8"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_11b8b309_a237_4358_834f_b05e979ce57a"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_76c31a7c_1919_4a18_843c_4f31ee6d9122"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_ad4d4288_b941_4218_bd2d_0ea6ee0f4223"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.3457300708425582e-07</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
@@ -1907,10 +1907,10 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_32c65a23_1c20_46a7_b980_3ca38267353d">
+<owl:NamedIndividual rdf:about="#indv_PFD_3cd97058_c296_4e18_affb_80b6da67f7c0">
   <rdf:type rdf:resource="#RCT_PFR"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_86d77c1f_c028_4108_859f_d895054c9e4a"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_19cb5fbd_0c5f_402e_bb9f_b1c3e322946a"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactor</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
@@ -1929,19 +1929,19 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasTypeOf_OperationMode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</hasTypeOf_OperationMode>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_86d77c1f_c028_4108_859f_d895054c9e4a">
+<owl:NamedIndividual rdf:about="#indv_PFD_19cb5fbd_0c5f_402e_bb9f_b1c3e322946a">
   <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_81991004_205b_422a_ba40_7966967f6f18"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_97165802_e3cf_4870_af40_e55407f2868f"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_51a06d3b_66cf_44db_bd26_9439af138609"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_5c490d23_5b8c_4fa2_aaaa_a47b4ed8c203"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_f45e38a8_a386_4604_8fa6_47da8d45cfc9"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_b91d9980_f044_4ff3_b7de_62bcca16bb27"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_87bf1d30_8f4a_40c8_938e_3a80d0ac2a70"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_b501ed24_e91f_48ac_ad37_41758db519aa"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_852af489_4b2e_4c6b_927b_b4b41fc58222"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_d36667b9_8bde_4086_99d9_5dd4d021756b"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_562e9ab3_9cb9_4e42_8897_70e905541d1e"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_ff0708f2_328b_46b0_8b90_4e131a49d809"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_b3bf9777_628f_4622_a4e0_eece675bef6e"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_08791710_bb57_430d_bd62_3475b27bf3b1"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_b279f163_0d03_46c9_9d4d_2a0d32f1556c"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_395df6e7_730d_4550_8c7f_0370b6106571"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_976eb744_5d92_44f7_b2ae_2e5f7b755d05"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_430b2077_b8e1_4a5c_aed3_c8dbd7fb4dc9"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_b7b4ab5e_54bf_4c61_8dbd_525fa0067fcb"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_452e08ce_000c_462a_b4de_789ce97c31cf"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.3450320607595866e-07</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
@@ -1949,23 +1949,23 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_ad8167a9_c7a1_4f49_b9be_480cb3e7ae4e">
+<owl:NamedIndividual rdf:about="#indv_PFD_8e9ce73d_a83c_4ae5_bafd_5d5262c7b86a">
   <rdf:type rdf:resource="#EnergyStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_32c65a23_1c20_46a7_b980_3ca38267353d"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_3cd97058_c296_4e18_affb_80b6da67f7c0"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Heat</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_c5f9e5e1_a873_4e55_ad53_3b249b6507eb">
+<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_653697f1_6b7e_48a1_a220_71227e2a8cc0">
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000176"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <obo:RO_0002233 rdf:resource="#ind_ABTS_red"/>
   <obo:RO_0002233 rdf:resource="#ind_Oxygen"/>
   <obo:RO_0002234 rdf:resource="#ind_ABTS_ox"/>
   <obo:RO_0002573 rdf:resource="#ind_Laccase"/>
-  <obo:RO_0002615 rdf:resource="#indv_Kin_15a59a42_0193_4c53_a86b_36cd2cb57a6d"/>
+  <obo:RO_0002615 rdf:resource="#indv_Kin_a7d1ae1a_e1ab_4c0f_86d2_66114531d2e9"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ABTS oxidation, HTR_r0</rdfs:label>
   <temperature rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">311.15</temperature>
   <temperature_unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">K</temperature_unit>
@@ -1974,9 +1974,9 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">r0</id>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_aa92239a_94b1_441d_aebd_5aa73ab83e94">
+<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_4cf32d2c_65a6_431d_84e4_86c1eecc6c02">
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000176"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <obo:RO_0002233 rdf:resource="#ind_ABTS_red"/>
   <obo:RO_0002233 rdf:resource="#ind_Oxygen"/>
   <obo:RO_0002234 rdf:resource="#ind_ABTS_ox"/>
@@ -1989,9 +1989,9 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">r1</id>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_a2e9280d_514b_4c2e_ac70_8b6c9f27d8d9">
+<owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_ef1906b9_8da1_439a_9275_a04822bde983">
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000176"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_38af4505_f195_4fd4_b238_971f582b6fa0"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_3c439a43_4b9f_45da_8ec7_9232c1c2197b"/>
   <obo:RO_0002233 rdf:resource="#ind_ABTS_red"/>
   <obo:RO_0002233 rdf:resource="#ind_Oxygen"/>
   <obo:RO_0002234 rdf:resource="#ind_ABTS_ox"/>
@@ -2004,7 +2004,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">r2</id>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_e9b25936_e5f2_4184_87d0_3ab8fd99d722">
+<owl:NamedIndividual rdf:about="#PFD_6b77f0d5_5073_449c_aa50_39a0a7404620">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Laccase</rdfs:label>
@@ -2013,7 +2013,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_93d463fc_61a6_4601_a038_4b2086b06a37">
+<owl:NamedIndividual rdf:about="#PFD_649e3017_c106_4345_b6be_89e5e7385459">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_ABTS_red</rdfs:label>
@@ -2022,7 +2022,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_6f89a67f_f4ea_4583_8a90_26072c94536e">
+<owl:NamedIndividual rdf:about="#PFD_86672974_901c_4a04_bf66_b4f762436fdc">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Water"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Water</rdfs:label>
@@ -2031,7 +2031,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_492a5856_b73a_4ae2_897c_aa1c19ba3794">
+<owl:NamedIndividual rdf:about="#PFD_bf31a86c_e6ad_42dc_ab96_dd07aec9cc98">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Oxygen</rdfs:label>
@@ -2040,7 +2040,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_05c392b2_0224_435b_9e65_5d4ee82878ae">
+<owl:NamedIndividual rdf:about="#PFD_7fcaa6b2_7cad_4b1c_ad69_ec2a832ef1b8">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Laccase</rdfs:label>
@@ -2049,7 +2049,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_54b0aa8d_c3dd_4629_b1d3_706c04e5bd4c">
+<owl:NamedIndividual rdf:about="#PFD_11b8b309_a237_4358_834f_b05e979ce57a">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_ABTS_red</rdfs:label>
@@ -2058,7 +2058,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_400018db_f84c_410f_baf6_5caae06aa388">
+<owl:NamedIndividual rdf:about="#PFD_76c31a7c_1919_4a18_843c_4f31ee6d9122">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Water"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Water</rdfs:label>
@@ -2067,7 +2067,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_999b8d90_4229_44e5_8aa6_df2070c3df5e">
+<owl:NamedIndividual rdf:about="#PFD_ad4d4288_b941_4218_bd2d_0ea6ee0f4223">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Oxygen</rdfs:label>
@@ -2076,7 +2076,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_81991004_205b_422a_ba40_7966967f6f18">
+<owl:NamedIndividual rdf:about="#PFD_562e9ab3_9cb9_4e42_8897_70e905541d1e">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_ox"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_ox</rdfs:label>
@@ -2085,7 +2085,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_97165802_e3cf_4870_af40_e55407f2868f">
+<owl:NamedIndividual rdf:about="#PFD_ff0708f2_328b_46b0_8b90_4e131a49d809">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Laccase</rdfs:label>
@@ -2094,7 +2094,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_51a06d3b_66cf_44db_bd26_9439af138609">
+<owl:NamedIndividual rdf:about="#PFD_b3bf9777_628f_4622_a4e0_eece675bef6e">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_red</rdfs:label>
@@ -2103,7 +2103,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_5c490d23_5b8c_4fa2_aaaa_a47b4ed8c203">
+<owl:NamedIndividual rdf:about="#PFD_08791710_bb57_430d_bd62_3475b27bf3b1">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Water"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Water</rdfs:label>
@@ -2112,7 +2112,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_f45e38a8_a386_4604_8fa6_47da8d45cfc9">
+<owl:NamedIndividual rdf:about="#PFD_b279f163_0d03_46c9_9d4d_2a0d32f1556c">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Oxygen</rdfs:label>
@@ -2121,7 +2121,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_b91d9980_f044_4ff3_b7de_62bcca16bb27">
+<owl:NamedIndividual rdf:about="#PFD_395df6e7_730d_4550_8c7f_0370b6106571">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_ox"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_ox</rdfs:label>
@@ -2130,7 +2130,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_87bf1d30_8f4a_40c8_938e_3a80d0ac2a70">
+<owl:NamedIndividual rdf:about="#PFD_976eb744_5d92_44f7_b2ae_2e5f7b755d05">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Laccase</rdfs:label>
@@ -2139,7 +2139,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_b501ed24_e91f_48ac_ad37_41758db519aa">
+<owl:NamedIndividual rdf:about="#PFD_430b2077_b8e1_4a5c_aed3_c8dbd7fb4dc9">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_red</rdfs:label>
@@ -2148,7 +2148,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_852af489_4b2e_4c6b_927b_b4b41fc58222">
+<owl:NamedIndividual rdf:about="#PFD_b7b4ab5e_54bf_4c61_8dbd_525fa0067fcb">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Water"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Water</rdfs:label>
@@ -2157,7 +2157,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#PFD_d36667b9_8bde_4086_99d9_5dd4d021756b">
+<owl:NamedIndividual rdf:about="#PFD_452e08ce_000c_462a_b4de_789ce97c31cf">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Oxygen</rdfs:label>

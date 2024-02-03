@@ -17,7 +17,7 @@ The working principle of the code to create the DWSIM-simulation files is depict
 </h1>
 
 ## Installation
-First, you need to install the DWSIM-software (link above). 
+First, you need to install the [DWSIM](https://dwsim.org)-software. 
 
 Needed Python modules (list may not be complete!):
 ```
@@ -26,6 +26,5 @@ pip install pythonnet
 ```
 
 ## Running the software
-
 To run the software, simply execute `main.py`. 
 This code executes the two main `run()` functions of the files mentioned above.
