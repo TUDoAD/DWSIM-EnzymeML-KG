@@ -257,10 +257,8 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                         exec(code)
                         #eval("streams['{}'] = sim.AddObject(ObjectType.{},{},{},'{}')".format(stream_name,stream_type,x_axis,y_axis,stream_name))
                         #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
-
                         x_axis += 100
 
-    
     #iterate through pfd_list connect the objects, direction of connection comes
     # with RO_0002234 (has output) and RO_0002353 (output of)
     for pfd_obj in process_streams:
@@ -397,9 +395,6 @@ for i in range(len(compsids)):
                 i +=1
     ##
 
-
-
-
     errors = interf.CalculateFlowsheet4(sim)
     if (len(errors) > 0):
         for e in errors:
@@ -470,17 +465,19 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     
                     for phase in conc_dict:
                         key_list = conc_dict[phase].keys()
+                        #add molarities
                         if material_label in key_list:
                             submat_stream.hasMolarity = [conc_dict[phase][material_label]]
                             submat_stream.hasMolarityUnit = ["mol/L"]
                         
                         # assert phase
-                        if "Liquid" in phase:
+                        if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
                             submat_stream.hasAggregateState.append("Liquid")
                         else:
                             submat_stream.hasAggregateState.append(phase)# Vapor,..
-            else: #no partial material stream(s) detected or missing
-                
+         
+            
+            else: #no partial material stream(s) detected or missing       
                 conc_dict = phase_dict[onto_obj.label.first()]
                 stream_name = onto_obj.label.first()
                 
@@ -495,37 +492,18 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                         for key in pfd_dict:
                             if pfd_dict[key].is_a.first().label.first() == material_label:
                                 substream.RO_0002473 = [pfd_dict[key]] #consists primarily of
-                     
+                    
+                    # add molarities
+                    if material_label in key_list:
+                        submat_stream.hasMolarity = [conc_dict[phase][material_label]]
+                        submat_stream.hasMolarityUnit = ["mol/L"]
+                
                     # assert phase
-                    if "Liquid" in phase:
-                        submat_stream.hasAggregateState.append("Liquid")
+                    if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
+                        substream.hasAggregateState.append("Liquid")
                     else:
-                        submat_stream.hasAggregateState.append(phase)# Vapor,..
+                        substream.hasAggregateState.append(phase)# Vapor,..
                    
-
-                ##TODO: do this to the substreams of the process stream, then attach 
-                # phase_comp = phase_dict[onto_obj.label.first()][phase] 
-                # phase_comp = {'indv_Reactant_1': {'OverallLiquid': {'ABTS_ox': 0.0, 'Laccase': 1.1500199382988784e-05, 'ABTS_red': 0.0009616546035775095, 'Water': 55.01433572428292, 'Oxygen': 0.0}}, 'indv_Reactant_2': {
-                # for each entry in phase_comp -> search key in material_labels (above) and assert
-                # submat_stream.hasMolarity = [phase_comp[key]]
-
-
-    # 
-    
-    
-    """
-    mol/L = mol/s / (m^3/s)  *composition
-    stream.GetMolarFlow() 
-    stream.GetVolumetricFlow()
-list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
-list(streams["indv_Product_1"].GetAsObject().ComponentIds)
-list(streams["indv_Product_1"].GetAsObject().GetMolarFlow())
-streams["indv_Product_1"].GetAsObject().GetMolarFlow()
-streams["indv_Product_1"].GetAsObject().GetOverallComposition()
-list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
-    """    
-    
-    
     return onto
 
 ##
@@ -563,9 +541,7 @@ def ini():
     return enz_dict, pfd_dict, onto
 
 ##
-#enz_dict, pfd_dict, onto = ini()
-#pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
-#pfd_iri = pfd_ind.iri
+
 
 ##
 def run():
@@ -589,10 +565,7 @@ def run():
     print("Storing Knowledge Graph: "+filename_KG)
     onto.save(file =filename_KG, format ="rdfxml")
     
-    return streams, pfd_list
-##
+    #return streams, pfd_list
 
-#TODO: subprocess?
-#TODO: import material streams from simulation into knowledge graph
 
 
