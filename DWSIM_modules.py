@@ -7,26 +7,25 @@ Created on Thu Jan 12 15:04:30 2024
 
 import os
 import uuid
+
 import clr 
 
 from owlready2 import *
 
+# Importiere Python Module
 import pythoncom
 import System
 pythoncom.CoInitialize()
 
 from System.IO import Directory, Path, File
-#from System import String, Environment
-#from System.Collections.Generic import Dictionary
+from System import String, Environment
+from System.Collections.Generic import Dictionary
 
 import ELNs_to_KG_modules
-
-#from enum import Enum
 # Path to DWSIM-Directory
+
 dwsimpath = os.getenv('LOCALAPPDATA') + "\\DWSIM8\\"
 
-
-## import DWSIM modules / DLLs
 clr.AddReference(dwsimpath + "DWSIM")
 clr.AddReference(dwsimpath + "CapeOpen.dll")
 clr.AddReference(dwsimpath + "DWSIM.Automation.dll")
@@ -45,13 +44,13 @@ clr.AddReference("System.Core")
 clr.AddReference("System.Windows.Forms")
 clr.AddReference(dwsimpath + "Newtonsoft.Json")
 
-import DWSIM
-from DWSIM.Automation import Automation3
 from DWSIM.Interfaces.Enums.GraphicObjects import ObjectType
 from DWSIM.Thermodynamics import Streams, PropertyPackages
 from DWSIM.UnitOperations import UnitOperations, Reactors
-#from DWSIM.GlobalSettings import Settings
+from DWSIM.Automation import Automation3
+from DWSIM.GlobalSettings import Settings
 
+from enum import Enum
 # Paket, um Kalkulationen durchzuführen 
 from DWSIM import FlowsheetSolver
 # Paket, um ein neues Fließbild zu erstellen und darauf zuzugreifen
@@ -60,7 +59,7 @@ from System import *
 
 from System.Linq import *
 from DWSIM import *
-
+#from DWSIM import FormPCBulk
 from DWSIM.Interfaces import *
 from DWSIM.Interfaces.Enums import*
 
@@ -78,22 +77,16 @@ from DWSIM.Thermodynamics.PropertyPackages.Auxiliary import *
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization import GenerateCompounds
 from DWSIM.Thermodynamics.Utilities.PetroleumCharacterization.Methods import *
 
-###
-def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
-    onto = owlready2.get_ontology(ontology_path).load()
-    onto.name = "onto"
-    enzdict, eln_dict = ELNs_to_KG_modules.eln_to_dict(enzymeML_ELN_path,process_ELN_path)
-    return enzdict, eln_dict, onto
-##
 
 ##
 def flowsheet_simulation(onto, pfd_iri):
-        #enz_dict, pfd_dict, onto, pfd_iri): 
+    #enz_dict, pfd_dict, onto, pfd_iri): 
     working_dir = os.getcwd()
     Directory.SetCurrentDirectory(dwsimpath)
     # Automatisierungsmanager erstellen
     # Create automatin manager
     interf = Automation3()
+    
     sim = interf.CreateFlowsheet()
     sim.CreateAndAddPropertyPackage("Raoult's Law")
 
@@ -133,9 +126,9 @@ def flowsheet_simulation(onto, pfd_iri):
     #loading components into DWSIM-simulation and filling dictionaries regarding
     # stoichiometric coefficients and reaction order coeffs.
     
-    comps = System.Collections.Generic.Dictionary[str, float]()
-    dorders = System.Collections.Generic.Dictionary[str, float]()
-    rorders = System.Collections.Generic.Dictionary[str, float]()
+    comps = Dictionary[str, float]()
+    dorders = Dictionary[str, float]()
+    rorders = Dictionary[str, float]()
     
     
     for comp in comp_list:
@@ -159,7 +152,7 @@ def flowsheet_simulation(onto, pfd_iri):
             kin_indv = comp["subst_indv"].RO_0000053 
             substrate_indv = []
             for indv in kin_indv: # might be more than one substrate
-                # has input-> input = substrate of reaction    
+                # has input -> input = substrate of reaction    
                 substrate_indv.append(indv.RO_0002233)
     
     ## Add streams to DWSIM:
@@ -171,8 +164,8 @@ def flowsheet_simulation(onto, pfd_iri):
     # Start at y = 0, x=0
     y_axis = 0
     for stream_indv in process_streams:
-        # if the property preceded by () output of (RO_0002353) returns an empty list -> Start of the flowsheet
-        if not stream_indv.BFO_0000062:#RO_0002353:
+        # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
+        if not stream_indv.RO_0002353:
             #print(stream_indv.label)
             stream_type = stream_indv.is_a[0].label.first()
             stream_name = stream_indv.label.first()
@@ -224,7 +217,7 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
     for stream_indv in process_streams:
         # if the property output of (RO_0002353) returns an empty list -> Start of the flowsheet
         #if not stream_indv.RO_0002353: # output of -> starting streams
-        next_modules = stream_indv.BFO_0000063 # precedes     #RO_0002234 # has output
+        next_modules = stream_indv.RO_0002234 # has output
         for module in next_modules:                
             module_type = module.is_a[0].label.first()
             module_name = module.label.first()
@@ -246,7 +239,7 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                 x_axis += 100
                 
                 # take a look on next stream, going out from last module
-                next_streams = module.BFO_0000063
+                next_streams = module.RO_0002234
                 for stream in next_streams:
                     stream_type = stream.is_a[0].label.first()
                     stream_name = stream.label.first()
@@ -258,18 +251,16 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                         exec(code)
                         #eval("streams['{}'] = sim.AddObject(ObjectType.{},{},{},'{}')".format(stream_name,stream_type,x_axis,y_axis,stream_name))
                         #codestr = """stream_info.append({{'type': ObjectType.{}, 'x': {}, 'y': {}, 'name': '{}'}})""".format(stream_type,x_axis, y_axis,stream_name)
-
                         x_axis += 100
 
-    
     #iterate through pfd_list connect the objects, direction of connection comes
     # with RO_0002234 (has output) and RO_0002353 (output of)
     for pfd_obj in process_streams:
         obj_name = pfd_obj.label.first()  
         obj_1 = streams[obj_name].GetAsObject().GraphicObject
         
-        output_objects = pfd_obj.BFO_0000063 # precedes -> obj_1 connected to obj_2
-        input_objects = pfd_obj.BFO_0000062 # preceded by -> obj_2 connected to obj_1
+        output_objects = pfd_obj.RO_0002234 # has_output -> obj_1 connected to obj_2
+        input_objects = pfd_obj.RO_0002353 # output of -> obj_2 connected to obj_1
         
         for out_obj in output_objects:
             obj_2_name = out_obj.label.first()
@@ -334,10 +325,10 @@ streams['{}'] = stream""".format(stream_type,y_axis,stream_name,stream_name)
                 reac_inlet_name = ""
                 
                 #first Reactor in reactor_list --output of (RO_0002353)-> Input of Reactor individual
-                # reactor_list.RO_0002353 --> BFO_0000062 (preceded by)
+                # reactor_list.RO_0002353
                 if reactor_list:
                     for reactor in reactor_list:
-                        for inp_stream in reactor.BFO_0000062: #.RO_0002353:
+                        for inp_stream in reactor.RO_0002353:
                             if inp_stream.is_a.first().label.first() == "MaterialStream": 
                                 reac_inlet_name = inp_stream.label.first()
                                 #print("Reactor found. Inlet stream name "+reac_inlet_name)                              
@@ -372,7 +363,7 @@ for i in range(len(compsids)):
                     code_str += catalysts.hasEnzymeML_ID.first() + " = " + "comp_dict['" + catalysts.is_a.first().label.first() + "']*concentration_flow\n"
                     
                     
-                reactants = kin_ind.RO_0002233 #BFO_0000062 #preceded by  #RO_0002233  # has input
+                reactants = kin_ind.RO_0002233  # has input
                 if type(reactants) == owlready2.prop.IndividualValueList:
                     for react in reactants:
                         code_str += react.hasEnzymeML_ID.first() + " = " + "comp_dict['" + react.is_a.first().label.first() + "']*concentration_flow\n"
@@ -398,9 +389,6 @@ for i in range(len(compsids)):
                 i +=1
     ##
 
-
-
-
     errors = interf.CalculateFlowsheet4(sim)
     if (len(errors) > 0):
         for e in errors:
@@ -417,12 +405,15 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
     #pfd_list = list of all individuals connected to pfd_iri in Knowledge Graph
     #pfd_iri = IRI of PFD object 
     
+    for datProp in ["overallMolarFlow","hasMolarFlowUnit", "hasMolarity","hasMolarityUnit"]:
+        onto = ELNs_to_KG_modules.datProp_from_str(datProp,onto)
+        
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_dict = {} 
+    phase_dict = {}
+    
     for i in pfd_list:
         pfd_dict[i.label.first()]=i
-    
-    
     
     for stream in streams:
         dwsim_obj = streams[stream].GetAsObject()
@@ -431,46 +422,102 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
         if "MaterialStream" in onto_obj.is_a.first().label:
             stream_comp_ids = list(dwsim_obj.ComponentIds)
             stream_composition = list(dwsim_obj.GetOverallComposition())
-#            molar_flow = dwsim_obj.GetMolarFlow()
-#            volume_flow = dwsim_obj.GetVolumetricFlow()
-#            f = molar_flow / volume_flow /1000 # mol/L
-
+            molar_flow = dwsim_obj.GetMolarFlow()
+            volume_flow = dwsim_obj.GetVolumetricFlow()
+            
+            ## get phase information
+            phases_dict = {}
             for phase_no in range(dwsim_obj.GetNumPhases()):
-                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow()
-                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow()
+            
+                mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow() #mol/s
+                vol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_volumetric_flow() #m3/s
                 
+                #print(onto_obj.label)
                 if mol_flow and vol_flow:                
                     f = mol_flow / vol_flow /1000 # mol/L
-                    print("phase"+str(phase_no)+"_concentration: " + str([i * f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
-                    print("phase"+ str(phase_no) + " " + str([i * f for i in list(dwsim_obj.GetPhaseComposition(int(phase_no)))]))
-                    #print("mol_flow: "+ str(mol_flow))
+                    conc_dict = {}
                     
-                for i in range(len(stream_comp_ids)):
-                    print(str(stream_comp_ids[i]) + " : " + str(stream_composition[i]))
-        
-    
-    
-    #ALEX:
-    # Stoffstrom aus Phase mit rein nehmen!
-    
-    
-    """
-    mol/L = mol/s / (m^3/s)  *composition
-    stream.GetMolarFlow() 
-    stream.GetVolumetricFlow()
-list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
-list(streams["indv_Product_1"].GetAsObject().ComponentIds)
-list(streams["indv_Product_1"].GetAsObject().GetMolarFlow())
-streams["indv_Product_1"].GetAsObject().GetMolarFlow()
-streams["indv_Product_1"].GetAsObject().GetOverallComposition()
-list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
-    """    
-    
-    
+                    
+                    for i in range(len(list(dwsim_obj.GetPhaseComposition(int(phase_no))))):
+                        conc_dict[stream_comp_ids[i]] = f * list(dwsim_obj.GetPhaseComposition(int(phase_no)))[i]
+                        #conc_list.append(conc_dict)
+                    
+                    phase_name = str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName)
+                    if phase_name != "Mixture":
+                        phases_dict[phase_name] = conc_dict
+            #
+            phase_dict[str(onto_obj.label.first())] = phases_dict
+            ##
+            
+            ## add information to ontology
+            onto_obj.overallVolumetricFlow = [str(volume_flow)]
+            onto_obj.hasVolumetricFlowUnit = ["m3/s"]
+            onto_obj.overallMolarFlow = [str(molar_flow)]
+            onto_obj.hasMolarFlowUnit = ["mol/s"]
+            #
+
+            # add Molarities to the sub-material streams
+            if onto_obj.BFO_0000051: # has part (partial material stream)
+                for submat_stream in onto_obj.BFO_0000051:
+                    material_label = submat_stream.RO_0002473[0].is_a[0].label.first()
+                    #submat_stream.label.first()
+                    conc_dict = phase_dict[onto_obj.label.first()]
+                    
+                    for phase in conc_dict:
+                        key_list = conc_dict[phase].keys()
+                        #add molarities
+                        if material_label in key_list:
+                            submat_stream.hasMolarity = [str(conc_dict[phase][material_label])]
+                            submat_stream.hasMolarityUnit = ["mol/L"]
+                        
+                        # assert phase
+                        if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
+                            submat_stream.hasAggregateState.append("Liquid")
+                        else:
+                            submat_stream.hasAggregateState.append(phase)# Vapor,..
+         
+            
+            else: #no partial material stream(s) detected or missing       
+                conc_dict = phase_dict[onto_obj.label.first()]
+                stream_name = onto_obj.label.first()
+                
+                for phase in conc_dict:
+                    key_list = conc_dict[phase].keys()
+                    
+                    for subst in key_list:
+                        #only extend, if Molarity != 0
+                        if conc_dict[phase][subst] != 0:
+                            onto, substream_uri = onto_substream_from_name(onto, stream_name, subst)
+                            substream = onto.search_one(iri = substream_uri)
+                            
+                            onto_obj.BFO_0000051.append(substream)#hasPart
+                            ## search for the correct substance individual in pfd_dict
+                            for key in pfd_dict:
+                                if pfd_dict[key].is_a.first().label.first() == subst:
+                                    substream.RO_0002473.append(pfd_dict[key]) #consists primarily of
+                        
+                            # add molarities
+                            if subst in key_list:
+                                substream.hasMolarity = [str(conc_dict[phase][subst])]
+                                substream.hasMolarityUnit = ["mol/L"]
+                        
+                            # assert phase
+                            if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
+                                substream.hasAggregateState.append("Liquid")
+                            else:
+                                substream.hasAggregateState.append(phase)# Vapor,..
+                   
     return onto
 
 ##
 
+def onto_substream_from_name(onto, stream_name, subst_name):
+    uuid_str = "PFD_" + str(uuid.uuid4()).replace("-","_")
+    substream = onto.search_one(label = "MaterialStream")(uuid_str)
+    substream.label = stream_name + "_" + subst_name
+    substream_iri = substream.iri  
+    
+    return onto, substream_iri
 
 
 
@@ -482,34 +529,16 @@ def save_simulation(sim,interface, filename):
 ##
 
 
-def simulate_in_subprocess():
-    command = ['python', 'run()']
-    process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    process.wait()
-
 
 ##
-def ini():
-    enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
-    eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-    onto_str ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
-    
-    enz_dict, pfd_dict, onto = data_ini(enz_str, eln_str, onto_str)
-    return enz_dict, pfd_dict, onto
+def run(filename_DWSIM,PFD_uuid,KG_path):#filename_DWSIM,filename_KG):
 
-##
-#enz_dict, pfd_dict, onto = ini()
-#pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
-#pfd_iri = pfd_ind.iri
-
-##
-def run():
-    enz_dict, pfd_dict, onto = ini()
+    onto = owlready2.get_ontology(KG_path).load()
+    onto.name = "onto"
     
-    filename_DWSIM = "./DWSIM/ABTS_ox.dwxmz"
-    filename_KG = "./ontologies/KG-DWSIM_EnzML_ELN_output.owl"
+    filename_KG = KG_path.replace(".owl","_output.owl")
     
-    pfd_ind = onto.search_one(label = "Experiment_"+enz_dict["name"])
+    pfd_ind = onto.search_one(iri = "*"+PFD_uuid)
     
     print("Data initialized, ontology loaded...")
     
@@ -524,10 +553,5 @@ def run():
     print("Storing Knowledge Graph: "+filename_KG)
     onto.save(file =filename_KG, format ="rdfxml")
     
-    #return streams, pfd_list
-##
-
-#TODO: subprocess?
-#TODO: import material streams from simulation into knowledge graph
 
 

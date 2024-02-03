@@ -27,40 +27,6 @@ import pandas as pd
 # owlready2.JAVA_EXE = "C://Users//..//Protege-5.5.0-win//Protege-5.5.0//jre//bin//java.exe"
 ##
 
-def enzymeML_readin(EnzymeML_XLSM_str):
-## DEPRECATED FUNCTION
-    ## USER INPUT
-    # Load EnzymeML Excel-file
-    # Make sure, Macros are turned OFF, else the pH-value might not be parsed correctly
-    enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/"+EnzymeML_XLSM_str+".xlsm")
-    """
-    # visualize first measurement
-    fig = enzmldoc.visualize(use_names=True, trendline=True, measurement_ids=["m0"])
-    """
-
-    Creator_Names = [i.given_name+ i.family_name for i in enzmldoc.creator_dict.values()]
-    Creator_Names = ", ".join(Creator_Names)
-
-        
-    # Infos zur Reaktion
-    for reaction in enzmldoc.reaction_dict.values():
-        Reaction_Name = reaction.name # ABTS Oxidation
-        Reaction_ID = reaction.id # r2
-        pH_Value = reaction.ph # 5.2
-        Temperature_Value = reaction.temperature # 311.15
-        Temperature_Unit = reaction.temperature_unit # K
-
-    # Infos zum Protein
-    for protein in enzmldoc.protein_dict.values():
-        Protein_Name = protein.name # Laccase
-        Protein_SBO = protein.ontology # SBO_0000252 = Protein
-        Protein_Sequence = protein.sequence # wichtig für das Molekulargewicht später
-        Protein_EC_Number = protein.ecnumber # 1.10.3.2
-        Protein_Organism = protein.organism # Trametes versicolor
-        Protein_UniProtID = protein.uniprotid # None, should be 'D2CSE5'
-
-####
-
 
 def eln_subst_data_to_dict(eln_sheet):
     ext_eln_data = {}
@@ -170,14 +136,14 @@ def new_ELN_to_dict(eln_path):
 #####
 # Ontology-Extension der Base Ontology #
 #####
-def base_ontology_extension(name_base_ontology):
+def base_ontology_extension(path_base_ontology):
     #TODO: Deprecate this function and include the two classes 
     # into the initial base-ontology manually
     # Only supports owl-ontologies
     # load base ontology
     onto_world = owlready2.World()
    # sbo_onto = onto_world.get_ontology("https://raw.githubusercontent.com/EBI-BioModels/SBO/master/SBO_OWL.owl").load()
-    onto = onto_world.get_ontology("./ontologies/"+name_base_ontology+".owl").load()
+    onto = onto_world.get_ontology(path_base_ontology).load()
     onto.name = "onto"
     
    # onto.imported_ontologies.append(sbo_onto)
@@ -570,8 +536,8 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
 	   "DWSIM-object type" as subclass of http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingModule
     2. Adds process modules as individual of their respective 
 	   classes based on their dict-key
-    3. Adds relation process_module_indv -- precedes -> process_module_indv 
-	   for each dict-entry "connection" (precedes: http://purl.obolibrary.org/obo/BFO_0000063)
+    3. Adds relation process_module_indv -- has_output -> process_module_indv 
+	   for each dict-entry "connection" (has output: http://purl.obolibrary.org/obo/RO_0002234)
     4. Searches for Substance names in subdicts of process modules
     -> "EntersAtObject" determines individual of the PFD, 
 	    where the substance enters
@@ -631,7 +597,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
     
     ##        
     # Connect the process module individuals based on their dict-entry "connection"
-    # with the relation "precedes" BFO_0000063
+    # with the relation "has output" RO_0002234
     for proc_mod in list(PFD_dict.keys()):
         # check, if there are any process modules connected to the current selected one
         if type(PFD_dict[proc_mod]["connection"]) == str and str(PFD_dict[proc_mod]["connection"]).strip():
@@ -641,7 +607,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                 proc_indv = onto.search_one(iri = "*{}")
                 con_proc_indv = onto.search_one(iri = "*{}")
                 
-                proc_indv.BFO_0000063.append(con_proc_indv)
+                proc_indv.RO_0002234.append(con_proc_indv)
 
             """.format(proc_indv_name, connected_indv_name)
             
@@ -663,13 +629,15 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                         enz_id = eln_dict["substances"][prop_key]["hasEnzymeML_ID"]
                     except:
                         enz_id = ''
-                        
+                    
+                    combined_ind_uuid = "PFD_" + str(uuid.uuid4()).replace("-","_")
                     combined_ind_name = proc_mod + '_' + prop_key
                     
                     # Add dataProperties of subdictionaries, mostly containing material streams of the substances
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
                         onto = datProp_from_str(key, onto)
                     
+                    #TODO: Alex
                     # Add individual for each proc+substance and connect it to individuals                    
                     codestring = """with onto:
                         proc_indv = onto.search_one(iri = "*{}") 
@@ -682,7 +650,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                         proc_subst_indv.RO_0002473.append(subst_indv)                           
                         proc_subst_indv.BFO_0000050.append(proc_indv)
                         
-                        """.format(uuid_dict[proc_mod],prop_key,enz_id,combined_ind_name,combined_ind_name)
+                        """.format(uuid_dict[proc_mod],prop_key,enz_id,combined_ind_uuid,combined_ind_name)
                     
                     # add data properties for newly created individual
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
@@ -711,15 +679,12 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                             """.format(uuid_dict[proc_mod], prop_key, val)
                     
                 code = compile(codestring, "<string>", "exec")
-                exec(code)
-    ##        
-            
-            
+                exec(code)    
     return onto
 
 ###
 def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
-    #TODO: Add reaction as indv. of ontology class from enzymeML sheet
+    
     # add properties of reaction to individual
     # add educts, products, ... subdicts -> based on assigned ontology class
     #onto -> add enzmldoc.reaction_dict[reac_ID]["ontology"]
@@ -798,7 +763,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
 
 ##
 
-def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
+def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, extended_ontology_path):
 
     ##
     #SBO Term: enzmldoc.getAny("s0").ontology.value
@@ -842,52 +807,30 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid)
     
     # save ontology
-    onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
+    onto.save(file=extended_ontology_path, format="rdfxml")
     
-
-    #####
-    # Ontology-Extension der Base Ontology #
-    #####
-    return onto, supp_eln_dict
-
-##
-#
-# in 00_2023_MA_Abaspour_Pythoncode.py nach #ALEX Rev suchen !
-# -> include rest of DWSIM-Simus 
-##
+    
+    return PFD_uuid
 
 
-def run():
-   # enzymeML_readin("EnzymeML_Template_18-8-2021_KR")
-   # onto, test_dict = substance_knowledge_graph("./ELNs/Ergänzendes Laborbuch_Kinetik_1.xlsx", onto, "BaseOnto2")
-   
-   enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
-   
-   onto = base_ontology_extension("BaseOntology")
-   
-   new_eln_dict = new_ELN_to_dict("./ELNs/New-ELN_Kinetik_1.xlsx")
-   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "DWSIM_EnzML_ELN")
-   
-  # with open('dict_dump.json', 'w') as file:
-  #      json.dump(eln_dict, file)
-   
-   #return test_dict
 
-#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-#eln_dict = new_ELN_to_dict(eln_str)
+def run(enzml_XLSX_path,pfd_XLSX_path, base_ontology_path, extended_ontology_path):
+
+   enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzml_XLSX_path)
+   new_eln_dict = new_ELN_to_dict(pfd_XLSX_path)
+   
+   onto = base_ontology_extension(base_ontology_path)
+
+   PFD_uuid = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, extended_ontology_path)
+   
+   return PFD_uuid
 
 def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
     enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzymeML_ELN_path)
     enzdict = enzmldoc.dict()
     eln_dict = new_ELN_to_dict(process_ELN_path)
-    
     return enzdict, eln_dict
-#enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
-#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-#enzdict, eln_dict = eln_to_dict(enz_str,eln_str)
 
-#TODO: characteristic_of -> Von Enzyme auf Reaktion! (RO_0000052)
-#TODO: Simulationsergebnisse zurück in KG 
 #TODO: implement UUIDs for substances and also for reaction/kinetic individuals
 #TODO: Link to simulation-files and to ELN files via comment/IRI!
     

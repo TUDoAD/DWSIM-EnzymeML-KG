@@ -8,7 +8,8 @@
          xmlns:core="http://www.w3.org/2004/02/skos/core#"
          xmlns:cheb="http://purl.obolibrary.org/obo/chebi/"
          xmlns:obo="http://purl.obolibrary.org/obo/"
-         xmlns:meta="http://w3id.org/nfdi4ing/metadata4ing#">
+         xmlns:meta="http://w3id.org/nfdi4ing/metadata4ing#"
+         xmlns:onto="http://www.nfdi.org/nfdi4cat/ontochem#">
 
 <owl:Ontology rdf:about="https://w3id.org/nfdi4cat">
   <owl:imports rdf:resource="http://purl.obolibrary.org/obo/go/releases/2023-11-15/go.owl"/>
@@ -40,6 +41,11 @@
   <core:prefLabel>has part</core:prefLabel>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#isPartOf">
+  <rdfs:subPropertyOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000050"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002230">
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasPart"/>
 </owl:ObjectProperty>
@@ -58,6 +64,13 @@
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObjectMandatory">
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObject"/>
   <core:prefLabel>has mandatory metadata object</core:prefLabel>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObject">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+  <owl:inverseOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#isMetadataObjectOf"/>
+  <rdfs:range rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#Metadata"/>
+  <core:prefLabel>has metadata object</core:prefLabel>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasChemicalMaterial">
@@ -91,13 +104,6 @@
   <core:prefLabel>has physical material state</core:prefLabel>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObject">
-  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-  <owl:inverseOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#isMetadataObjectOf"/>
-  <rdfs:range rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#Metadata"/>
-  <core:prefLabel>has metadata object</core:prefLabel>
-</owl:ObjectProperty>
-
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#isMetadataObjectOf">
   <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
   <rdfs:domain rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#Metadata"/>
@@ -107,11 +113,6 @@
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObjectOptional">
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObject"/>
   <core:prefLabel>has optional metadata object</core:prefLabel>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#isPartOf">
-  <rdfs:subPropertyOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000050"/>
-  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasProcessingModule">
@@ -181,6 +182,10 @@
   <core:prefLabel>has mandatory simple metadata</core:prefLabel>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimple">
+  <core:prefLabel>has simple metadata</core:prefLabel>
+</owl:DatatypeProperty>
+
 <owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#commentOnMaterialState">
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimpleMandatory"/>
   <rdfs:domain rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysicalMaterialState"/>
@@ -207,10 +212,6 @@
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimpleMandatory"/>
   <rdfs:domain rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysicalMaterialState"/>
   <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimple">
-  <core:prefLabel>has simple metadata</core:prefLabel>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimpleOptional">
@@ -574,6 +575,22 @@
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">model</rdfs:label>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#overallMolarFlow">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">overallMolarFlow</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMolarFlowUnit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolarFlowUnit</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMolarity">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolarity</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMolarityUnit">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasMolarityUnit</rdfs:label>
+</owl:DatatypeProperty>
+
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/inchi"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/inchikey"/>
@@ -708,6 +725,25 @@
   <core:prefLabel>unit operation transfer</core:prefLabel>
 </owl:Class>
 
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PCPM_Output">
+  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingStepOutput"/>
+  <core:prefLabel>output of physical-chemical processing module</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Matter"/>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule">
+  <rdfs:subClassOf rdf:resource="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
+  <core:prefLabel>data processing module</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PCPM_Input">
+  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingStepInput"/>
+  <core:prefLabel>input for physical-chemical processing module</core:prefLabel>
+</owl:Class>
+
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000000">
   <rdfs:comment>Representation of an entity used in a systems biology knowledge reconstruction, such as a model, pathway, network.</rdfs:comment>
   <rdfs:label>systems biology representation</rdfs:label>
@@ -746,17 +782,17 @@ same reaction, its global quantity remaining unchanged.</rdfs:comment>
   <rdfs:label>stimulator</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000015">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
-  <rdfs:comment>Molecule which is acted upon by an enzyme. The substrate binds with the enzyme's active site, and the enzyme catalyzes a chemical reaction involving the substrate.</rdfs:comment>
-  <rdfs:label>substrate</rdfs:label>
-</owl:Class>
-
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000019">
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000003"/>
   <rdfs:comment>Substance that changes the velocity of a process without
 itself being consumed or transformed by the reaction.</rdfs:comment>
   <rdfs:label>modifier</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000015">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
+  <rdfs:comment>Molecule which is acted upon by an enzyme. The substrate binds with the enzyme's active site, and the enzyme catalyzes a chemical reaction involving the substrate.</rdfs:comment>
+  <rdfs:label>substrate</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000020">
@@ -1236,8 +1272,6 @@ process depending on the context in which it occurs. For example, the observed e
   <rdfs:label>spontaneous reaction</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
-
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Alloy">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterial"/>
   <core:prefLabel>alloy</core:prefLabel>
@@ -1252,8 +1286,6 @@ process depending on the context in which it occurs. For example, the observed e
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterial"/>
   <core:prefLabel>chemical substance</core:prefLabel>
 </owl:Class>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Matter"/>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterialInput_Manual">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterialInput"/>
@@ -1274,6 +1306,20 @@ process depending on the context in which it occurs. For example, the observed e
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingTask"/>
   <core:prefLabel>chemical reaction</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingTask">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:oneOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterialTransfer"/>
+        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalReaction"/>
+        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#LiquidGasSeparation"/>
+        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#chemical_naterial_storage"/>
+      </owl:oneOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask"/>
 </owl:Class>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DPM_Input">
@@ -1306,11 +1352,6 @@ process depending on the context in which it occurs. For example, the observed e
   <core:prefLabel>output of processing step</core:prefLabel>
 </owl:Class>
 
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule">
-  <rdfs:subClassOf rdf:resource="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
-  <core:prefLabel>data processing module</core:prefLabel>
-</owl:Class>
-
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingTask">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask"/>
 </owl:Class>
@@ -1320,16 +1361,6 @@ process depending on the context in which it occurs. For example, the observed e
 </owl:Class>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Device"/>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PCPM_Input">
-  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingStepInput"/>
-  <core:prefLabel>input for physical-chemical processing module</core:prefLabel>
-</owl:Class>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PCPM_Output">
-  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingStepOutput"/>
-  <core:prefLabel>output of physical-chemical processing module</core:prefLabel>
-</owl:Class>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PCRS_Input">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingStepInput"/>
@@ -1369,20 +1400,6 @@ process depending on the context in which it occurs. For example, the observed e
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PhysicalMeasurementModule">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingModule"/>
   <core:prefLabel>physical measurement module</core:prefLabel>
-</owl:Class>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingTask">
-  <owl:equivalentClass>
-    <owl:Class>
-      <owl:oneOf rdf:parseType="Collection">
-        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterialTransfer"/>
-        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalReaction"/>
-        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#LiquidGasSeparation"/>
-        <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#chemical_naterial_storage"/>
-      </owl:oneOf>
-    </owl:Class>
-  </owl:equivalentClass>
-  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask"/>
 </owl:Class>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingModuleMetadata">
@@ -1441,13 +1458,13 @@ process depending on the context in which it occurs. For example, the observed e
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#UO_Separation"/>
 </owl:Class>
 
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UOLiquidGasSeparation">
-  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#UO_Separation"/>
-</owl:Class>
-
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UO_Separation">
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#UnitOperation"/>
   <core:prefLabel>unit operation separation</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UOLiquidGasSeparation">
+  <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#UO_Separation"/>
 </owl:Class>
 
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UOMixingMagnetic">
@@ -1554,6 +1571,18 @@ process depending on the context in which it occurs. For example, the observed e
   <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasDirect_OrderCoefficient>
   <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
   <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True</inDWSIMdatabase>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#reactant">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68">
+  <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Experiment_Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"> Creator(s): 
+given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.university, id: a0
+</rdfs:comment>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ind_ABTS_red">
@@ -1663,6 +1692,10 @@ process depending on the context in which it occurs. For example, the observed e
   <hasChao_SeaderSolubilityParameter_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mL/mol</hasChao_SeaderSolubilityParameter_Unit>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#catalyst">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000013"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ind_ABTS_ox">
   <rdf:type rdf:resource="#ABTS_ox"/>
   <obo:RO_0000087 rdf:resource="#product"/>
@@ -1714,6 +1747,10 @@ process depending on the context in which it occurs. For example, the observed e
   <hasChao_SeaderSolubilityParameter_Unit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mL/mol</hasChao_SeaderSolubilityParameter_Unit>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#product">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000011"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ind_Water">
   <rdf:type rdf:resource="#Water"/>
   <obo:RO_0000087 rdf:resource="#reactant"/>
@@ -1723,26 +1760,6 @@ process depending on the context in which it occurs. For example, the observed e
   <hasDirect_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasDirect_OrderCoefficient>
   <hasReverse_OrderCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasReverse_OrderCoefficient>
   <inDWSIMdatabase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True</inDWSIMdatabase>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68">
-  <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Experiment_Laccase - Helically Coiled Reactor (HCR) and Straight Capillary Reactor (SCR)</rdfs:label>
-  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"> Creator(s): 
-given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.university, id: a0
-</rdfs:comment>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#reactant">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#catalyst">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000013"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#product">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000011"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_Kin_9d22256c_f706_419f_a13a_bb6ae08c7998">
@@ -1779,16 +1796,8 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_1</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8.33333333333333e-08</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#indv_PFD_d98465d9_3d8c_45c7_a0ce_f1e4d0150a7d">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_7fe30698_f0af_456b_9c35_400c62ac9ec5"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_fbd7b3c1_5982_466d_9f55_33523c73b82c"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_2</rdfs:label>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5e-08</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.004584609073257156</overallMolarFlow>
+  <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_7fe30698_f0af_456b_9c35_400c62ac9ec5">
@@ -1800,13 +1809,102 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#PFD_cbd29c21_3aed_4904_94cd_b033b5fd3ee2">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_Laccase</rdfs:label>
+  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p2</hasEnzymeML_ID>
+  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">9.66666666666667e-10</hasCompoundMolarFlow>
+  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8.33333333333333e-08</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
+  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
+  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.1500199382988784e-05</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_4fc1f4db_a9b2_4c52_b763_4c973827afab">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_ABTS_red</rdfs:label>
+  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s0</hasEnzymeML_ID>
+  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8.08333333333333e-08</hasCompoundMolarFlow>
+  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
+  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
+  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.0009616546035775095</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_c89f9dc4_c7f2_4d9b_a26d_2c6efe623f16">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Water"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_Water</rdfs:label>
+  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.004624313262962963</hasCompoundMolarFlow>
+  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
+  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
+  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">55.01433572428292</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#indv_PFD_d98465d9_3d8c_45c7_a0ce_f1e4d0150a7d">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_7fe30698_f0af_456b_9c35_400c62ac9ec5"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_fbd7b3c1_5982_466d_9f55_33523c73b82c"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Reactant_2</rdfs:label>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5e-08</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.9584243093019674e-06</overallMolarFlow>
+  <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_fbd7b3c1_5982_466d_9f55_33523c73b82c">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_2_Oxygen</rdfs:label>
+  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s1</hasEnzymeML_ID>
+  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.655e-07</hasCompoundMolarFlow>
+  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5e-08</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_2</EntersAtObject>
+  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
+  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03916848618603935</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#indv_PFD_9a891fa6_b1c5_40a4_9383_4dcf59ecca8f">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:BFO_0000050 rdf:resource="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68"/>
   <obo:RO_0002234 rdf:resource="#indv_PFD_357f0ea0_f500_4be6_ad9a_09cec0202b51"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_1dc0467c_178f_44a0_b765_84b60b35b37f"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_b37149e6_c074_4245_9493_c29bad36d618"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_81306838_f6e3_440b_a7ec_64ae1eb8f2ea"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_31b2f01f_dcb9_4fc1_8e5d_2a61c8d6057a"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_9a925eee_7323_421a_872e_741e15fa2746"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_b9f95db9_5dd0_427e_be1c_04043cca27dc"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_e791fd11_1be6_4bb0_b53a_76b65716f4fc"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_df32a79a_9fed_47c4_b90a_079bccba0a21"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture</rdfs:label>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.3457300708425582e-07</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.004586567497566459</overallMolarFlow>
+  <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_357f0ea0_f500_4be6_ad9a_09cec0202b51">
@@ -1834,9 +1932,21 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
 <owl:NamedIndividual rdf:about="#indv_PFD_c01d4cbb_f829_408e_89ab_55f5cc37ebb8">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:BFO_0000050 rdf:resource="#Experiment_bdd8dc86_199f_4372_93e4_6a1b75363d68"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_954cbd11_720d_4301_8c16_4c3992e993d6"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_2ec13ee8_8bc3_4e0a_8677_13e7f19b301c"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_bfcf0260_e438_4c41_bf31_3831a82007e3"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_bee41e0d_d888_4dd2_95e8_dccb0a7385cf"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_7567c5fc_891f_4b2c_b57f_10876571c5fa"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_29e45ee1_fa73_4078_8366_d957a422d18a"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_a3868902_7e23_41fb_8160_ebf95e1c07a4"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_c3fce498_3ebb_45dc_83b9_c61ca5ed5d19"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_da9beadf_4044_420a_bc62_b6fd2f7e2638"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_df72347d_2798_4ac0_916e_4ef81bb131ab"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1</rdfs:label>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
+  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.3450320607595866e-07</overallVolumetricFlow>
+  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
+  <overallMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.004586576916744849</overallMolarFlow>
+  <hasMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasMolarFlowUnit>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_7be67f41_832c_4682_b48c_b393c39fd230">
@@ -1846,61 +1956,6 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Heat</rdfs:label>
   <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</overallVolumetricFlow>
   <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">None</hasVolumetricFlowUnit>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#PFD_cbd29c21_3aed_4904_94cd_b033b5fd3ee2">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_Laccase</rdfs:label>
-  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p2</hasEnzymeML_ID>
-  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">9.66666666666667e-10</hasCompoundMolarFlow>
-  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8.33333333333333e-08</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
-  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
-  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
-  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#PFD_4fc1f4db_a9b2_4c52_b763_4c973827afab">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_ABTS_red</rdfs:label>
-  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s0</hasEnzymeML_ID>
-  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8.08333333333333e-08</hasCompoundMolarFlow>
-  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
-  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
-  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
-  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#PFD_c89f9dc4_c7f2_4d9b_a26d_2c6efe623f16">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:RO_0002473 rdf:resource="#ind_Water"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1_Water</rdfs:label>
-  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.004624313262962963</hasCompoundMolarFlow>
-  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
-  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_1</EntersAtObject>
-  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
-  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#PFD_fbd7b3c1_5982_466d_9f55_33523c73b82c">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_2_Oxygen</rdfs:label>
-  <hasEnzymeML_ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">s1</hasEnzymeML_ID>
-  <hasCompoundMolarFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.655e-07</hasCompoundMolarFlow>
-  <hasCompoundMolarFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/s</hasCompoundMolarFlowUnit>
-  <overallVolumetricFlow rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5e-08</overallVolumetricFlow>
-  <hasVolumetricFlowUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3/s</hasVolumetricFlowUnit>
-  <EntersAtObject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactant_2</EntersAtObject>
-  <hasTemperature rdf:datatype="http://www.w3.org/2001/XMLSchema#string">38</hasTemperature>
-  <hasTemperatureUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C</hasTemperatureUnit>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_eef41ef0_d244_44d6_b186_7b2acbcdb9dc">
@@ -1949,6 +2004,176 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">r2</id>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#PFD_1dc0467c_178f_44a0_b765_84b60b35b37f">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Laccase</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.1497738117471192e-05</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_b37149e6_c074_4245_9493_c29bad36d618">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_ABTS_red</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.000961654738566971</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_81306838_f6e3_440b_a7ec_64ae1eb8f2ea">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Water"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Water</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">55.01395781865195</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_31b2f01f_dcb9_4fc1_8e5d_2a61c8d6057a">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Oxygen</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.000992180154446213</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_9a925eee_7323_421a_872e_741e15fa2746">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Laccase</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">4.410370069740686e-09</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_b9f95db9_5dd0_427e_be1c_04043cca27dc">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_ABTS_red</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3.387915882552327e-08</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_e791fd11_1be6_4bb0_b53a_76b65716f4fc">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Water"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Water</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.0025652801682458032</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_df32a79a_9fed_47c4_b90a_079bccba0a21">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Mixture_Oxygen</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.036605575360694816</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_954cbd11_720d_4301_8c16_4c3992e993d6">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_ox"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_ox</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.00044847469047489387</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_2ec13ee8_8bc3_4e0a_8677_13e7f19b301c">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Laccase</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.1496543699616878e-05</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_bfcf0260_e438_4c41_bf31_3831a82007e3">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_red</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.0005142814413601535</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_bee41e0d_d888_4dd2_95e8_dccb0a7385cf">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Water"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Water</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">55.00854391899767</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_7567c5fc_891f_4b2c_b57f_10876571c5fa">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Oxygen</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.0009856809880263613</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Liquid</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_29e45ee1_fa73_4078_8366_d957a422d18a">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_ox"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_ox</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.6035683120235877e-08</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_a3868902_7e23_41fb_8160_ebf95e1c07a4">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Laccase"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Laccase</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">4.450074311647865e-09</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_c3fce498_3ebb_45dc_83b9_c61ca5ed5d19">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_ABTS_red"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_ABTS_red</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.838867254590649e-08</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_da9beadf_4044_420a_bc62_b6fd2f7e2638">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Water"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Water</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.0026006903388883095</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PFD_df72347d_2798_4ac0_916e_4ef81bb131ab">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:RO_0002473 rdf:resource="#ind_Oxygen"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Product_1_Oxygen</rdfs:label>
+  <hasMolarity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03648990087840085</hasMolarity>
+  <hasMolarityUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mol/L</hasMolarityUnit>
+  <onto:hasAggregateState rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vapor</onto:hasAggregateState>
+</owl:NamedIndividual>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Alloy"/>
+    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMixture"/>
+    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalSubstance"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
 <owl:AllDisjointClasses>
   <owl:members rdf:parseType="Collection">
     <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UO_Heating"/>
@@ -1956,14 +2181,6 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
     <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UO_Separation"/>
     <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UO_Storage"/>
     <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#UO_Transfer"/>
-  </owl:members>
-</owl:AllDisjointClasses>
-
-<owl:AllDisjointClasses>
-  <owl:members rdf:parseType="Collection">
-    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#Alloy"/>
-    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMixture"/>
-    <rdf:Description rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalSubstance"/>
   </owl:members>
 </owl:AllDisjointClasses>
 
