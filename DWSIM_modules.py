@@ -545,7 +545,7 @@ def run(filename_DWSIM,eln_IRI,KG_path):#filename_DWSIM,filename_KG):
     
     filename_KG = KG_path.replace(".owl","_output.owl")
     
-    pfd_ind = onto.search_one(iri=eln_IRI)
+    pfd_indv = onto.search_one(iri = "*"+PFD_uuid)
     
     print("Data initialized, ontology loaded...")
     
