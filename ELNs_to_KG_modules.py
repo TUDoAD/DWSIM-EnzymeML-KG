@@ -27,40 +27,6 @@ import pandas as pd
 # owlready2.JAVA_EXE = "C://Users//..//Protege-5.5.0-win//Protege-5.5.0//jre//bin//java.exe"
 ##
 
-def enzymeML_readin(EnzymeML_XLSM_str):
-## DEPRECATED FUNCTION
-    ## USER INPUT
-    # Load EnzymeML Excel-file
-    # Make sure, Macros are turned OFF, else the pH-value might not be parsed correctly
-    enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/"+EnzymeML_XLSM_str+".xlsm")
-    """
-    # visualize first measurement
-    fig = enzmldoc.visualize(use_names=True, trendline=True, measurement_ids=["m0"])
-    """
-
-    Creator_Names = [i.given_name+ i.family_name for i in enzmldoc.creator_dict.values()]
-    Creator_Names = ", ".join(Creator_Names)
-
-        
-    # Infos zur Reaktion
-    for reaction in enzmldoc.reaction_dict.values():
-        Reaction_Name = reaction.name # ABTS Oxidation
-        Reaction_ID = reaction.id # r2
-        pH_Value = reaction.ph # 5.2
-        Temperature_Value = reaction.temperature # 311.15
-        Temperature_Unit = reaction.temperature_unit # K
-
-    # Infos zum Protein
-    for protein in enzmldoc.protein_dict.values():
-        Protein_Name = protein.name # Laccase
-        Protein_SBO = protein.ontology # SBO_0000252 = Protein
-        Protein_Sequence = protein.sequence # wichtig für das Molekulargewicht später
-        Protein_EC_Number = protein.ecnumber # 1.10.3.2
-        Protein_Organism = protein.organism # Trametes versicolor
-        Protein_UniProtID = protein.uniprotid # None, should be 'D2CSE5'
-
-####
-
 
 def eln_subst_data_to_dict(eln_sheet):
     ext_eln_data = {}
