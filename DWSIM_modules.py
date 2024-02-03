@@ -421,7 +421,6 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
         
     pfd_ind = onto.search_one(iri = pfd_iri)
     pfd_dict = {} 
-    
     phase_dict = {}
     
     for i in pfd_list:
@@ -450,17 +449,15 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                     conc_list = []
                     conc_dict = {}
                     for i in range(len(list(dwsim_obj.GetPhaseComposition(int(phase_no))))):
-                        
                         conc_dict[stream_comp_ids[i]] = f * list(dwsim_obj.GetPhaseComposition(int(phase_no)))[i]
                         #conc_list.append(conc_dict)
-                        
                     
                     phase_dict[str(onto_obj.label.first())] = {str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName): conc_dict}
             ##
             ## add information to ontology
-            onto_obj.overallVolumetricFlow = [volume_flow]
+            onto_obj.overallVolumetricFlow = [str(volume_flow)]
             onto_obj.hasVolumetricFlowUnit = ["m3/s"]
-            onto_obj.overallMolarFlow = [molar_flow]
+            onto_obj.overallMolarFlow = [str(molar_flow)]
             onto_obj.hasMolarFlowUnit = ["mol/s"]
             
             #print(phase_dict)
@@ -476,33 +473,42 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                         if material_label in key_list:
                             submat_stream.hasMolarity = [conc_dict[phase][material_label]]
                             submat_stream.hasMolarityUnit = ["mol/L"]
-                   # if 
-                    #    phase_dict[submat_stream.label.first()] # the composition dict, gives composition etc 
-
+                        
+                        # assert phase
+                        if "Liquid" in phase:
+                            submat_stream.hasAggregateState.append("Liquid")
+                        else:
+                            submat_stream.hasAggregateState.append(phase)# Vapor,..
+            else: #no partial material stream(s) detected or missing
+                
+                conc_dict = phase_dict[onto_obj.label.first()]
+                stream_name = onto_obj.label.first()
+                
+                for phase in conc_dict:
+                    key_list = conc_dict[phase].keys()
+                    
+                    for subst in key_list:
+                        onto, substream = onto_substream_from_name(onto, stream_name, subst)
+                        
+                        onto_obj.BFO_0000051.append(substream)#hasPart
+                        ## search for the correct substance individual in pfd_dict
+                        for key in pfd_dict:
+                            if pfd_dict[key].is_a.first().label.first() == material_label:
+                                substream.RO_0002473 = [pfd_dict[key]] #consists primarily of
+                     
+                    # assert phase
+                    if "Liquid" in phase:
+                        submat_stream.hasAggregateState.append("Liquid")
+                    else:
+                        submat_stream.hasAggregateState.append(phase)# Vapor,..
+                   
 
                 ##TODO: do this to the substreams of the process stream, then attach 
                 # phase_comp = phase_dict[onto_obj.label.first()][phase] 
                 # phase_comp = {'indv_Reactant_1': {'OverallLiquid': {'ABTS_ox': 0.0, 'Laccase': 1.1500199382988784e-05, 'ABTS_red': 0.0009616546035775095, 'Water': 55.01433572428292, 'Oxygen': 0.0}}, 'indv_Reactant_2': {
                 # for each entry in phase_comp -> search key in material_labels (above) and assert
                 # submat_stream.hasMolarity = [phase_comp[key]]
-                for phase in phase_dict[onto_obj.label.first()]:
-                    print(phase)
-                    if "Liquid" in phase:
-                        onto_obj.hasAggregateState.append("Liquid")
-                    else:
-                        onto_obj.hasAggregateState.append(phase)# Vapor,..
-                        
-            else: #no partial material stream(s) detected or missing
-                #create new individuals etc.
-                for phase in phase_dict[onto_obj.label.first()]:
-                    print(phase)
-                    if "Liquid" in phase:
-                        onto_obj.hasAggregateState.append("Liquid")
-                    else:
-                        onto_obj.hasAggregateState.append(phase) #Vapor,...
-                pass
-        
-    #print(phase_dict)
+
 
     # 
     
@@ -524,6 +530,12 @@ list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
 
 ##
 
+def onto_substream_from_name(onto, stream_name, subst_name):
+    uuid_str = "PFD_" + str(uuid.uuid4()).replace("-","_")
+    substream = onto.search_one(label = "MaterialStream")(uuid_str)
+    uuid_str.label = stream_name + "_" + subst_name
+    
+    return onto, substream
 
 
 
