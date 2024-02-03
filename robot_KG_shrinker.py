@@ -16,7 +16,7 @@ working_dir = os.getcwd()
 
 #URL = "https://raw.githubusercontent.com/nfdi4cat/Ontology-Overview-of-NFDI4Cat/main/ontologies/AFO.ttl"
 
-URL = working_dir + "/ontologies/KG-DWSIM_EnzML_ELN.owl" #"C://Users/smmcvoel/Documents/GitHub/Abschlussarbeiten_Behr/VoelkenrathMA/ontologies/HuPSON_v092013_merged.owl"
+URL = working_dir + "/ontologies/KG-DWSIM_EnzML_ELN_output.owl" #"C://Users/smmcvoel/Documents/GitHub/Abschlussarbeiten_Behr/VoelkenrathMA/ontologies/HuPSON_v092013_merged.owl"
 IRI_file = "iri_individuals.txt"
 onto_path = "ontologies/KG-DWSIM_EnzML_ELN_robotted.owl"
 
