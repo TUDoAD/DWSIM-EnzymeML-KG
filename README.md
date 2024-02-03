@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/733437045.svg)](https://zenodo.org/doi/10.5281/zenodo.10613473)
+
 ## DWSIM-EnzymeML-KG
 
 This repository contains the code and the MS Excel files (subdirectory [ELNs](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/tree/main/ELNs)) used as data input for the automated generation of process simulations in [DWSIM](https://dwsim.org).
