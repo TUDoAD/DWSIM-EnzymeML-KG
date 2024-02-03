@@ -677,10 +677,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                             """.format(uuid_dict[proc_mod], prop_key, val)
                     
                 code = compile(codestring, "<string>", "exec")
-                exec(code)
-    ##        
-            
-            
+                exec(code)    
     return onto
 
 ###
@@ -810,23 +807,13 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     # save ontology
     onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
     
-
-    #####
-    # Ontology-Extension der Base Ontology #
-    #####
+    
     return onto, supp_eln_dict
 
-##
-#
-# in 00_2023_MA_Abaspour_Pythoncode.py nach #ALEX Rev suchen !
-# -> include rest of DWSIM-Simus 
-##
 
 
 def run():
-   # enzymeML_readin("EnzymeML_Template_18-8-2021_KR")
-   # onto, test_dict = substance_knowledge_graph("./ELNs/Ergänzendes Laborbuch_Kinetik_1.xlsx", onto, "BaseOnto2")
-   
+
    enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
    
    onto = base_ontology_extension("BaseOntology")
@@ -836,24 +823,14 @@ def run():
    
   # with open('dict_dump.json', 'w') as file:
   #      json.dump(eln_dict, file)
-   
-   #return test_dict
-
-#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-#eln_dict = new_ELN_to_dict(eln_str)
+ 
 
 def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
     enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzymeML_ELN_path)
     enzdict = enzmldoc.dict()
     eln_dict = new_ELN_to_dict(process_ELN_path)
-    
     return enzdict, eln_dict
-#enz_str = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
-#eln_str = "./ELNs/New-ELN_Kinetik_1.xlsx"
-#enzdict, eln_dict = eln_to_dict(enz_str,eln_str)
 
-#TODO: characteristic_of -> Von Enzyme auf Reaktion! (RO_0000052)
-#TODO: Simulationsergebnisse zurück in KG 
 #TODO: implement UUIDs for substances and also for reaction/kinetic individuals
 #TODO: Link to simulation-files and to ELN files via comment/IRI!
     

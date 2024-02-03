@@ -87,12 +87,13 @@ def data_ini(enzymeML_ELN_path,process_ELN_path,ontology_path):
 
 ##
 def flowsheet_simulation(onto, pfd_iri):
-        #enz_dict, pfd_dict, onto, pfd_iri): 
+    #enz_dict, pfd_dict, onto, pfd_iri): 
     working_dir = os.getcwd()
     Directory.SetCurrentDirectory(dwsimpath)
     # Automatisierungsmanager erstellen
     # Create automatin manager
     interf = Automation3()
+    
     sim = interf.CreateFlowsheet()
     sim.CreateAndAddPropertyPackage("Raoult's Law")
 
@@ -432,6 +433,7 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
             volume_flow = dwsim_obj.GetVolumetricFlow()
             
             ## get phase information
+            phases_dict = {}
             for phase_no in range(dwsim_obj.GetNumPhases()):
             
                 mol_flow = dict(dwsim_obj.get_Phases())[phase_no].Properties.get_molarflow() #mol/s
@@ -441,13 +443,18 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                 if mol_flow and vol_flow:                
                     f = mol_flow / vol_flow /1000 # mol/L
                     conc_dict = {}
+                    
+                    
                     for i in range(len(list(dwsim_obj.GetPhaseComposition(int(phase_no))))):
                         conc_dict[stream_comp_ids[i]] = f * list(dwsim_obj.GetPhaseComposition(int(phase_no)))[i]
                         #conc_list.append(conc_dict)
                     
-                    phase_dict[str(onto_obj.label.first())] = {str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName): conc_dict}
+                    phase_name = str(dict(dwsim_obj.get_Phases())[int(phase_no)].ComponentName)
+                    if phase_name != "Mixture":
+                        phases_dict[phase_name] = conc_dict
+            #
+            phase_dict[str(onto_obj.label.first())] = phases_dict
             ##
-            
             
             ## add information to ontology
             onto_obj.overallVolumetricFlow = [str(volume_flow)]
@@ -467,7 +474,7 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                         key_list = conc_dict[phase].keys()
                         #add molarities
                         if material_label in key_list:
-                            submat_stream.hasMolarity = [conc_dict[phase][material_label]]
+                            submat_stream.hasMolarity = [str(conc_dict[phase][material_label])]
                             submat_stream.hasMolarityUnit = ["mol/L"]
                         
                         # assert phase
@@ -483,7 +490,7 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                 
                 for phase in conc_dict:
                     key_list = conc_dict[phase].keys()
-                    
+                    print(phase)
                     for subst in key_list:
                         onto, substream_uri = onto_substream_from_name(onto, stream_name, subst)
                         substream = onto.search_one(iri = substream_uri)
@@ -491,21 +498,21 @@ def extend_knowledgegraph(sim,onto,streams, pfd_list,pfd_iri):
                         onto_obj.BFO_0000051.append(substream)#hasPart
                         ## search for the correct substance individual in pfd_dict
                         for key in pfd_dict:
-                            if pfd_dict[key].is_a.first().label.first() == material_label:
-                                substream.RO_0002473 = [pfd_dict[key]] #consists primarily of
+                            if pfd_dict[key].is_a.first().label.first() == subst:
+                                substream.RO_0002473.append(pfd_dict[key]) #consists primarily of
                     
-                    # add molarities
-                    if material_label in key_list:
-                        substream.hasMolarity = [conc_dict[phase][material_label]]
-                        substream.hasMolarityUnit = ["mol/L"]
-                
-                    # assert phase
-                    if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
-                        substream.hasAggregateState.append("Liquid")
-                    else:
-                        substream.hasAggregateState.append(phase)# Vapor,..
+                        # add molarities
+                        if subst in key_list:
+                            substream.hasMolarity = [str(conc_dict[phase][subst])]
+                            substream.hasMolarityUnit = ["mol/L"]
+                    
+                        # assert phase
+                        if "Liquid" in phase: #DWSIM asserts "OverallLiquid" for liquid phases
+                            substream.hasAggregateState.append("Liquid")
+                        else:
+                            substream.hasAggregateState.append(phase)# Vapor,..
                    
-    return onto
+    return onto,phase_dict
 
 ##
 
@@ -563,11 +570,11 @@ def run():
     save_simulation(sim,interface,filename_DWSIM)
     
     print("Integrating new information into Knowledge Graph")
-    onto = extend_knowledgegraph(sim, onto, streams, pfd_list, pfd_iri)
+    onto,stream_dict = extend_knowledgegraph(sim, onto, streams, pfd_list, pfd_iri)
     print("Storing Knowledge Graph: "+filename_KG)
     onto.save(file =filename_KG, format ="rdfxml")
     
-    #return streams, pfd_list
+    return stream_dict
 
 
 
