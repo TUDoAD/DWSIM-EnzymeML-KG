@@ -533,7 +533,7 @@ list(streams["indv_Product_1"].GetAsObject().GetOverallComposition())
 def onto_substream_from_name(onto, stream_name, subst_name):
     uuid_str = "PFD_" + str(uuid.uuid4()).replace("-","_")
     substream = onto.search_one(label = "MaterialStream")(uuid_str)
-    uuid_str.label = stream_name + "_" + subst_name
+    substream.label = stream_name + "_" + subst_name
     
     return onto, substream
 
