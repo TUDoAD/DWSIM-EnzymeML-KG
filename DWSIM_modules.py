@@ -536,26 +536,12 @@ def save_simulation(sim,interface, filename):
 ##
 
 
-def simulate_in_subprocess():
-    command = ['python', 'run()']
-    process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    process.wait()
-
 
 ##
-def ini():
+def run(filename_DWSIM,eln_IRI,path,KG_path):#filename_DWSIM,filename_KG):
 
-    
-    enz_dict, pfd_dict, onto = data_ini(enz_str, eln_str, onto_str)
-    return enz_dict, pfd_dict, onto
-
-##
-
-
-##
-def run(filename_DWSIM,enzml_XLSX_path,pfd_XLSX_path,KG_path):#filename_DWSIM,filename_KG):
-
-    enz_dict, pfd_dict, onto = data_ini(enzml_XLSX_path,pfd_XLSX_path,KG_path)
+    onto = owlready2.get_ontology(KG_path).load()
+    onto.name = "onto"
     
     filename_KG = KG_path.replace(".owl","_output.owl")
     

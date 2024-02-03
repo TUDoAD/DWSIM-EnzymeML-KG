@@ -136,14 +136,14 @@ def new_ELN_to_dict(eln_path):
 #####
 # Ontology-Extension der Base Ontology #
 #####
-def base_ontology_extension(name_base_ontology):
+def base_ontology_extension(path_base_ontology):
     #TODO: Deprecate this function and include the two classes 
     # into the initial base-ontology manually
     # Only supports owl-ontologies
     # load base ontology
     onto_world = owlready2.World()
    # sbo_onto = onto_world.get_ontology("https://raw.githubusercontent.com/EBI-BioModels/SBO/master/SBO_OWL.owl").load()
-    onto = onto_world.get_ontology("./ontologies/"+name_base_ontology+".owl").load()
+    onto = onto_world.get_ontology(path_base_ontology).load()
     onto.name = "onto"
     
    # onto.imported_ontologies.append(sbo_onto)
@@ -682,7 +682,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
 
 ###
 def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
-    #TODO: Add reaction as indv. of ontology class from enzymeML sheet
+    
     # add properties of reaction to individual
     # add educts, products, ... subdicts -> based on assigned ontology class
     #onto -> add enzmldoc.reaction_dict[reac_ID]["ontology"]
@@ -761,7 +761,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
 
 ##
 
-def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
+def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, extended_ontology_path):
 
     ##
     #SBO Term: enzmldoc.getAny("s0").ontology.value
@@ -805,25 +805,23 @@ def eln_to_knowledge_graph(enzmldoc, supp_eln_dict, onto, onto_str):
     onto = reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid)
     
     # save ontology
-    onto.save(file="./ontologies/KG-"+ onto_str+".owl", format="rdfxml")
+    onto.save(file=extended_ontology_path, format="rdfxml")
     
     
-    return onto, supp_eln_dict
+    return eln_iri
 
 
 
-def run():
+def run(enzml_XLSX_path,pfd_XLSX_path, base_ontology_path, extended_ontology_path):
 
-   enzmldoc = pe.EnzymeMLDocument.fromTemplate("./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm")
+   enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzml_XLSX_path)
+   new_eln_dict = new_ELN_to_dict(pfd_XLSX_path)
    
-   onto = base_ontology_extension("BaseOntology")
+   onto = base_ontology_extension(base_ontology_path)
+
+   eln_IRI = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, extended_ontology_path)
    
-   new_eln_dict = new_ELN_to_dict("./ELNs/New-ELN_Kinetik_1.xlsx")
-   onto, test_dict = eln_to_knowledge_graph(enzmldoc, new_eln_dict, onto, "DWSIM_EnzML_ELN")
-   
-  # with open('dict_dump.json', 'w') as file:
-  #      json.dump(eln_dict, file)
- 
+   return eln_IRI
 
 def eln_to_dict(enzymeML_ELN_path,process_ELN_path):
     enzmldoc = pe.EnzymeMLDocument.fromTemplate(enzymeML_ELN_path)
