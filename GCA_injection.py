@@ -7,7 +7,9 @@ Created on Sun Feb  4 13:00:31 2024
 
 from owlready2 import *
 
-onto = get_ontology("./ontologies/KG-DWSIM_EnzML_ELN_output_with_r4c.owl").load()
+onto_path = "./ontologies/KG-DWSIM_EnzML_ELN_output_with_r4c.owl"
+onto = get_ontology(onto_path).load()
+
 
 cat_name = "Laccase"
 
@@ -25,6 +27,7 @@ with onto:
     
     gca = GeneralClassAxiom(reacComp_rel.some(cat_sub_indv) & potCatBy_rel.some(cat_sub_indv)) # Left side
     gca.is_a.append(cat_rel.some(cat_sub_indv)) # Right side
-      
+    
+    onto.save(file=onto_path.replace(".owl","_gca.owl"), format="rdfxml")      
 #'Laccase Reaction' and (hasCatalyst some ((material entity or chemical entity) and (inverse (hasReactionComponent some 'Laccase Reaction'))) SubClassOf 'Catalysed Laccase Reaction'
 #(hasEductComponent some ABTS_red) and (hasEductComponent some Oxygen) and (hasProductComponent some ABTS_ox) SubClassOf hasReactionRole some ({Laccase_reaction_indv})
