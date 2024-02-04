@@ -2595,6 +2595,11 @@ process depending on the context in which it occurs. For example, the observed e
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Water</rdfs:label>
 </owl:Class>
 
+<owl:Class rdf:about="#1ba79719_f00c_4bd3_b549_1f605c1432d2">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000200"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">redox reaction with Laccase</rdfs:label>
+</owl:Class>
+
 <owl:NamedIndividual rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ChemicalMaterialTransfer">
   <rdf:type rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingTask"/>
   <core:prefLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">chemical material transfer</core:prefLabel>
@@ -3420,37 +3425,84 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
 <owl:Class>
   <owl:intersectionOf rdf:parseType="Collection">
     <owl:Restriction>
-      <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000062"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/RO_0002233"/>
+      <owl:someValuesFrom rdf:resource="#ABTS_red"/>
     </owl:Restriction>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000067"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/RO_0002233"/>
+      <owl:someValuesFrom rdf:resource="#Oxygen"/>
+    </owl:Restriction>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/RO_0002234"/>
+      <owl:someValuesFrom rdf:resource="#ABTS_ox"/>
     </owl:Restriction>
   </owl:intersectionOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000003"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000015"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://biomodels.net/SBO/RCT_21f79bea_a7cf_4bf9_bb9c_32348d5d0b24"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:someValuesFrom>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
 
 <owl:Class>
   <owl:intersectionOf rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://biomodels.net/SBO/SBO_0000200"/>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000003"/>
+          <owl:someValuesFrom rdf:resource="http://biomodels.net/SBO/SBO_0000240"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000063"/>
+          <owl:someValuesFrom rdf:resource="http://biomodels.net/SBO/SBO_0000200"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:intersectionOf>
+  <rdfs:subClassOf rdf:resource="#1ba79719_f00c_4bd3_b549_1f605c1432d2"/>
+</owl:Class>
+
+<owl:Class>
+  <owl:intersectionOf rdf:parseType="Collection">
     <owl:Restriction>
       <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000062"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ind_Laccase"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:someValuesFrom>
     </owl:Restriction>
     <owl:Restriction>
       <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000067"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ind_Laccase"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:someValuesFrom>
     </owl:Restriction>
   </owl:intersectionOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000003"/>
-      <owl:someValuesFrom rdf:resource="#ind_Laccase"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ind_Laccase"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:someValuesFrom>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
