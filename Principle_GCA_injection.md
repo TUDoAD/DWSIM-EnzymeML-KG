@@ -8,21 +8,21 @@
 
 
 ## Entities
-hasReactionComponent = 
-{Sub_Laccase} =
-isPotentiallyCatalysedBy = 
-hasCatalyst =
+hasReactionComponent = r4c - has input, has output
+{Sub_Laccase} = Indv. of substance Laccase
+isPotentiallyCatalysedBy = r4c
+hasCatalyst = r4c
 
-'Laccase Reaction' = (RedOX reaction
-material entity =
-chemical entity =
-'Catalysed Laccase Reaction' = (catalysed RedOX reaction)
+'Laccase Reaction' = SubClassOf (redox reaction) http://biomodels.net/SBO/SBO_0000200
+material entity = http://biomodels.net/SBO/SBO_0000240 (material entity, or BFO_0000040)
+chemical entity = NONE
+'Catalysed Laccase Reaction' = SubClassOf 'Laccase Reaction'
 
 
-hasEductComponent =
-ABTS_red = 
-Oxygen = 
-hasProductComponent =
-ABTS_ox =
-hasReactionRole =
-{Laccase_reaction_indv} =
+hasEductComponent = has input
+ABTS_red = self
+Oxygen = self
+hasProductComponent = has output
+ABTS_ox = self
+hasReactionRole = r4c
+{Laccase_reaction_indv} = self
