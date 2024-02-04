@@ -72,20 +72,20 @@ with onto:
         
         gca_str = ""
         for educt_name in educt_names:
-            educt_class = onto.search_one(label = educt_name)
+            #educt_class = onto.search_one(label = educt_name)
             if gca_str:
-                gca_str += "& educt_rel.some({})".format(educt_class)
+                gca_str += "& educt_rel.some(onto.{})".format(educt_name)
             else:
-                gca_str += "educt_rel.some({})".format(educt_class)
+                gca_str += "educt_rel.some(onto.{})".format(educt_name)
                 
         for product_name in product_names:
-            product_class = onto.search_one(label = product_name)
+            #product_class = onto.search_one(label = product_name)
             if gca_str:
-                gca_str += "& product_rel.some({})".format(product_class)
+                gca_str += "& product_rel.some(onto.{})".format(product_name)
             else:
-                gca_str += "product_rel.some({})".format(product_class)
+                gca_str += "product_rel.some(onto.{})".format(product_name)
         
-        codestr = "gca3 =" + gca_str
+        codestr = "gca3 = GeneralClassAxiom(" + gca_str + ")"
         code = compile(codestr, "<string>","exec")
         exec(code)
         
