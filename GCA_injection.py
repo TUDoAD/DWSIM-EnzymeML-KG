@@ -68,6 +68,7 @@ with onto:
         #(hasEductComponent some ABTS_red) and (hasEductComponent some Oxygen) and (hasProductComponent some ABTS_ox) SubClassOf hasReactionRole some ({Laccase_reaction_indv})
         educt_rel = onto.search_one(label = educt_prop_str)
         product_rel = onto.search_one(label = product_prop_str)
+        reac_role_rel = onto.search_one(label = reac_role_prop_str)
         reac_indv = onto.search_one(label = reac_indv_name)
         
         gca_str = ""
@@ -89,8 +90,7 @@ with onto:
         code = compile(codestr, "<string>","exec")
         exec(code)
         
-        #gca = GeneralClassAxiom(reaction_class & (cat_rel.some(material_class) & (reacComp_rel.inverse.some(reaction_class)))) # Left side
-        gca3.is_a.append(OneOf([reac_indv])) # Right side
+        gca3.is_a.append(reac_role_rel.some(OneOf([reac_indv]))) # Right side
         
         
         onto.save(file=onto_path.replace(".owl","_gca.owl"), format="rdfxml")      
