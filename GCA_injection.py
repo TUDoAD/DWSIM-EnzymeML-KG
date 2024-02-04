@@ -28,6 +28,7 @@ mat_class_iri = "SBO_0000240" #SBO material entity
 reaction_class_iri = "SBO_0000200" #redox reaction http://biomodels.net/SBO/SBO_0000200
 # uuid for unique identifier for the specified reaction (redox reaction with Laccase)
 spec_reac_uuid =str(uuid.uuid4()).replace("-","_")
+spec_reac_indv_uuid =str(uuid.uuid4()).replace("-","_")
 
 # object properties 
 reacComp_prop_str = "hasReactionComponent"
@@ -59,6 +60,9 @@ with onto:
     
         spec_reaction_class = types.new_class(spec_reac_uuid, (reaction_class,))
         spec_reaction_class.label = spec_reac_label
+        spec_reaction_indv = spec_reaction_class(spec_reac_indv_uuid)
+        spec_reaction_indv.label = spec_reac_label
+        
         #'Haber Bosch reaction' and (hasCatalyst some 'material entity' or 'chemical entity') and ( inverse (hasReactionComponent) some 'Haber Bosch reaction'))) SubClassOf 'catalysed Haber Bosch reaction'
         gca2 = GeneralClassAxiom(reaction_class & (cat_rel.some(material_class) & (reacComp_rel.inverse.some(reaction_class)))) # Left side
         gca2.is_a.append(spec_reaction_class) # Right side

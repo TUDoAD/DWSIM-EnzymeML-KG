@@ -16,9 +16,9 @@ working_dir = os.getcwd()
 
 #URL = "https://raw.githubusercontent.com/nfdi4cat/Ontology-Overview-of-NFDI4Cat/main/ontologies/AFO.ttl"
 
-URL = working_dir + "/ontologies/KG-DWSIM_EnzML_ELN_output.owl" #"C://Users/smmcvoel/Documents/GitHub/Abschlussarbeiten_Behr/VoelkenrathMA/ontologies/HuPSON_v092013_merged.owl"
+URL = working_dir + "/ontologies/KG-DWSIM_EnzML_ELN_output_with_r4c_gca.owl" #"C://Users/smmcvoel/Documents/GitHub/Abschlussarbeiten_Behr/VoelkenrathMA/ontologies/HuPSON_v092013_merged.owl"
 IRI_file = "iri_individuals.txt"
-onto_path = "ontologies/KG-DWSIM_EnzML_ELN_robotted.owl"
+onto_path = "ontologies/KG-DWSIM_EnzML_ELN_output_with_r4c_gca_robotted.owl"
 
 def run():
     
@@ -27,11 +27,7 @@ def run():
     
     bashCommand = "java -jar {}/robot/robot.jar extract --input {} --method {} --term-file {} --output {} ".format(working_dir,URL, meth, IRI_file, onto_path)
     
-    #bashCommand = "java -jar C://Users/smmcvoel/Documents/GitHub/Abschlussarbeiten_Behr/VoelkenrathMA/robot/robot.jar merge --input ontologies/MV-Onto.owl --input ontologies/Reac4Cat_Folgereaktion.owl --output ontologies/MV-Ontology.owl"
-    
-    
     os.system(bashCommand)
-    
     
     object_props = ["ends after", "has participant", "participates in", "temporally related to", "has role", "has characteristic", "composed primarily of","has modifier"]
     class_props = ["occurrent", "continuant","specifically dependent continuant"]#,""]
