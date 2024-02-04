@@ -13,7 +13,7 @@ hasReactionComponent = r4c - has input, has output
 isPotentiallyCatalysedBy = r4c
 hasCatalyst = r4c
 
-'Laccase Reaction' = SubClassOf (redox reaction) http://biomodels.net/SBO/SBO_0000200
+'Laccase Reaction' = is_a (redox reaction) http://biomodels.net/SBO/SBO_0000200
 material entity = http://biomodels.net/SBO/SBO_0000240 (material entity, or BFO_0000040)
 chemical entity = NONE
 'Catalysed Laccase Reaction' = SubClassOf 'Laccase Reaction'
