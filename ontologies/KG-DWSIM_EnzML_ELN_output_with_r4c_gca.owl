@@ -2595,7 +2595,7 @@ process depending on the context in which it occurs. For example, the observed e
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Water</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="#1644cf1c_9cc8_4059_b8f4_eb6a5d94f757">
+<owl:Class rdf:about="#8a288c46_60b0_4abe_b5b4_a95ee9f81486">
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000200"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">redox reaction with Laccase</rdfs:label>
 </owl:Class>
@@ -3422,9 +3422,9 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_Heat</rdfs:label>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#749bdeee_0038_4cd2_9d3a_fa19b85244b0">
-  <rdf:type rdf:resource="#1644cf1c_9cc8_4059_b8f4_eb6a5d94f757"/>
-  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">redox reaction with Laccase</rdfs:label>
+<owl:NamedIndividual rdf:about="#8bf5a2b2_0e4d_4f16_bf13_4af2e5276837">
+  <rdf:type rdf:resource="#8a288c46_60b0_4abe_b5b4_a95ee9f81486"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">indv_redox reaction with Laccase</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:Class>
@@ -3448,7 +3448,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
       <owl:someValuesFrom>
         <owl:Class>
           <owl:oneOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://biomodels.net/SBO/RCT_21f79bea_a7cf_4bf9_bb9c_32348d5d0b24"/>
+            <rdf:Description rdf:about="#8bf5a2b2_0e4d_4f16_bf13_4af2e5276837"/>
           </owl:oneOf>
         </owl:Class>
       </owl:someValuesFrom>
@@ -3472,7 +3472,7 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
       </owl:intersectionOf>
     </owl:Class>
   </owl:intersectionOf>
-  <rdfs:subClassOf rdf:resource="#1644cf1c_9cc8_4059_b8f4_eb6a5d94f757"/>
+  <rdfs:subClassOf rdf:resource="#8a288c46_60b0_4abe_b5b4_a95ee9f81486"/>
 </owl:Class>
 
 <owl:Class>

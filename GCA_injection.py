@@ -61,7 +61,7 @@ with onto:
         spec_reaction_class = types.new_class(spec_reac_uuid, (reaction_class,))
         spec_reaction_class.label = spec_reac_label
         spec_reaction_indv = spec_reaction_class(spec_reac_indv_uuid)
-        spec_reaction_indv.label = spec_reac_label
+        spec_reaction_indv.label = "indv_"+spec_reac_label
         
         #'Haber Bosch reaction' and (hasCatalyst some 'material entity' or 'chemical entity') and ( inverse (hasReactionComponent) some 'Haber Bosch reaction'))) SubClassOf 'catalysed Haber Bosch reaction'
         gca2 = GeneralClassAxiom(reaction_class & (cat_rel.some(material_class) & (reacComp_rel.inverse.some(reaction_class)))) # Left side
@@ -94,7 +94,7 @@ with onto:
         code = compile(codestr, "<string>","exec")
         exec(code)
         
-        gca3.is_a.append(reac_role_rel.some(OneOf([reac_indv]))) # Right side
+        gca3.is_a.append(reac_role_rel.some(OneOf([spec_reaction_indv]))) # Right side
         
         
         onto.save(file=onto_path.replace(".owl","_gca.owl"), format="rdfxml")      
