@@ -1,0 +1,46 @@
+{
+  "cff-version": "1.2.0",
+  "title": "Fluent Integration of Laboratory Data into Biocatalytic Process Simulation Using EnzymeML, DWSIM, and Ontologies",
+  "authors": [
+    {
+      "family-names": "Behr",
+      "given-names": "Alexander S."
+    },
+    {
+      "family-names": "Surkamp",
+      "given-names": "Julia"
+    },
+    {
+      "family-names": "Abbaspour",
+      "given-names": "Elnaz"
+    },
+    {
+      "family-names": "Häußler",
+      "given-names": "Max"
+    },
+    {
+      "family-names": "Lütz",
+      "given-names": "Stephan"
+    },
+    {
+      "family-names": "Pleiss",
+      "given-names": "Jürgen"
+    },
+    {
+      "family-names": "Kockmann",
+      "given-names": "Norbert"
+    },
+    {
+      "family-names": "Rosenthal",
+      "given-names": "Katrin"
+    }
+  ],
+  "journal": "Processes",
+  "volume": "12",
+  "number": "3",
+  "pages": "597",
+  "year": "2024",
+  "url": "https://www.mdpi.com/2227-9717/12/3/597",
+  "issn": "2227-9717",
+  "doi": "10.3390/pr12030597"
+}
