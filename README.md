@@ -1,5 +1,7 @@
 [![DOI](https://zenodo.org/badge/733437045.svg)](https://zenodo.org/doi/10.5281/zenodo.10613473)
 
+The methods and codes in this repository are described in more detail here: Behr, A.S.; Surkamp, J.; Abbaspour, E.; Häußler, M.; Lütz, S.; Pleiss, J.; Kockmann, N.; Rosenthal, K. Fluent Integration of Laboratory Data into Biocatalytic Process Simulation Using EnzymeML, DWSIM, and Ontologies. Processes 2024, 12, 597. https://doi.org/10.3390/pr12030597
+
 ## DWSIM-EnzymeML-KG
 
 This repository contains the code and the MS Excel files (subdirectory [ELNs](https://github.com/TUDoAD/DWSIM-EnzymeML-KG/tree/main/ELNs)) used as data input for the automated generation of process simulations in [DWSIM](https://dwsim.org).
