@@ -474,8 +474,57 @@ def kin_ind_from_dict(eln_dict, onto):
         kin_indv = onto.search_one(iri = "*"+kin_indv_uuid)
         kin_indv.has_equation.append(str(kin_dict[kin]["has_equation"]))
         ##
-        
-        if kin_type == "Henri-Michaelis-Menten rate law":
+        if kin_type == "Arrhenius equation":
+            if "A" in kin_dict[kin]:
+                
+                ind_name = "A_" + kin_dict[kin]["hasEnzymeML_ID"]
+                val = kin_dict[kin]["A"]
+                unit = kin_dict[kin]["A_Unit"]
+                
+                hasVal = onto.search_one(iri = '*hasValue')
+                #hasModel= onto.search_one(iri = '*RO_0002615')
+                #kin_indv = onto.search_one(label = kin)
+                # https://w3id.org/nfdi4cat#pre-exponential_factor
+                kin_indv_label =  "indv_"+kin
+                
+                codestring = """with onto:
+                                A_indv = onto.search_one(iri = "*pre-exponential_factor")('{}')
+                                A_indv.label = "A"
+                                A_indv.{}.append('{}')
+                                A_indv.has_unit_string.append('{}')
+                                
+                                kin_indv = onto.search_one(label = kin_indv_label)
+                                kin_indv.hasVariable.append(A_indv)
+                    """.format(ind_name, hasVal.name, val, unit)
+                    
+                    
+                #print(codestring)
+                code = compile(codestring, "<string>","exec")
+                exec(code)
+                ## https://w3id.org/nfdi4cat#activation_energy
+                if "E" in kin_dict[kin]:
+                    
+                    ind_name = "E_" + kin_dict[kin]["hasEnzymeML_ID"]
+                    val = kin_dict[kin]["E"]
+                    unit = kin_dict[kin]["E_Unit"]
+                    
+                    kin_indv_label =  "indv_"+kin
+                    
+                    codestring = """with onto:
+                                    E_indv = onto.search_one(iri = "*activation_energy")('{}')
+                                    E_indv.label = "E"
+                                    E_indv.{}.append('{}')
+                                    E_indv.has_unit_string.append('{}')
+                                    
+                                    kin_indv = onto.search_one(label = kin_indv_label)
+                                    kin_indv.hasVariable.append(E_indv)
+                        """.format(ind_name, hasVal.name, val, unit)
+                    code = compile(codestring, "<string>","exec")
+                    exec(code)    
+                    
+                    
+        ##
+        elif kin_type == "Henri-Michaelis-Menten rate law":
             ## adding Km indv if it is contained
             if "Km" in kin_dict[kin]:
                 
