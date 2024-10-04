@@ -719,13 +719,13 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                         codestring = """with onto:
                             proc_indv = onto.search_one(iri = "*{}") 
                             proc_indv.{}.append(float({}))
-                            """.format(uuid_dict[proc_mod], prop_key, val)
+                            """.format(uuid_dict[proc_mod], prop_key.strip().replace(' ','_'), val)
 
                     else:
                         codestring = """with onto:
                             proc_indv = onto.search_one(iri = "*{}") 
                             proc_indv.{}.append('{}')
-                            """.format(uuid_dict[proc_mod], prop_key, val)
+                            """.format(uuid_dict[proc_mod], prop_key.strip().replace(' ','_'), val)
                     
                 code = compile(codestring, "<string>", "exec")
                 exec(code)    
