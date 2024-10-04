@@ -33,7 +33,7 @@ def eln_subst_data_to_dict(eln_sheet):
     for col, d in eln_sheet.items():
         if col != "Property":
             sub_name = eln_sheet[eln_sheet['Property'].str.contains('Name')][col].iloc[0]
-            sub_name = sub_name.strip() if sub_name == str else sub_name 
+            sub_name = sub_name.strip().replace(' ','_') if sub_name == str else sub_name 
             if pd.notna(sub_name): ext_eln_data[sub_name] = {}
            # if sub_name in list(ext_eln_data.keys()):
             for index, row in eln_sheet.iterrows():
@@ -75,14 +75,14 @@ def new_ELN_to_dict(eln_path):
     for sheet_name in ['Properties for JSON-file', 'Additional Info (Units)']:
         eln_sheet_properties = pd.read_excel(ELN_xlsx,sheet_name)
         add_dict = eln_subst_data_to_dict(eln_sheet_properties)
-        subst_eln_data = {key.strip(): {**subst_eln_data.get(key, {}), **add_dict.get(key, {})} for key in set(subst_eln_data) | set(add_dict)}    
+        subst_eln_data = {key.strip().replace(' ','_'): {**subst_eln_data.get(key, {}), **add_dict.get(key, {})} for key in set(subst_eln_data) | set(add_dict)}    
     
     ##
     
     # extract kinetic parameters into dictionary
     for col, d in eln_sheet_kin_params.items():
         if col != "Property":
-            kin_name = eln_sheet_kin_params[eln_sheet_kin_params['Property'].str.contains('Name')][col].iloc[0].strip()
+            kin_name = eln_sheet_kin_params[eln_sheet_kin_params['Property'].str.contains('Name')][col].iloc[0].strip().replace(' ','_')
             kin_eln_data[kin_name] = {}
             for index, row in eln_sheet_kin_params.iterrows():
                 if pd.notna(row[col]) and row["Property"] != "kineticName":
@@ -303,7 +303,7 @@ def datProp_from_dict(dataProp_dict, onto):
         if rel in enzymeML_subst_parameters:
             onto = datProp_from_str("has_" + rel,onto)
         else:
-            onto = datProp_from_str(rel,onto)
+            onto = datProp_from_str(rel.strip().replace(' ','_'),onto)
         
     return onto
     
@@ -380,7 +380,7 @@ def kin_ind_from_dict(eln_dict, onto):
         ## Enzyme
         # rateLaw -- characteristic of -> Enzyme
         # indv_rateLaw -- http://purl.obolibrary.org/obo/RO_0000052 -> subst_Enzyme
-        Enzyme_name = kin_dict[kin]["kineticOfCompound"]             
+        Enzyme_name = kin_dict[kin]["kineticOfCompound"].strip().replace(' ','_')             
         subst_id = eln_dict["substances"][Enzyme_name]["hasEnzymeML_ID"]       
         Enz_indv_label = "Sub_" + Enzyme_name + "_" + subst_id
     
@@ -391,12 +391,12 @@ def kin_ind_from_dict(eln_dict, onto):
         substrate_indv_label = []
         for i in Substrates.split(","):
             try:
-                substrate_indv_label.append("Sub_" + i.strip() + "_" + eln_dict["substances"][i.strip()]["hasEnzymeML_ID"])
+                substrate_indv_label.append("Sub_" + i.strip().replace(' ','_') + "_" + eln_dict["substances"][i.strip().replace(' ','_')]["hasEnzymeML_ID"])
             except:
                 try:
-                    found = eln_dict["substances"][i.strip()]
+                    found = eln_dict["substances"][i.strip().replace(' ','_')]
                     if found:
-                        substrate_indv_label.append("Sub_" + i.strip() + "_")
+                        substrate_indv_label.append("Sub_" + i.strip().replace(' ','_') + "_")
                 except:
                     print("baseCompound {} in kinetic of {} not found in elndict. EnzymeML_ID missing or comma in baseCompound-Name?".format(i,kin))
                     pass
@@ -684,7 +684,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                     
                     # Add dataProperties of subdictionaries, mostly containing material streams of the substances
                     for key in list(PFD_dict[proc_mod][prop_key].keys()):
-                        onto = datProp_from_str(key, onto)
+                        onto = datProp_from_str(key.strip().replace(' ','_'), onto)
                     
                     #TODO: Alex
                     # Add individual for each proc+substance and connect it to individuals                    
@@ -713,7 +713,7 @@ def process_to_KG_from_dict(enzmldoc, eln_dict, onto, PFD_uuid):
                     #print(codestring)
                 else:
                     # No Substance name -> Direct dataProperty assertion
-                    onto = datProp_from_str(prop_key,onto)
+                    onto = datProp_from_str(prop_key.strip().replace(' ','_'),onto)
                     val = PFD_dict[proc_mod][prop_key]
                     if (val == int) or (val == float):
                         codestring = """with onto:
@@ -793,7 +793,7 @@ def reactions_to_KG(enzmldoc,supp_eln_dict,onto,PFD_uuid):
             else:
                 ## add to individual via dataProperty
                 if entry not in ["name","ontology"]:
-                    onto = datProp_from_str(entry, onto)
+                    onto = datProp_from_str(entry.strip().replace(' ','_'), onto)
                     if reac_obj.dict()[entry]:
                         if type(reac_obj.dict()[entry]) in [float, int]:
                             codestr = """rct_indv.{}.append({})""".format(entry,reac_obj.dict()[entry])
