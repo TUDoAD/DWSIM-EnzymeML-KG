@@ -28,7 +28,7 @@
      xmlns:subsets="http://purl.obolibrary.org/obo/ro/subsets#"
      xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
     <owl:Ontology rdf:about="https://w3id.org/nfdi4cat">
-        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/go/releases/2023-11-15/go.owl"/>
+        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/go.owl"/>
         <owl:imports rdf:resource="http://purl.obolibrary.org/obo/ro/releases/2023-08-18/ro.owl"/>
         <owl:imports rdf:resource="https://nfdi4ing.pages.rwth-aachen.de/metadata4ing/metadata4ing/ontology.xml"/>
         <owl:imports rdf:resource="https://raw.githubusercontent.com/EBI-BioModels/SBO/master/SBO_OWL.owl"/>
