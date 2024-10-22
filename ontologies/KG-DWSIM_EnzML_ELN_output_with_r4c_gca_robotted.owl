@@ -11,9 +11,9 @@
          xmlns:obo="http://purl.obolibrary.org/obo/"
          xmlns:Math="http://www.w3.org/1998/Math/"
          xmlns:core="http://www.w3.org/2004/02/skos/core#"
-         xmlns:cheb="http://purl.obolibrary.org/obo/chebi/"
          xmlns:prop="http://purl.allotrope.org/ontologies/property#"
          xmlns:term="http://purl.org/dc/terms/"
+         xmlns:cheb="http://purl.obolibrary.org/obo/chebi/"
          xmlns:onto="https://nfdi4cat.org/ontologies/"
          xmlns:meta="http://w3id.org/nfdi4ing/metadata4ing#"
          xmlns:onto2="http://www.nfdi.org/nfdi4cat/ontochem#">
@@ -157,6 +157,14 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
   <rdfs:label xml:lang="en">overlaps</rdfs:label>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002323">
+  <obo:IAO_0000117 rdf:resource="https://orcid.org/0000-0002-6601-2165"/>
+  <obo:RO_0001900 rdf:resource="http://purl.obolibrary.org/obo/RO_0001901"/>
+  <obo:IAO_0000115>A mereological relationship or a topological relationship</obo:IAO_0000115>
+  <obo:IAO_0000232>Do not use this relation directly. It is ended as a grouping for a diverse set of relations, all involving parthood or connectivity relationships</obo:IAO_0000232>
+  <rdfs:label xml:lang="en">mereotopologically related to</rdfs:label>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0000052">
   <rdfs:subPropertyOf rdf:resource="http://purl.obolibrary.org/obo/RO_0002314"/>
   <owl:inverseOf rdf:resource="http://purl.obolibrary.org/obo/RO_0000053"/>
@@ -232,6 +240,12 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
   <core:prefLabel>bearer of</core:prefLabel>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002502">
+  <obo:IAO_0000117 rdf:resource="https://orcid.org/0000-0002-6601-2165"/>
+  <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/BFO_0000169"/>
+  <rdfs:label>depends on</rdfs:label>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0000081">
   <rdfs:subPropertyOf rdf:resource="http://purl.obolibrary.org/obo/RO_0000052"/>
   <owl:inverseOf rdf:resource="http://purl.obolibrary.org/obo/RO_0000087"/>
@@ -256,14 +270,6 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
   <core:editorialNote>A bearer can have many roles, and its roles can exist for different periods of time, but none of its roles can exist when the bearer does not exist. A role need not be realized at all the times that the role exists.  [RO]</core:editorialNote>
   <core:example>this person has role this investigator role (more colloquially: this person has this role of investigator) [RO]</core:example>
   <core:prefLabel>has role</core:prefLabel>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002323">
-  <obo:IAO_0000117 rdf:resource="https://orcid.org/0000-0002-6601-2165"/>
-  <obo:RO_0001900 rdf:resource="http://purl.obolibrary.org/obo/RO_0001901"/>
-  <obo:IAO_0000115>A mereological relationship or a topological relationship</obo:IAO_0000115>
-  <obo:IAO_0000232>Do not use this relation directly. It is ended as a grouping for a diverse set of relations, all involving parthood or connectivity relationships</obo:IAO_0000232>
-  <rdfs:label xml:lang="en">mereotopologically related to</rdfs:label>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002233">
@@ -313,12 +319,6 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
   <core:editorialNote xml:lang="en">changed by m4i: added skos:prefLabel</core:editorialNote>
   <core:prefLabel xml:lang="en">has output</core:prefLabel>
   <core:prefLabel xml:lang="de">hat Output</core:prefLabel>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002502">
-  <obo:IAO_0000117 rdf:resource="https://orcid.org/0000-0002-6601-2165"/>
-  <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/BFO_0000169"/>
-  <rdfs:label>depends on</rdfs:label>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataObject">
@@ -380,6 +380,10 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
   <rdfs:label>hasInitialMixture</rdfs:label>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000063">
+  <rdfs:label>isReactionComponentOf</rdfs:label>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000007">
   <rdfs:subPropertyOf rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000062"/>
   <owl:inverseOf rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000065"/>
@@ -404,10 +408,6 @@ A continuant cannot have an occurrent as part: use 'participates in'. An occurre
 
 <owl:ObjectProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000008">
   <rdfs:label>hasProductComponentSet</rdfs:label>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000063">
-  <rdfs:label>isReactionComponentOf</rdfs:label>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000011">
@@ -524,6 +524,16 @@ This unwanted inference, in which all Individuals with the property 'has role' a
   <rdfs:label>has model</rdfs:label>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="http://w3id.org/nfdi4ing/metadata4ing#hasVariable">
+  <owl:inverseOf rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#isVariableInAssignment"/>
+  <rdfs:domain rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#Assignment"/>
+  <rdfs:range rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#Variable"/>
+  <core:definition xml:lang="de">( a hasVariable x ) bedeutet, dass a: x = y eine Variablenzuordnung ist, in der der Variablen x ein Wert zugeordnet wird.</core:definition>
+  <core:definition xml:lang="en">( a hasVariable x ) means that a: x = y is an assignment where the value y is assigned to a variable x</core:definition>
+  <core:prefLabel xml:lang="en">has variable</core:prefLabel>
+  <core:prefLabel xml:lang="de">hat Variable</core:prefLabel>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002473">
   <rdfs:subPropertyOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000051"/>
   <obo:IAO_0000117 rdf:resource="https://orcid.org/0000-0002-6601-2165"/>
@@ -533,16 +543,6 @@ This unwanted inference, in which all Individuals with the property 'has role' a
   <obo:IAO_0000112>'otolith organ' SubClassOf 'composed primarily of' some 'calcium carbonate'</obo:IAO_0000112>
   <obo:IAO_0000115>x composed_primarily_of y if and only if more than half of the mass of x is made from y or units of the same type as y.</obo:IAO_0000115>
   <rdfs:label>composed primarily of</rdfs:label>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="http://w3id.org/nfdi4ing/metadata4ing#hasVariable">
-  <owl:inverseOf rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#isVariableInAssignment"/>
-  <rdfs:domain rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#Assignment"/>
-  <rdfs:range rdf:resource="http://www.molmod.info/semantics/pims-ii.ttl#Variable"/>
-  <core:definition xml:lang="de">( a hasVariable x ) bedeutet, dass a: x = y eine Variablenzuordnung ist, in der der Variablen x ein Wert zugeordnet wird.</core:definition>
-  <core:definition xml:lang="en">( a hasVariable x ) means that a: x = y is an assignment where the value y is assigned to a variable x</core:definition>
-  <core:prefLabel xml:lang="en">has variable</core:prefLabel>
-  <core:prefLabel xml:lang="de">hat Variable</core:prefLabel>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002211">
@@ -2320,14 +2320,14 @@ For example, A and B may be gene products and binding of B by A positively regul
   <core:prefLabel>has mandatory simple metadata</core:prefLabel>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimple">
+  <core:prefLabel>has simple metadata</core:prefLabel>
+</owl:DatatypeProperty>
+
 <owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasAggregateState">
   <rdfs:subPropertyOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimpleMandatory"/>
   <rdfs:domain rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#PhysicalMaterialState"/>
   <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-</owl:DatatypeProperty>
-
-<owl:DatatypeProperty rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#hasMetadataSimple">
-  <core:prefLabel>has simple metadata</core:prefLabel>
 </owl:DatatypeProperty>
 
 <owl:DatatypeProperty rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000013">
@@ -2668,6 +2668,18 @@ For example, A and B may be gene products and binding of B by A positively regul
 
 <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
 
+<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/RO_0001900"/>
+
+<owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#inSubset"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000114"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000117"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000119"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/rights"/>
+
 <owl:AnnotationProperty rdf:about="http://purl.allotrope.org/ontologies/property#AFX_0002796"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.allotrope.org/ontologies/property#AFX_0002818"/>
@@ -2682,17 +2694,11 @@ For example, A and B may be gene products and binding of B by A positively regul
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000112"/>
 
-<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000114"/>
-
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000115"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000116"/>
 
-<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000117"/>
-
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000118"/>
-
-<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000119"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000232"/>
 
@@ -2703,8 +2709,6 @@ For example, A and B may be gene products and binding of B by A positively regul
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0000602"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/IAO_0010000"/>
-
-<owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/RO_0001900"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/charge"/>
 
@@ -2719,8 +2723,6 @@ For example, A and B may be gene products and binding of B by A positively regul
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/monoisotopicmass"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.obolibrary.org/obo/chebi/smiles"/>
-
-<owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/rights"/>
 
 <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/source"/>
 
@@ -2737,8 +2739,6 @@ For example, A and B may be gene products and binding of B by A positively regul
 <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasOBONamespace"/>
 
 <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#id"/>
-
-<owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#inSubset"/>
 
 <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel"/>
 
@@ -2833,6 +2833,37 @@ For example, A and B may be gene products and binding of B by A positively regul
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingModule">
   <rdfs:subClassOf rdf:resource="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
   <core:prefLabel>physical-chemical processing module</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000017">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000020"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000050"/>
+      <owl:allValuesFrom rdf:resource="http://purl.obolibrary.org/obo/BFO_0000017"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <owl:disjointWith rdf:resource="http://purl.obolibrary.org/obo/BFO_0000019"/>
+  <obo:IAO_0000115 xml:lang="en">A specifically dependent continuant  that inheres in continuant  entities and are not exhibited in full at every time in which it inheres in an entity or group of entities. The exhibition or actualization of a realizable entity is a particular manifestation, functioning or process that occurs under certain circumstances.</obo:IAO_0000115>
+  <rdfs:comment xml:lang="en">Semantic artefact of the BFO class 'realizable entity' (http://purl.obolibrary.org/obo/BFO_0000017) which has not been fully implemented in order to reduce the complexity and depth a full import of a Top level ontology would bring into this example</rdfs:comment>
+  <rdfs:label>realizable entity</rdfs:label>
+  <rdfs:label xml:lang="en">realizable entity</rdfs:label>
+  <core:definition>To say that b is a realizable entity is to say that b is a specifically dependent continuant that inheres in some independent continuant which is not a spatial region and is of a type instances of which are realized in processes of a correlated type. (axiom label in BFO2 Reference: [058-002])</core:definition>
+  <core:editorialNote xml:lang="en">changed by m4i: added german labels, added skos:prefLabel</core:editorialNote>
+  <core:prefLabel xml:lang="de">realisierbare Entität</core:prefLabel>
+  <core:prefLabel xml:lang="en">realizable entity</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule">
+  <rdfs:subClassOf rdf:resource="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
+  <core:prefLabel>data processing module</core:prefLabel>
+</owl:Class>
+
+<owl:Class rdf:about="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+  <core:definition xml:lang="en">Specific action undertaken during research</core:definition>
+  <core:prefLabel xml:lang="de">Arbeitsschritt</core:prefLabel>
+  <core:prefLabel xml:lang="en">processing step</core:prefLabel>
 </owl:Class>
 
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000000">
@@ -2930,13 +2961,6 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <core:prefLabel xml:lang="en">process</core:prefLabel>
 </owl:Class>
 
-<owl:Class rdf:about="http://purl.allotrope.org/ontologies/role#AFRL_0000344">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-  <rdfs:isDefinedBy rdf:resource="http://purl.allotrope.org/voc/afo/REC/2021/09/aft"/>
-  <core:definition>A synthesis role is a role of a material that is participating in a synthesis (material conversion) process. [Allotrope]</core:definition>
-  <core:prefLabel>synthesis role</core:prefLabel>
-</owl:Class>
-
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000003">
   <rdfs:subClassOf>
     <owl:Restriction>
@@ -2956,23 +2980,11 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <rdfs:label xml:lang="en">occurrent</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000017">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000020"/>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000050"/>
-      <owl:allValuesFrom rdf:resource="http://purl.obolibrary.org/obo/BFO_0000017"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <owl:disjointWith rdf:resource="http://purl.obolibrary.org/obo/BFO_0000019"/>
-  <obo:IAO_0000115 xml:lang="en">A specifically dependent continuant  that inheres in continuant  entities and are not exhibited in full at every time in which it inheres in an entity or group of entities. The exhibition or actualization of a realizable entity is a particular manifestation, functioning or process that occurs under certain circumstances.</obo:IAO_0000115>
-  <rdfs:comment xml:lang="en">Semantic artefact of the BFO class 'realizable entity' (http://purl.obolibrary.org/obo/BFO_0000017) which has not been fully implemented in order to reduce the complexity and depth a full import of a Top level ontology would bring into this example</rdfs:comment>
-  <rdfs:label>realizable entity</rdfs:label>
-  <rdfs:label xml:lang="en">realizable entity</rdfs:label>
-  <core:definition>To say that b is a realizable entity is to say that b is a specifically dependent continuant that inheres in some independent continuant which is not a spatial region and is of a type instances of which are realized in processes of a correlated type. (axiom label in BFO2 Reference: [058-002])</core:definition>
-  <core:editorialNote xml:lang="en">changed by m4i: added german labels, added skos:prefLabel</core:editorialNote>
-  <core:prefLabel xml:lang="de">realisierbare Entität</core:prefLabel>
-  <core:prefLabel xml:lang="en">realizable entity</core:prefLabel>
+<owl:Class rdf:about="http://purl.allotrope.org/ontologies/role#AFRL_0000344">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+  <rdfs:isDefinedBy rdf:resource="http://purl.allotrope.org/voc/afo/REC/2021/09/aft"/>
+  <core:definition>A synthesis role is a role of a material that is participating in a synthesis (material conversion) process. [Allotrope]</core:definition>
+  <core:prefLabel>synthesis role</core:prefLabel>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000040">
@@ -2998,6 +3010,24 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
   <oboI:id>CHEBI:33579</oboI:id>
   <rdfs:label>main group molecular entity</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_23367">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_24431"/>
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/bfo.owl#material"/>
+  <prop:AFX_0002796 rdf:resource="http://purl.allotrope.org/ontologies/result#AFR_0001222"/>
+  <prop:AFX_0002865 rdf:resource="http://purl.obolibrary.org/obo/chebi.owl"/>
+  <term:license rdf:resource="http://purl.allotrope.org/voc/iupac-license"/>
+  <term:rights rdf:resource="http://purl.allotrope.org/voc/iupac-copyright"/>
+  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
+  <rdfs:isDefinedBy rdf:resource="http://purl.allotrope.org/voc/afo/perspective/REC/2021/09/molecular-scale"/>
+  <obo:IAO_0000115>Any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer etc., identifiable as a separately distinguishable entity.</obo:IAO_0000115>
+  <term:source>PAC, 1994, 66, 1077. (Glossary of terms used in physical organic chemistry (IUPAC Recommendations 1994)) on page 1142</term:source>
+  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
+  <oboI:id>CHEBI:23367</oboI:id>
+  <rdfs:label>molecular entity</rdfs:label>
+  <core:definition>Any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer etc., identifiable as a separately distinguishable entity. [IUPAC]</core:definition>
+  <core:prefLabel>molecular entity</core:prefLabel>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_15377">
@@ -3032,6 +3062,15 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
   <oboI:id>CHEBI:52625</oboI:id>
   <rdfs:label>inorganic hydroxy compound</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_24835">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_23367"/>
+  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
+  <obo:IAO_0000115>A molecular entity that contains no carbon.</obo:IAO_0000115>
+  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
+  <oboI:id>CHEBI:24835</oboI:id>
+  <rdfs:label>inorganic molecular entity</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_16134">
@@ -3114,6 +3153,15 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <rdfs:label>iron group element atom</rdfs:label>
 </owl:Class>
 
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_27081">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_33521"/>
+  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
+  <obo:IAO_0000115>An element whose atom has an incomplete d sub-shell, or which can give rise to cations with an incomplete d sub-shell.</obo:IAO_0000115>
+  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
+  <oboI:id>CHEBI:27081</oboI:id>
+  <rdfs:label>transition element atom</rdfs:label>
+</owl:Class>
+
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_18276">
   <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_138675"/>
   <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
@@ -3124,24 +3172,6 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
   <oboI:id>CHEBI:18276</oboI:id>
   <rdfs:label>dihydrogen</rdfs:label>
-</owl:Class>
-
-<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_23367">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_24431"/>
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/bfo.owl#material"/>
-  <prop:AFX_0002796 rdf:resource="http://purl.allotrope.org/ontologies/result#AFR_0001222"/>
-  <prop:AFX_0002865 rdf:resource="http://purl.obolibrary.org/obo/chebi.owl"/>
-  <term:license rdf:resource="http://purl.allotrope.org/voc/iupac-license"/>
-  <term:rights rdf:resource="http://purl.allotrope.org/voc/iupac-copyright"/>
-  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
-  <rdfs:isDefinedBy rdf:resource="http://purl.allotrope.org/voc/afo/perspective/REC/2021/09/molecular-scale"/>
-  <obo:IAO_0000115>Any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer etc., identifiable as a separately distinguishable entity.</obo:IAO_0000115>
-  <term:source>PAC, 1994, 66, 1077. (Glossary of terms used in physical organic chemistry (IUPAC Recommendations 1994)) on page 1142</term:source>
-  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
-  <oboI:id>CHEBI:23367</oboI:id>
-  <rdfs:label>molecular entity</rdfs:label>
-  <core:definition>Any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer etc., identifiable as a separately distinguishable entity. [IUPAC]</core:definition>
-  <core:prefLabel>molecular entity</core:prefLabel>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_24431">
@@ -3166,24 +3196,6 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <core:prefLabel>material</core:prefLabel>
 </owl:Class>
 
-<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_24835">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_23367"/>
-  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
-  <obo:IAO_0000115>A molecular entity that contains no carbon.</obo:IAO_0000115>
-  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
-  <oboI:id>CHEBI:24835</oboI:id>
-  <rdfs:label>inorganic molecular entity</rdfs:label>
-</owl:Class>
-
-<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_27081">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_33521"/>
-  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
-  <obo:IAO_0000115>An element whose atom has an incomplete d sub-shell, or which can give rise to cations with an incomplete d sub-shell.</obo:IAO_0000115>
-  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
-  <oboI:id>CHEBI:27081</oboI:id>
-  <rdfs:label>transition element atom</rdfs:label>
-</owl:Class>
-
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_33521">
   <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_33250"/>
   <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
@@ -3193,6 +3205,17 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
   <oboI:id>CHEBI:33521</oboI:id>
   <rdfs:label>metal atom</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_33250">
+  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_24431"/>
+  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
+  <obo:IAO_0000115>A chemical entity constituting the smallest component of an element having the chemical properties of the element.</obo:IAO_0000115>
+  <oboI:hasAlternativeId>CHEBI:22671</oboI:hasAlternativeId>
+  <oboI:hasAlternativeId>CHEBI:23907</oboI:hasAlternativeId>
+  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
+  <oboI:id>CHEBI:33250</oboI:id>
+  <rdfs:label>atom</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_28112">
@@ -3230,17 +3253,6 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
   <oboI:id>CHEBI:33365</oboI:id>
   <rdfs:label>platinum group metal atom</rdfs:label>
-</owl:Class>
-
-<owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_33250">
-  <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_24431"/>
-  <oboI:inSubset rdf:resource="http://purl.obolibrary.org/obo/chebi#3_STAR"/>
-  <obo:IAO_0000115>A chemical entity constituting the smallest component of an element having the chemical properties of the element.</obo:IAO_0000115>
-  <oboI:hasAlternativeId>CHEBI:22671</oboI:hasAlternativeId>
-  <oboI:hasAlternativeId>CHEBI:23907</oboI:hasAlternativeId>
-  <oboI:hasOBONamespace>chebi_ontology</oboI:hasOBONamespace>
-  <oboI:id>CHEBI:33250</oboI:id>
-  <rdfs:label>atom</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_33352">
@@ -3292,22 +3304,6 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
   <rdfs:label>hydrogenation</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep">
-  <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
-  <core:definition xml:lang="en">Specific action undertaken during research</core:definition>
-  <core:prefLabel xml:lang="de">Arbeitsschritt</core:prefLabel>
-  <core:prefLabel xml:lang="en">processing step</core:prefLabel>
-</owl:Class>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#DataProcessingModule">
-  <rdfs:subClassOf rdf:resource="http://w3id.org/nfdi4ing/metadata4ing#ProcessingStep"/>
-  <core:prefLabel>data processing module</core:prefLabel>
-</owl:Class>
-
-<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask">
-  <core:prefLabel>processing task</core:prefLabel>
-</owl:Class>
-
 <owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#PhysChemProcessingTask">
   <owl:equivalentClass>
     <owl:Class>
@@ -3320,6 +3316,10 @@ itself being consumed or transformed by the reaction.</rdfs:comment>
     </owl:Class>
   </owl:equivalentClass>
   <rdfs:subClassOf rdf:resource="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.nfdi.org/nfdi4cat/ontochem#ProcessingTask">
+  <core:prefLabel>processing task</core:prefLabel>
 </owl:Class>
 
 <owl:Class rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000001">
@@ -3467,10 +3467,9 @@ CHEBI:16541</rdfs:comment>
   <rdfs:label>Water</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000027">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000193"/>
-  <rdfs:comment>Synonym: Michaelis-Menten constant </rdfs:comment>
-  <rdfs:label>Michaelis constant</rdfs:label>
+<owl:Class rdf:about="#8a288c46_60b0_4abe_b5b4_a95ee9f81486">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000200"/>
+  <rdfs:label>redox reaction with Laccase</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000029">
@@ -3506,10 +3505,23 @@ CHEBI:16541</rdfs:comment>
   <rdfs:label>Henri-Michaelis-Menten rate law</rdfs:label>
 </owl:Class>
 
+<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000027">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000193"/>
+  <rdfs:comment>Synonym: Michaelis-Menten constant </rdfs:comment>
+  <rdfs:label>Michaelis constant</rdfs:label>
+</owl:Class>
+
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000025">
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000035"/>
   <rdfs:comment>Synonym: turnover number </rdfs:comment>
   <rdfs:label>catalytic rate constant</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000240">
+  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000236"/>
+  <rdfs:comment>A real thing that is defined by its physico-chemical structure.
+</rdfs:comment>
+  <rdfs:label>material entity</rdfs:label>
 </owl:Class>
 
 <owl:Class rdf:about="http://purl.obolibrary.org/obo/GO_0003674">
@@ -4011,13 +4023,6 @@ reaction involving only one reactant. This parameter encompasses all the contrib
   <rdfs:label>physical entity representation</rdfs:label>
 </owl:Class>
 
-<owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000240">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000236"/>
-  <rdfs:comment>A real thing that is defined by its physico-chemical structure.
-</rdfs:comment>
-  <rdfs:label>material entity</rdfs:label>
-</owl:Class>
-
 <owl:Class rdf:about="http://biomodels.net/SBO/SBO_0000245">
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000240"/>
   <rdfs:comment>Molecular entity mainly built-up by the repetition of pseudo-identical units.
@@ -4036,11 +4041,6 @@ CHEBI:33839</rdfs:comment>
   <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000268"/>
   <rdfs:comment>Kinetics of enzymes that catalyse the transformation of only one substrate. </rdfs:comment>
   <rdfs:label>enzymatic rate law for unireactant enzymes</rdfs:label>
-</owl:Class>
-
-<owl:Class rdf:about="#8a288c46_60b0_4abe_b5b4_a95ee9f81486">
-  <rdfs:subClassOf rdf:resource="http://biomodels.net/SBO/SBO_0000200"/>
-  <rdfs:label>redox reaction with Laccase</rdfs:label>
 </owl:Class>
 
 <owl:NamedIndividual rdf:about="http://purl.obolibrary.org/obo/IAO_0000125">
@@ -4086,6 +4086,28 @@ CHEBI:33839</rdfs:comment>
   <onto:reac4cat_000011 rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000047"/>
   <rdfs:comment>This individual models the reaction role of the methanation reaction</rdfs:comment>
   <rdfs:label>MethanationReacRole_Ind</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000040">
+  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_18248"/>
+  <rdfs:label>Sub_Fe</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000045">
+  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_28112"/>
+  <rdfs:label>Sub_Ni</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000046">
+  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_49882"/>
+  <rdfs:label>Sub_Rh</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000047">
+  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_30682"/>
+  <rdfs:comment xml:lang="en">An Individual representing a Substance consisting of Ruthenium</rdfs:comment>
+  <rdfs:comment xml:lang="en">Intended only as an example of adding new individuals to the ontology</rdfs:comment>
+  <rdfs:label>Sub_Ru</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_21f79bea_a7cf_4bf9_bb9c_32348d5d0b24">
@@ -4282,6 +4304,18 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <core:altLabel>Laccase</core:altLabel>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#reactant">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#product">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000011"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#catalyst">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000013"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="http://biomodels.net/SBO/RCT_9a269f1f_6a87_4474_b778_e3ca10f94c79">
   <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000176"/>
   <obo:BFO_0000050 rdf:resource="#Experiment_dfe59b61_4982_4676_a36e_772b32eeadc8"/>
@@ -4323,16 +4357,25 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label>indv_Michaelis-Menten-Kinetics</rdfs:label>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Km_r0">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000027"/>
+  <meta:hasValue>1.212</meta:hasValue>
+  <has_unit_string>mol/m3</has_unit_string>
+  <rdfs:label>Km</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#kcat_r0">
+  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000025"/>
+  <meta:hasValue>1.986</meta:hasValue>
+  <has_unit_string>1/s</has_unit_string>
+  <rdfs:label>kcat</rdfs:label>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000018">
   <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000040"/>
   <rdf:type rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000050"/>
   <onto:reac4cat_000004 rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000045"/>
   <rdfs:label>CatalystSample_1</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000045">
-  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_28112"/>
-  <rdfs:label>Sub_Ni</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000019">
@@ -4456,6 +4499,12 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label>Reactor_1</rdfs:label>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000055">
+  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000040"/>
+  <onto:reac4cat_000004 rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000040"/>
+  <rdfs:label>ReactorMaterial_1</rdfs:label>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000035">
   <rdf:type rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000059"/>
   <onto:reac4cat_000006 rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000023"/>
@@ -4482,36 +4531,6 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <onto:reac4cat_000014 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">374.0</onto:reac4cat_000014>
   <rdfs:comment>This is an example individual which will be inferred as methanation reaction</rdfs:comment>
   <rdfs:label>Reaction_5</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000040">
-  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_18248"/>
-  <rdfs:label>Sub_Fe</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000046">
-  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_49882"/>
-  <rdfs:label>Sub_Rh</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000047">
-  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/CHEBI_30682"/>
-  <rdfs:comment xml:lang="en">An Individual representing a Substance consisting of Ruthenium</rdfs:comment>
-  <rdfs:comment xml:lang="en">Intended only as an example of adding new individuals to the ontology</rdfs:comment>
-  <rdfs:label>Sub_Ru</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="https://nfdi4cat.org/ontologies/reac4cat_000055">
-  <rdf:type rdf:resource="http://purl.obolibrary.org/obo/BFO_0000040"/>
-  <onto:reac4cat_000004 rdf:resource="https://nfdi4cat.org/ontologies/reac4cat_000040"/>
-  <rdfs:label>ReactorMaterial_1</rdfs:label>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Km_r0">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000027"/>
-  <meta:hasValue>1.212</meta:hasValue>
-  <has_unit_string>mol/m3</has_unit_string>
-  <rdfs:label>Km</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#PFD_07f98bbc_e22d_4a80_8ae7_74daf098dc17">
@@ -4754,25 +4773,6 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label>indv_Mixture_Water</rdfs:label>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#catalyst">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000013"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#product">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000011"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#reactant">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000010"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#kcat_r0">
-  <rdf:type rdf:resource="http://biomodels.net/SBO/SBO_0000025"/>
-  <meta:hasValue>1.986</meta:hasValue>
-  <has_unit_string>1/s</has_unit_string>
-  <rdfs:label>kcat</rdfs:label>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#indv_PFD_09352a56_d82a_4b9b_9480_2653b07097bc">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:BFO_0000050 rdf:resource="#Experiment_dfe59b61_4982_4676_a36e_772b32eeadc8"/>
@@ -4794,20 +4794,6 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <rdfs:label>indv_Mixer</rdfs:label>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#indv_PFD_2fb964eb_45c6_42d0_9079_d9673498b62b">
-  <rdf:type rdf:resource="#MaterialStream"/>
-  <obo:BFO_0000050 rdf:resource="#Experiment_dfe59b61_4982_4676_a36e_772b32eeadc8"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_0ee6dc28_77c5_4148_bb6d_1e4f39df1bad"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_32edabe8_aa05_48fd_bc54_d082612c76fc"/>
-  <obo:BFO_0000051 rdf:resource="#PFD_d5a5b7b5_3462_4c19_81a8_942b41e7c5ea"/>
-  <obo:RO_0002234 rdf:resource="#indv_PFD_6deac31f_49d7_4b3f_b738_6e1b70178b98"/>
-  <hasMolarFlowUnit>mol/s</hasMolarFlowUnit>
-  <hasVolumetricFlowUnit>m3/s</hasVolumetricFlowUnit>
-  <overallMolarFlow>0.004584609073257156</overallMolarFlow>
-  <overallVolumetricFlow>8.33333333333333e-08</overallVolumetricFlow>
-  <rdfs:label>indv_Reactant_1</rdfs:label>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#indv_PFD_509978c2_8dbf_4ba8_87f4_29589e7116fd">
   <rdf:type rdf:resource="#MaterialStream"/>
   <obo:BFO_0000050 rdf:resource="#Experiment_dfe59b61_4982_4676_a36e_772b32eeadc8"/>
@@ -4825,6 +4811,20 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <overallMolarFlow>0.004586567497566459</overallMolarFlow>
   <overallVolumetricFlow>1.3457300708425582e-07</overallVolumetricFlow>
   <rdfs:label>indv_Mixture</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#indv_PFD_2fb964eb_45c6_42d0_9079_d9673498b62b">
+  <rdf:type rdf:resource="#MaterialStream"/>
+  <obo:BFO_0000050 rdf:resource="#Experiment_dfe59b61_4982_4676_a36e_772b32eeadc8"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_0ee6dc28_77c5_4148_bb6d_1e4f39df1bad"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_32edabe8_aa05_48fd_bc54_d082612c76fc"/>
+  <obo:BFO_0000051 rdf:resource="#PFD_d5a5b7b5_3462_4c19_81a8_942b41e7c5ea"/>
+  <obo:RO_0002234 rdf:resource="#indv_PFD_6deac31f_49d7_4b3f_b738_6e1b70178b98"/>
+  <hasMolarFlowUnit>mol/s</hasMolarFlowUnit>
+  <hasVolumetricFlowUnit>m3/s</hasVolumetricFlowUnit>
+  <overallMolarFlow>0.004584609073257156</overallMolarFlow>
+  <overallVolumetricFlow>8.33333333333333e-08</overallVolumetricFlow>
+  <rdfs:label>indv_Reactant_1</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#indv_PFD_7b559d1d_0363_479c_a528_9af7c50b6e16">
@@ -4876,6 +4876,11 @@ given_name: Katrin , family_name: Rosenthal, mail: krosenthal@constructor.univer
   <hasVolumetricFlowUnit>None</hasVolumetricFlowUnit>
   <overallVolumetricFlow>None</overallVolumetricFlow>
   <rdfs:label>indv_Heat</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#8bf5a2b2_0e4d_4f16_bf13_4af2e5276837">
+  <rdf:type rdf:resource="#8a288c46_60b0_4abe_b5b4_a95ee9f81486"/>
+  <rdfs:label>indv_redox reaction with Laccase</rdfs:label>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="http://purl.obolibrary.org/obo/IAO_0000122">
@@ -5129,11 +5134,6 @@ Source: https://doi.org/10.26302/SSHADE/EXPERIMENT_OP_20201104_001</core:scopeNo
   <core:definition xml:lang="en">A Work Package is a recognized data product, not all of which is included in publication. The package, instead, may include notes, discarded documents, etc. The Work Package Leader is responsible for ensuring the comprehensive contents, versioning, and availability of the Work Package during the development of the resource.</core:definition>
   <core:prefLabel xml:lang="de">Arbeitspaketleiter*in</core:prefLabel>
   <core:prefLabel xml:lang="en">work package leader</core:prefLabel>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#8bf5a2b2_0e4d_4f16_bf13_4af2e5276837">
-  <rdf:type rdf:resource="#8a288c46_60b0_4abe_b5b4_a95ee9f81486"/>
-  <rdfs:label>indv_redox reaction with Laccase</rdfs:label>
 </owl:NamedIndividual>
 
 <swrl:Variable rdf:about="urn:swrl#w"/>
