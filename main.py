@@ -14,7 +14,7 @@ enzml_XLSX_path = "./ELNs/EnzymeML_Template_18-8-2021_KR.xlsm"
 pfd_XLSX_path = "./ELNs/New-ELN_Kinetik_1.xlsx"
 
 extended_ontology_path ="./ontologies/KG-DWSIM_EnzML_ELN.owl"
-filename_DWSIM ="ABTS_ox.dwxmz"
+filename_DWSIM ="./DWSIM/ABTS_ox.dwxmz"
 
 ##
 # Loading the information stored in both enz_str and eln_str Excel-files
